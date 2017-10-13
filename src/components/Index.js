@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import API from 'fetch-api';
+import XHRClient from '../helpers/XHRClient';
 
 class Index extends Component {
     constructor() {
@@ -8,30 +8,12 @@ class Index extends Component {
     }
 
     // This has been made as an example
-    getFakeInfos() {
-        const that = this;
+    async getFakeInfos() {
         this.setState({visibility: 'hidden'});
+        const XHR = await XHRClient.get('http://localhost:3080/onBoarding'); // # TODO: Remove me
 
-        fetch("http://localhost:3080/onBoarding", {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain',
-                'Content-Type': 'application/json',
-            },
-        }).then( (response) => {
-            if (!response.ok)
-                that.setState({response: "Not Provided"});
-
-            return response.json();
-        }).then( (json) => {
-            this.setState({
-                response: json.response || null,
-                visibility: 'visible'
-            });
-        }).catch( (error) => {
-            console.error(error);
-            that.setState({response: "Error: " + error, visibility: 'visible'});            
-        });
+        if (XHR.response)
+            this.setState({visibility: 'visible', response: XHR.response || null});
     }
     
     render() {
@@ -39,11 +21,11 @@ class Index extends Component {
             <div className="index-component">
                 <h1>Welcome !!</h1>
 
-                <button onClick={ () => this.getFakeInfos() }>
+                <button className={'call'} onClick={ () => this.getFakeInfos() }>
                     Load Again
                 </button>
 
-                <p style={{ visibility: this.state.visibility }}>
+                <p className={'content'} style={{ visibility: this.state.visibility }}>
                     {this.state.response}
                 </p>
             </div>  
