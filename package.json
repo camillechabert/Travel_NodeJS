@@ -33,7 +33,9 @@
   "author": "Catalin Luntraru",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.16.2",
     "fetch-api": "0.0.2",
+    "path": "^0.12.7",
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
