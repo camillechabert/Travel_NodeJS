@@ -16,7 +16,7 @@ module.exports = {
   output: {
     path: __dirname + '/public/js',
     publicPath: 'js/',
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
@@ -38,6 +38,7 @@ module.exports = {
   },
   devServer: {
     contentBase: __dirname + '/public',
+    headers: { "Access-Control-Allow-Origin": "*" }
   },
   plugins: [
     new CleanWebpackPlugin(['css/main.css', 'js/bundle.js'], {

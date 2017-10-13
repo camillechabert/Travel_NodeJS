@@ -10,13 +10,14 @@
     "boilerplate"
   ],
   "main": "index.js",
-  "homepage": "http://redux-minimal.js.org/",
+  "homepage": "localhost",
   "repository": {
     "type": "git",
     "url": "https://github.com/catalin-luntraru/redux-minimal"
   },
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 8080",
+    "proxy": "node Api/server",
+    "start": "npm run proxy & webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 9000",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
     "test": "mocha --recursive --compilers js:babel-register --require babel-polyfill --require ignore-styles",
@@ -32,6 +33,7 @@
   "author": "Catalin Luntraru",
   "license": "MIT",
   "dependencies": {
+    "fetch-api": "0.0.2",
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
