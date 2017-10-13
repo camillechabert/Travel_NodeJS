@@ -16,7 +16,7 @@
     "url": "https://github.com/catalin-luntraru/redux-minimal"
   },
   "scripts": {
-    "proxy": "node Api/server",
+    "proxy": "node App/server",
     "start": "npm run proxy & webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 9000",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",

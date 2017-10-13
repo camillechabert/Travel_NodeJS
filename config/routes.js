@@ -13,7 +13,7 @@ routerApiv01.use((req, res, next) => {
 });    
 
 routerApiv01.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname + '/../index.html'));
+    // Render some JsonStuff
 });
 
 /************************************
