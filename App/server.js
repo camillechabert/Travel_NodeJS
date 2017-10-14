@@ -1,14 +1,16 @@
 const express = require('express');
 const app = express();
 const path = require("path");
-const routes = require('../config/routes');
+const api = require('../routes/api');
+const web = require('../routes/web');
+const server = require('../config/server');
 
 // Mount routes from router
-app.use('/Apiv01', routes.routerApiv01);
+app.use('/api', api.v01);
 
 // Mount routes from boarding
-app.use('/onBoarding', routes.onBoardingRoutes);
+app.use('/boarding', web.boarding);
 
-app.listen(process.env.PORT || 3080, () => {
-	console.log('App is Running on', process.env.PORT || 3080);
+app.listen(server.port, () => {
+	console.log('App is Running on', server.port);
 });
