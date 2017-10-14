@@ -1,11 +1,11 @@
 {
   "name": "redux-minimal",
   "version": "1.0.0",
-  "description": "Start building complex react-redux apps today, with this minimalist easy to understand starter kit (boilerplate)",
+  "description": "Start building complex react-redux apps today, with this minimalist easy to understand starter kit ",
   "keywords": [
     "react",
     "redux",
-    "minimal",
+    "ndoejs",
     "starter kit",
     "boilerplate"
   ],
@@ -13,7 +13,7 @@
   "homepage": "localhost",
   "repository": {
     "type": "git",
-    "url": "https://github.com/catalin-luntraru/redux-minimal"
+    "url": "https://github.com/JuH33/Ynov_react_proj"
   },
   "scripts": {
     "proxy": "node App/server",
@@ -30,13 +30,14 @@
       "stage-3"
     ]
   },
-  "author": "Catalin Luntraru",
+  "author": "Julien, Julien, François, Camille",
   "license": "MIT",
   "dependencies": {
     "babel-register": "^6.26.0",
     "express": "^4.16.2",
     "fetch-api": "0.0.2",
     "fetch-mock": "^5.13.1",
+    "mysql2": "^1.4.2",
     "node-fetch": "^1.7.3",
     "path": "^0.12.7",
     "react": "^15.4.2",
@@ -49,6 +50,8 @@
     "redux": "^3.6.0",
     "redux-form": "^6.4.3",
     "redux-saga": "^0.14.3",
+    "sequelize": "^4.13.15",
+    "sequelize-cli": "^3.0.0",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
