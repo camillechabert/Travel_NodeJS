@@ -16,8 +16,9 @@
     "url": "https://github.com/JuH33/Ynov_react_proj"
   },
   "scripts": {
+    "start": "echo ---- Start is deprecated: use [npm run serv] instead ----",
     "proxy": "node App/server",
-    "start": "npm run proxy & webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 9000",
+    "serv": "npm run proxy & webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 9000",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
     "test": "mocha --recursive --compilers js:babel-register --require babel-polyfill -r jsdom-global/register --require ignore-styles",
