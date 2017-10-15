@@ -37,26 +37,29 @@ class Chatroom extends React.Component {
         this.state = {
             name : json.name,
             user : json.user,
-            chat : json.chat
+            chat : json.chat,
+
+            //watcher
+            textarea : "test"
         }
 
         this.submitMessage = this.submitMessage.bind(this);
     }
 
     submitMessage(e) {
-        e.preventDefault();
-
-        if( e.which == 13 ){            
+        if( e.target.value !== "" || e.type === "click" || e.which == 13 ){            
             this.setState({
                 chat: this.state.chat.concat([{
                     user: this.state.user.id,
                     date : new Date(),
-                    message: ReactDOM.findDOMNode(this.refs.msg).value
+                    message: e.target.value
                 }])
             }, () => {
-                ReactDOM.findDOMNode(this.refs.msg).value = "";
+                this.setState({ textearea : ""});
             });
-        }
+        } else {
+            this.setState({ textearea : e.target.value });
+       }
 
     }
 
@@ -83,9 +86,9 @@ class Chatroom extends React.Component {
                 </div>          
                 <div className="row send-chat-box">
                     <div className="col-sm-12">
-                        <textarea className="form-control" placeholder="Type your message" onKeyUp={(e) => this.submitMessage(e)}></textarea>
+                        <textarea className="form-control" placeholder="Type your message" onKeyUp={ this.submitMessage } value={ this.state.textarea }></textarea>
                         <div className="custom-send"><a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="Insert Emojis"><i className="ti-face-smile"></i></a> <a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="File Attachment"><i className="fa fa-paperclip"></i></a>
-                            <button className="btn btn-danger btn-rounded" type="button" onSubmit={(e) => this.submitMessage(e)}>Send</button>
+                            <button className="btn btn-danger btn-rounded" type="button" onClick={this.submitMessage}>Send</button>
                         </div>
                     </div>
                 </div>
