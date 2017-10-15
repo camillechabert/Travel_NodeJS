@@ -10,7 +10,7 @@ class Index extends Component {
     // This has been made as an example
     async getFakeInfos() {
         this.setState({visibility: 'hidden'});
-        const XHR = await XHRClient.get('http://localhost:3080/onBoarding'); // # TODO: Remove me
+        const XHR = await XHRClient.get('http://localhost:3080/boarding'); // # TODO: Remove me
 
         if (XHR.response)
             this.setState({visibility: 'visible', response: XHR.response || null});
