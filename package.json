@@ -20,7 +20,7 @@
     "start": "npm run proxy & webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 9000",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
-    "test": "mocha --recursive --compilers js:babel-register --require babel-polyfill --require ignore-styles",
+    "test": "mocha --recursive --compilers js:babel-register --require babel-polyfill -r jsdom-global/register --require ignore-styles",
     "test-watch": "npm test -- --watch"
   },
   "babel": {
@@ -67,6 +67,8 @@
     "enzyme": "^2.7.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "ignore-styles": "^5.0.1",
+    "jsdom": "^11.3.0",
+    "jsdom-global": "^3.0.2",
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
     "react-addons-test-utils": "^15.4.2",

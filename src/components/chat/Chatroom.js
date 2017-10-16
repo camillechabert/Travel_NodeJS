@@ -1,10 +1,13 @@
 import React from "react";
 import "../../stylesheets/main.scss";
+import "../../stylesheets/components/chat.scss";
 import Message from "./Message";
 
 class Chatroom extends React.Component {
 
     constructor(props){
+        super(props)        
+        
         let json = {
             name : "France",
             user : {
@@ -12,27 +15,27 @@ class Chatroom extends React.Component {
                 username : "Greencame",
                 name : "Julien",
                 lastname : "Mustière",
-                image : "none"
-            },
-            chat : [
+                image : "https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"
+            }
+        }
+        json.chat = [
                 {
                     message : "coucou c'est moi",
                     date : new Date(),
-                    user : 1221354
+                    user : json.user
                 },
                 {
                     message : "bienvenue en France",
                     date : new Date(),
-                    user : 1221354
+                    user : json.user
                 },
                 {
                     message : "ici c'est pas chère",
                     date : new Date(),
-                    user : 132224
+                    user : json.user
                 }
-            ]
-        }
-        super(props)        
+        ]
+        
 
         this.state = {
             name : json.name,
@@ -40,36 +43,39 @@ class Chatroom extends React.Component {
             chat : json.chat,
 
             //watcher
-            textarea : "test"
+            textarea : ""
         }
 
         this.submitMessage = this.submitMessage.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     submitMessage(e) {
-        if( e.target.value !== "" || e.type === "click" || e.which == 13 ){            
+        e.preventDefault();
+
+        if( this.state.textarea !== "" ){            
             this.setState({
                 chat: this.state.chat.concat([{
-                    user: this.state.user.id,
+                    user: this.state.user,
                     date : new Date(),
-                    message: e.target.value
-                }])
-            }, () => {
-                this.setState({ textearea : ""});
-            });
-        } else {
-            this.setState({ textearea : e.target.value });
-       }
-
+                    message: this.state.textarea
+                }]),             
+                textarea : ""
+            });            
+        }
     }
 
-    scrollToBot() {
+    scrollToBot() { 
         ReactDOM.findDOMNode(this.refs["chat-box"]).scrollTop = ReactDOM.findDOMNode(this.refs["chat-box"]).scrollHeight;
+    }
+
+    handleChange(e) {
+        this.setState({textarea: e.target.value});
     }
     
     render() {
         return (
-            <div className="chat-right-aside">
+            <div className="chat chat-right-aside">
                 <div className="chat-main-header">
                     <div className="p-20 b-b">
                         <h3 className="box-title"> { this.state.name } </h3> 
@@ -78,19 +84,21 @@ class Chatroom extends React.Component {
                 <div className="chat-box" ref="chat-box">
                     <ul className="chat-list slimscroll p-t-30">
                     {
-                        this.state.chat.map((c) =>
-                            <Message message={c} />
+                        this.state.chat.map((c, i) =>
+                            <Message message={c} key={"chat-"+i}/>
                         )
                     }                  
                     </ul>
                 </div>          
                 <div className="row send-chat-box">
-                    <div className="col-sm-12">
-                        <textarea className="form-control" placeholder="Type your message" onKeyUp={ this.submitMessage } value={ this.state.textarea }></textarea>
-                        <div className="custom-send"><a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="Insert Emojis"><i className="ti-face-smile"></i></a> <a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="File Attachment"><i className="fa fa-paperclip"></i></a>
-                            <button className="btn btn-danger btn-rounded" type="button" onClick={this.submitMessage}>Send</button>
+                    <form onSubmit={ (e) => { this.submitMessage } }>
+                        <div className="col-sm-12">
+                            <textarea value={ this.state.textarea } onChange={ this.handleChange } className="form-control" />
+                            <div className="custom-send"><a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="Insert Emojis"><i className="ti-face-smile"></i></a> <a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="File Attachment"><i className="fa fa-paperclip"></i></a>
+                                <button className="btn btn-danger btn-rounded" type="submit">Send</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         );

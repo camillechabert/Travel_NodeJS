@@ -13,13 +13,13 @@ class Message extends React.Component {
     render() {
 
         return (
-            <div ref="chat-message">
+            <div className="chat-message">
                 <div className="chat-image"> 
-                    <img alt="user-picture" src={ this.state.user } /> 
+                    <img alt="user-picture" src={ this.state.user.image } /> 
                 </div>
                 <div className="chat-body">
                     <div className="chat-text">
-                        <h4> { this.state.user } </h4>
+                        <h4> { this.state.user.username } </h4>
                         <p> { this.state.message } </p> 
                         <b> { this.state.date.toLocaleDateString() } </b> 
                     </div>
