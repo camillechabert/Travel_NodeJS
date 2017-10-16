@@ -6,33 +6,44 @@ import Message from "./Message";
 class Chatroom extends React.Component {
 
     constructor(props){
-        super(props)        
+        super(props)   
+        const date = new Date();    
         
+        /**
+         * this.state = {
+         *     name : this.props.name,
+         *     user : this.props.user,
+         * 
+         *     textarea : ""
+         * }
+         */
+        
+        //test
         let json = {
-            name : "France",
-            user : {
-                id : 132224,
-                username : "Greencame",
-                name : "Julien",
-                lastname : "Mustière",
-                image : "https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"
+            "name" : "France",
+            "user" : {
+                "id" : 132224,
+                "username" : "Greencame",
+                "name" : "Julien",
+                "lastname" : "Mustière",
+                "image" : "https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"
             }
         }
-        json.chat = [
+        json["chat"] = [
                 {
-                    message : "coucou c'est moi",
-                    date : new Date(),
-                    user : json.user
+                    "message" : "coucou c'est moi",
+                    "date" : date.toDateString(),
+                    "user" : json.user
                 },
                 {
-                    message : "bienvenue en France",
-                    date : new Date(),
-                    user : json.user
+                    "message" : "bienvenue en France",
+                    "date" : date.toDateString(),
+                    "user" : json.user
                 },
                 {
-                    message : "ici c'est pas chère",
-                    date : new Date(),
-                    user : json.user
+                    "message" : "ici c'est pas chère",
+                    "date" : date.toDateString(),
+                    "user" : json.user
                 }
         ]
         
@@ -48,20 +59,33 @@ class Chatroom extends React.Component {
 
         this.submitMessage = this.submitMessage.bind(this);
         this.handleChange = this.handleChange.bind(this);
+
+        this.ws = new WebSocket('ws://localhost:3080');
+        this.ws.onmessage = function (e) { 
+            this.setState({
+                chat: this.state.chat.concat([JSON.parse(e.data)]),             
+                textarea : ""
+            });
+        }.bind(this);
     }
 
     submitMessage(e) {
         e.preventDefault();
 
-        if( this.state.textarea !== "" ){            
+        if( this.state.textarea !== "" ){ 
+            const date = new Date();
+            const message =  {
+                "user": this.state.user,
+                "date" : date.toDateString(),
+                "message": this.state.textarea
+            }
+
             this.setState({
-                chat: this.state.chat.concat([{
-                    user: this.state.user,
-                    date : new Date(),
-                    message: this.state.textarea
-                }]),             
+                chat: this.state.chat.concat([message]),             
                 textarea : ""
-            });            
+            });
+            
+            this.connection.send( JSON.stringify(message) )         
         }
     }
 
@@ -72,7 +96,7 @@ class Chatroom extends React.Component {
     handleChange(e) {
         this.setState({textarea: e.target.value});
     }
-    
+
     render() {
         return (
             <div className="chat chat-right-aside">
@@ -85,13 +109,15 @@ class Chatroom extends React.Component {
                     <ul className="chat-list slimscroll p-t-30">
                     {
                         this.state.chat.map((c, i) =>
-                            <Message message={c} key={"chat-"+i}/>
+                            <li className={ c.user.id === this.state.user.id ? 'odd' : '' }>  
+                                <Message message={c} key={"chat-"+i}/>
+                            </li>
                         )
                     }                  
                     </ul>
                 </div>          
                 <div className="row send-chat-box">
-                    <form onSubmit={ (e) => { this.submitMessage } }>
+                    <form onSubmit={ this.submitMessage }>
                         <div className="col-sm-12">
                             <textarea value={ this.state.textarea } onChange={ this.handleChange } className="form-control" />
                             <div className="custom-send"><a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="Insert Emojis"><i className="ti-face-smile"></i></a> <a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="File Attachment"><i className="fa fa-paperclip"></i></a>

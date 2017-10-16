@@ -11,6 +11,7 @@ class Message extends React.Component {
 
     
     render() {
+        const date = new Date( this.state.date )
 
         return (
             <div className="chat-message">
@@ -21,7 +22,7 @@ class Message extends React.Component {
                     <div className="chat-text">
                         <h4> { this.state.user.username } </h4>
                         <p> { this.state.message } </p> 
-                        <b> { this.state.date.toLocaleDateString() } </b> 
+                        <b> { date.toLocaleDateString() } </b> 
                     </div>
                 </div>
             </div>
