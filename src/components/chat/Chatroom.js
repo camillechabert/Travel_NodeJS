@@ -85,7 +85,7 @@ class Chatroom extends React.Component {
                 textarea : ""
             });
             
-            this.connection.send( JSON.stringify(message) )         
+            this.ws.send( JSON.stringify(message) )         
         }
     }
 
@@ -99,31 +99,33 @@ class Chatroom extends React.Component {
 
     render() {
         return (
-            <div className="chat chat-right-aside">
-                <div className="chat-main-header">
-                    <div className="p-20 b-b">
-                        <h3 className="box-title"> { this.state.name } </h3> 
+            <div className="row">
+                <div className="white-box">
+                    <h3 className="box-title">{ this.state.name } </h3>
+            
+                    <div className="chat-box" ref="chat-box">
+                        <ul className="chat-list slimscroll p-t-30">
+                        {
+                            this.state.chat.map((c, i) =>
+                                <li className={ c.user.id === this.state.user.id ? 'odd' : '' }>  
+                                    <Message message={c} key={"chat-"+i}/>
+                                </li>
+                            )
+                        }                  
+                        </ul>
                     </div>
-                </div>
-                <div className="chat-box" ref="chat-box">
-                    <ul className="chat-list slimscroll p-t-30">
-                    {
-                        this.state.chat.map((c, i) =>
-                            <li className={ c.user.id === this.state.user.id ? 'odd' : '' }>  
-                                <Message message={c} key={"chat-"+i}/>
-                            </li>
-                        )
-                    }                  
-                    </ul>
-                </div>          
-                <div className="row send-chat-box">
+
                     <form onSubmit={ this.submitMessage }>
-                        <div className="col-sm-12">
-                            <textarea value={ this.state.textarea } onChange={ this.handleChange } className="form-control" />
-                            <div className="custom-send"><a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="Insert Emojis"><i className="ti-face-smile"></i></a> <a href="javacript:void(0)" className="cst-icon" data-toggle="tooltip" title="File Attachment"><i className="fa fa-paperclip"></i></a>
-                                <button className="btn btn-danger btn-rounded" type="submit">Send</button>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <div className="input-group">
+                                    <input type="text" value={ this.state.textarea } onChange={ this.handleChange } className="form-control" placeholder="Say something"/>
+                                    <span className="input-group-btn">
+                                        <button className="btn btn-success" type="submit">Send</button>
+                                    </span> 
+                                </div>
                             </div>
-                        </div>
+                        </div>         
                     </form>
                 </div>
             </div>

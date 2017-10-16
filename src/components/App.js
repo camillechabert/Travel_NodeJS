@@ -6,8 +6,10 @@ export default class App extends React.Component {
   // render
   render() {
     return (
-      <div className="container">
-        {this.props.children}
+      <div id="page-wrapper" className="container">
+        <div className="container-fluid">
+          {this.props.children}
+        </div>
       </div>
     );
   }
