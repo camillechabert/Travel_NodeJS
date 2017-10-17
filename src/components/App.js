@@ -14,7 +14,9 @@ class App extends React.Component {
       <MuiThemeProvider muiTheme={getMuiTheme(lightTheme)}>
         <div id="page-wrapper" className="main-app">
           <Header />
-            {this.props.children}
+            <div className="content-app">
+              {this.props.children}
+            </div>
           <Footer />
         </div>
       </MuiThemeProvider>

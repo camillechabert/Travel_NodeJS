@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import XHRClient from '../helpers/XHRClient';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Index extends Component {
 
@@ -21,10 +22,8 @@ class Index extends Component {
         return (
             <div className="index">
                 <h1>Welcome !!</h1>
-
-                <button className={'call'} onClick={ () => this.getFakeInfos() }>
-                    Load Again
-                </button>
+                
+                <RaisedButton label="Call API Test" primary={true} onClick={ () => this.getFakeInfos() } />
 
                 <p className={'content'} style={{ visibility: this.state.visibility }}>
                     {this.state.response}
