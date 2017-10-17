@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import XHRClient from '../helpers/XHRClient';
 
 class Index extends Component {
+
     constructor() {
         super();
         this.state = { visibility: 'visible', response: null };
@@ -18,7 +19,7 @@ class Index extends Component {
     
     render() {
         return (
-            <div className="index-component">
+            <div className="index">
                 <h1>Welcome !!</h1>
 
                 <button className={'call'} onClick={ () => this.getFakeInfos() }>

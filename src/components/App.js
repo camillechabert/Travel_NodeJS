@@ -3,15 +3,17 @@ import "../stylesheets/main.scss";
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 
-export default class App extends React.Component {
+class App extends React.Component {
 
   render() {
     return (
-      <div id="page-wrapper" className="container">
+      <div id="page-wrapper" className="main-app">
         <Header />
-        {this.props.children}
+          {this.props.children}
         <Footer />
       </div>
     );
   }
 }
+
+export default  App;
