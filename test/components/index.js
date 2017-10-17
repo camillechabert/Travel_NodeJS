@@ -5,6 +5,8 @@ import  Index  from "../../src/components/Index";
 import XHR from '../../src/helpers/XHRClient';
 import FetchMock from 'fetch-mock';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 // unit tests for the Index component
 describe('Index component', () => {
 
@@ -15,8 +17,12 @@ describe('Index component', () => {
     });
 
     it('should render the component Index', () => {
-      const wrapper = render(<Index/>);
-      assert.ok(wrapper.find(".index-component"));
+      const wrapper = render(
+        <MuiThemeProvider >
+          <Index/>
+        </MuiThemeProvider>
+    );
+      assert.ok(wrapper.find(".index"));
     });
 
     it('should return valid data from Api', async () => {
