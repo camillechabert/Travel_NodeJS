@@ -6,7 +6,7 @@ $('.chat-left-inner > .chatonline').slimScroll({
 
 });
  $(function(){
-            $(window).load(function(){ // On load
+            $(window).on('load', function(){ // On on load
                 $('.chat-list').css({'height':(($(window).height())-470)+'px'});
             });
             $(window).resize(function(){ // On resize
@@ -17,7 +17,7 @@ $('.chat-left-inner > .chatonline').slimScroll({
 // this is for the left-aside-fix in content area with scroll
 
 $(function() {
-    $(window).load(function() { // On load
+    $(window).on('load', function() { // On on load
         $('.chat-left-inner').css({
             'height': (($(window).height()) - 240) + 'px'
         });
