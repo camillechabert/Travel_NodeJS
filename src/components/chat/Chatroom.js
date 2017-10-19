@@ -1,9 +1,9 @@
-import React from "react";
+import React, {Component} from "react";
 import "../../stylesheets/main.scss";
 import "../../stylesheets/components/chat.scss";
 import Message from "./Message";
 
-class Chatroom extends React.Component {
+class Chatroom extends Component {
 
     constructor(props){
         super(props)   
@@ -72,7 +72,7 @@ class Chatroom extends React.Component {
     submitMessage(e) {
         e.preventDefault();
 
-        if( this.state.textarea !== "" ){ 
+        if ( this.state.textarea !== "" ) { 
             const date = new Date();
             const message =  {
                 "user": this.state.user,
@@ -107,7 +107,7 @@ class Chatroom extends React.Component {
                         <ul className="chat-list slimscroll p-t-30">
                         {
                             this.state.chat.map((c, i) =>
-                                <li className={ c.user.id === this.state.user.id ? 'odd' : '' }>  
+                                <li key={ c.user.id + i } className={ c.user.id === this.state.user.id ? 'odd' : '' }>  
                                     <Message message={c} key={"chat-"+i}/>
                                 </li>
                             )
