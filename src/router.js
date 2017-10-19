@@ -27,3 +27,5 @@ const router = (
     </Route>
   </Router>
 );
+
+export { router };

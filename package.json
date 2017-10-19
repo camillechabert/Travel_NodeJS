@@ -38,6 +38,7 @@
     "express": "^4.16.2",
     "fetch-api": "0.0.2",
     "fetch-mock": "^5.13.1",
+    "iconv-lite": "^0.4.19",
     "material-ui": "^0.19.4",
     "mysql2": "^1.4.2",
     "node-fetch": "^1.7.3",
