@@ -1,17 +1,12 @@
 import React, {Component} from "react";
 import "../stylesheets/main.scss";
-import Header from './layouts/Header';
-import Footer from './layouts/Footer';
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import lightTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import Header from './layouts/GlobalHeader';
+import Footer from './layouts/GlobalFooter';
 
 class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(lightTheme)}>
         <div id="page-wrapper" className="main-app">
           <Header />
             <div className="content-app">
@@ -19,7 +14,6 @@ class App extends Component {
             </div>
           <Footer />
         </div>
-      </MuiThemeProvider>
     );
   }
 }

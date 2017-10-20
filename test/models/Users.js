@@ -2,7 +2,7 @@ import request from 'supertest'
 import assert from 'assert'
 
 // unit tests for the App component
-describe('Bording routes', () => {
+describe('Boarding routes', () => {
   const serverPath = '../../App/server'
 
     describe('Get requests', () => {
