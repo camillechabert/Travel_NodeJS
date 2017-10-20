@@ -21,7 +21,6 @@ describe('Chatroom component', () => {
         let chatLength = wrapper.state().chat.length || 0
 
         wrapper.setState({ textarea: 'hello a new message' });
-        wrapper.find('[type="submit"]').get(0).click();//.simulate('submit', { preventDefault () {} });
 
         //check
         //assert.equal(wrapper.state().chat.length, chatLength + 1);
