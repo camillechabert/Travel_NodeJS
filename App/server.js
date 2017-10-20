@@ -3,8 +3,8 @@ const app = express();
 const http = require('http');
 const url = require('url');
 const path = require("path");
-const api = require('../routes/api');
-const web = require('../routes/web');
+const api = require('./routes/api');
+const web = require('./routes/web');
 const serverConf = require('../config/server');
 
 const server = http.createServer(app);
