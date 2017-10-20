@@ -6,7 +6,12 @@ const path = require("path");
 const api = require('../routes/api');
 const web = require('../routes/web');
 const serverConf = require('../config/server');
-const WebSocket = require('ws');
+
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+
+//const WebSocket = require('ws');
 
 // Mount routes from router
 app.use('/api', api.v01);
@@ -14,28 +19,20 @@ app.use('/api', api.v01);
 // Mount routes from boarding
 app.use('/boarding', web.boarding);
 
-//websocket 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
- 
-wss.broadcast = function broadcast(data) {
-	wss.clients.forEach(function each(client) {
-	  if (client.readyState === WebSocket.OPEN) {
-		client.send(data);
-	  }
-	});
-  };
-
-wss.on('connection', function connection(ws) {
-	ws.on('message', function incoming(data) {
-		// Broadcast to everyone else.
-		wss.clients.forEach(function each(client) {
-			if (client !== ws && client.readyState === WebSocket.OPEN) {
-				client.send(data);
-			}
-		});
+// this must be get out of there
+io.on('connection', function(client) {
+	io.emit('client_disconnected', /* CLIENT ID WHO MUST BE CONNTECTED TO THE ROOM */);
+	client.on('message', function(data) {
+		io.emit('message', data);
 	});
 });
+
+io.on('disconnect', function(client) {
+	io.emit('client_disconnected', /* CLIENT ID WHO MUST BE DISCONNECTED FROM THE ROOM */);
+});
+
+
+process.env.SOCKET_URL = 'http://localhost:' + serverConf.port;
 
 //start server
 server.listen(serverConf.port, () => {

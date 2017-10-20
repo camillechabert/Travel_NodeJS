@@ -55,6 +55,8 @@
     "redux-saga": "^0.14.3",
     "sequelize": "^4.13.15",
     "sequelize-cli": "^3.0.0",
+    "socket.io": "^2.0.3",
+    "socket.io-react": "^1.2.0",
     "whatwg-fetch": "^2.0.3",
     "ws": "^3.2.0"
   },
