@@ -5,11 +5,11 @@ import Message from "./Message";
 import io from 'socket.io-client';
 
 class Chatroom extends Component {
-    
+
     constructor(props) {
-        super(props)   
-        const date = new Date();    
-        
+        super(props)
+        const date = new Date();
+
         // Dummy items
         let json = {
             "name" : "France",
@@ -38,39 +38,39 @@ class Chatroom extends Component {
                 "user" : json.user
             }
         ]
-        
-        
+
+
         this.state = {
             name : json.name,
             user : json.user,
             chat : json.chat,
-            
+
             //watcher
             textarea : ""
         }
-        
+
         this.socket = io.connect('http://localhost:3080');
         this.socket.on('message', (data) => {
             const incomeData = JSON.parse(data);
             const userMessages = this.state.chat.slice();
-            
+
             userMessages.push(incomeData);
-            
+
             this.setState({
                 chat: userMessages,
                 textarea: ''
             })
         });
-        
+
         this.submitMessage = this.submitMessage.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    
+
     submitMessage(e) {
         e.preventDefault();
-        
+
         let emiter;
-        
+
         if ( this.state.textarea !== '' ) {
             const date = new Date();
             const message =  {
@@ -78,7 +78,7 @@ class Chatroom extends Component {
                 "date" : date.toDateString(),
                 "message": this.state.textarea
             }
-            
+
             try {
                 emiter = this.socket.send( JSON.stringify(message) )
             } catch (e) {
@@ -89,47 +89,47 @@ class Chatroom extends Component {
             }
         }
     }
-    
-    scrollToBot() { 
+
+    scrollToBot() {
         ReactDOM.findDOMNode(this.refs["chat-box"]).scrollTop = ReactDOM.findDOMNode(this.refs["chat-box"]).scrollHeight;
     }
-    
+
     handleChange(e) {
         this.setState({textarea: e.target.value});
     }
-    
+
     render() {
         return (
-            <div className="row">
-                <div className="white-box">
-                    <h3 className="box-title">{ this.state.name } </h3>
-                    
-                    <div className="chat-box" ref="chat-box">
-                        <ul className="chat-list slimscroll p-t-30">
-                        {
-                            this.state.chat.map((c, i) =>
-                            <li key={ c.user.id + i } className={ c.user.id === this.state.user.id ? 'odd' : '' }>  
-                            <Message message={c} key={"chat-"+i}/>
-                            </li>
-                            )
-                        }                  
-                        </ul>
-                    </div>
-                
-                    <form onSubmit={ this.submitMessage }>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <div className="input-group">
-                                <input type="text" value={ this.state.textarea } onChange={ this.handleChange } className="form-control" placeholder="Say something"/>
-                                <span className="input-group-btn">
-                                    <button className="btn btn-success" type="submit">Send</button>
-                                </span> 
-                                </div>
+                    <div className="ui grid" data-html="<div className='header'>1056 Users connected</div>">
+                      <div className="four column row">
+                        <div className="right floated column ui piled segment">
+
+                            <div className="sixteen wide column">
+                                    <h3 className="ui header">{ this.state.name } </h3>
+                                      <div className="">
+                                        {
+                                            this.state.chat.map((c, i) =>
+                                            <div key={ c.user.id + i } className={ c.user.id === this.state.user.id ? 'ui feed ui vertical segment' : '' }>
+                                            <Message message={c} key={"chat-"+i}/>
+                                            </div>
+                                            )
+                                        }
+                                      </div>
                             </div>
-                        </div>         
-                    </form>
-                </div>
-            </div>
+
+                            <div className="sixteen wide column">
+                              <form className="ui message" onSubmit={ this.submitMessage }>
+                                        <div className="ui icon input">
+                                          <input type="texte" value={ this.state.textarea } onChange={ this.handleChange } placeholder="Message"/>
+                                            <i className=" circular Comments icon"></i>
+                                    </div>
+                              </form>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+
         );
     }
 }
