@@ -21,7 +21,7 @@ class Login extends Component {
             <div className='login-form'>
                 <Grid
                 textAlign='center'
-                style={{ height: '85%' }}
+                style={{ height: '50%' }}
                 verticalAlign='middle'
                 >
                     <Grid.Column style={{ maxWidth: 450 }}>
