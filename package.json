@@ -21,7 +21,7 @@
     "serv": "npm run proxy & webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 9000",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
-    "test": "mocha --recursive --compilers js:babel-register --require babel-polyfill -r jsdom-global/register --require ignore-styles",
+    "test": "mocha",
     "test-watch": "npm test -- --watch"
   },
   "babel": {

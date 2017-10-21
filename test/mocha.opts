@@ -1,0 +1,5 @@
+--recursive
+--compilers js:babel-register
+--require babel-polyfill -r jsdom-global/register
+--require ignore-styles
+--require test/mocha.env.js
