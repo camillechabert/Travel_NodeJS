@@ -3,6 +3,8 @@ import "../../stylesheets/main.scss";
 import "../../stylesheets/components/chat.scss";
 import Message from "./Message";
 import io from 'socket.io-client';
+import Chat from "../../helpers/chat";
+import { Dropdown } from 'semantic-ui-react';
 
 class Chatroom extends Component {
 
@@ -41,6 +43,8 @@ class Chatroom extends Component {
 
 
         this.state = {
+            rooms : [],
+            currentRoom : null,
             name : json.name,
             user : json.user,
             chat : json.chat,
@@ -49,8 +53,9 @@ class Chatroom extends Component {
             textarea : ""
         }
 
-        this.socket = io.connect('http://localhost:3080');
-        this.socket.on('message', (data) => {
+        
+        this.chat = new Chat(this, io.connect('http://localhost:3080'));
+        this.chat.onMessage((data) => {
             const incomeData = JSON.parse(data);
             const userMessages = this.state.chat.slice();
 
@@ -60,10 +65,11 @@ class Chatroom extends Component {
                 chat: userMessages,
                 textarea: ''
             })
-        });
+        })
 
         this.submitMessage = this.submitMessage.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeChat = this.handleChangeChat.bind(this);
     }
 
     submitMessage(e) {
@@ -80,7 +86,7 @@ class Chatroom extends Component {
             }
 
             try {
-                emiter = this.socket.send( JSON.stringify(message) )
+                emiter = this.chat.sendMessage( JSON.stringify(message) );        
             } catch (e) {
                 console.error(e);
                 // Change behavior there, must apply render() / then try to emit 'message'
@@ -88,6 +94,10 @@ class Chatroom extends Component {
                 // Depending of the situation, free-up UI.
             }
         }
+    }
+
+    handleChangeChat(e, o) {
+        this.chat.join(o.value);
     }
 
     scrollToBot() {
@@ -105,7 +115,9 @@ class Chatroom extends Component {
                         <div className="right floated column ui piled segment">
 
                             <div className="sixteen wide column">
-                                    <h3 className="ui header">{ this.state.name } </h3>
+                                    <h3 className="ui header">
+                                        <Dropdown selection search onChange={ this.handleChangeChat } options={ this.state.rooms } value={ this.state.currentRoom } />
+                                    </h3>
                                       <div className="">
                                         {
                                             this.state.chat.map((c, i) =>

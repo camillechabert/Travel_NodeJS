@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import "../stylesheets/main.scss";
-import Header from './layouts/GlobalHeader';
-import Footer from './layouts/GlobalFooter';
-import {store} from '../store';
+import Header from "./layouts/GlobalHeader";
+import Footer from "./layouts/GlobalFooter";
+import {store} from "../store";
 
 class App extends Component {
 
@@ -19,4 +19,4 @@ class App extends Component {
   }
 }
 
-export default  App;
+export default App;
