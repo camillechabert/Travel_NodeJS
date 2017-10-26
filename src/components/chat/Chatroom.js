@@ -4,7 +4,7 @@ import "../../stylesheets/components/chat.scss";
 import Message from "./Message";
 import io from 'socket.io-client';
 import Chat from "../../helpers/chat";
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Label } from 'semantic-ui-react';
 
 class Chatroom extends Component {
 
@@ -23,53 +23,46 @@ class Chatroom extends Component {
                 "image" : "https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"
             }
         }
-        json["chat"] = [
-            {
-                "message" : "coucou c'est moi",
-                "date" : date.toDateString(),
-                "user" : json.user
-            },
-            {
-                "message" : "bienvenue en France",
-                "date" : date.toDateString(),
-                "user" : json.user
-            },
-            {
-                "message" : "ici c'est pas chère",
-                "date" : date.toDateString(),
-                "user" : json.user
-            }
-        ]
-
+        // json["chat"] = [
+        //     {
+        //         "message" : "coucou c'est moi",
+        //         "date" : date.toDateString(),
+        //         "user" : json.user
+        //     },
+        //     {
+        //         "message" : "bienvenue en France",
+        //         "date" : date.toDateString(),
+        //         "user" : json.user
+        //     },
+        //     {
+        //         "message" : "ici c'est pas chère",
+        //         "date" : date.toDateString(),
+        //         "user" : json.user
+        //     }
+        // ]
 
         this.state = {
-            rooms : [],
-            currentRoom : null,
-            name : json.name,
             user : json.user,
-            chat : json.chat,
-
-            //watcher
             textarea : ""
         }
-
-        
-        this.chat = new Chat(this, io.connect('http://localhost:3080'));
-        this.chat.onMessage((data) => {
-            const incomeData = JSON.parse(data);
-            const userMessages = this.state.chat.slice();
-
-            userMessages.push(incomeData);
-
-            this.setState({
-                chat: userMessages,
-                textarea: ''
-            })
-        })
 
         this.submitMessage = this.submitMessage.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeChat = this.handleChangeChat.bind(this);
+    }
+
+    componentWillMount(){
+        this.chat = new Chat(this, io.connect('http://localhost:3080'));
+        
+        this.chat.onMessage(() => {
+            this.setState({
+                textarea: ''
+            })
+        })
+
+        this.chat.join('default', this.state.user);      
+        this.chat.on('notifications', () => {}, true);
+        this.chat.on('newUser', () => {}, true);
     }
 
     submitMessage(e) {
@@ -79,14 +72,14 @@ class Chatroom extends Component {
 
         if ( this.state.textarea !== '' ) {
             const date = new Date();
-            const message =  {
+            const data =  {
                 "user": this.state.user,
                 "date" : date.toDateString(),
                 "message": this.state.textarea
             }
 
             try {
-                emiter = this.chat.sendMessage( JSON.stringify(message) );        
+                emiter = this.chat.sendMessage( JSON.stringify(data) );        
             } catch (e) {
                 console.error(e);
                 // Change behavior there, must apply render() / then try to emit 'message'
@@ -97,7 +90,7 @@ class Chatroom extends Component {
     }
 
     handleChangeChat(e, o) {
-        this.chat.join(o.value);
+        this.chat.join(o.value, this.state.user);
     }
 
     scrollToBot() {
@@ -116,17 +109,33 @@ class Chatroom extends Component {
 
                             <div className="sixteen wide column">
                                     <h3 className="ui header">
-                                        <Dropdown selection search onChange={ this.handleChangeChat } options={ this.state.rooms } value={ this.state.currentRoom } />
+                                        <Dropdown selection search onChange={ this.handleChangeChat } options={ this.state.rooms } value={ this.state.room } />
                                     </h3>
-                                      <div className="">
-                                        {
-                                            this.state.chat.map((c, i) =>
-                                            <div key={ c.user.id + i } className={ c.user.id === this.state.user.id ? 'ui feed ui vertical segment' : '' }>
-                                            <Message message={c} key={"chat-"+i}/>
-                                            </div>
+                                    <div className="">
+                                    {
+                                        this.state.history ?
+                                            this.state.history.map((h, i) =>
+                                                (h.type === "message") ?
+                                                    <div key={ h.data.user.id + i } className={ h.data.user.id === this.state.user.id ? 'ui feed ui vertical segment' : '' }>
+                                                        <Message message={h.data} key={"chat-"+i}/>
+                                                    </div>
+                                                :  ((h.type === "notifications") ?
+                                                    <div key={ i }>
+                                                        <Label as='a' >
+                                                            {h.data.message}
+                                                        </Label>
+                                                    </div>
+                                                :
+                                                    <div key={ i }>
+                                                        <Label as='a' image>
+                                                            <img src={h.data.user.image} />
+                                                            {h.data.user.username} joined
+                                                        </Label>
+                                                    </div>)
                                             )
-                                        }
-                                      </div>
+                                        : ''
+                                    }
+                                    </div>
                             </div>
 
                             <div className="sixteen wide column">

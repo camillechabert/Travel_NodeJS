@@ -5,7 +5,7 @@ const url = require('url');
 const path = require("path");
 const api = require('./routes/api');
 const web = require('./routes/web');
-const chatroom = require('./lib/chatroom');
+const chat = require('./lib/chat');
 const serverConf = require('../config/server');
 
 const server = http.createServer(app);
@@ -17,7 +17,7 @@ app.use('/api', api.v01);
 app.use('/boarding', web.boarding);
 
 //chat with socket.io
-chatroom.listen(server);
+chat.listen(server);
 
 process.env.SOCKET_URL = 'http://localhost:' + serverConf.port;
 
