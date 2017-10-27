@@ -24,8 +24,8 @@ exports.listen = function(_server) {
     handleRoomJoining(socket);
     
     //provide all rooms availables
-    socket.on('rooms', function() {
-      socket.emit('rooms', rooms);
+    socket.on('rooms', function(response, fn) {
+      fn( parse(socket, true , "rooms available", { rooms : rooms }) ) ;
     });
     
     handleClientDisconnection(socket, nicknames);
@@ -33,37 +33,41 @@ exports.listen = function(_server) {
 };
 
   function joinRoom(socket, room, user) {
-    console.log('change room');
     socket.join(room); //Make user join room
-    socket.emit('joinRoom', room); //Let user know 
     
-    socket.broadcast.to(room).emit('newUser', {
-      user: user
-    });
+    socket.broadcast.to(room).emit('newUser', parse(socket, true , "new user connected", { user: user }) );
 
     //Show how many users there are in the room
-    var usersInRoomSummary = 'Users connected : ' + (io.sockets.adapter.rooms[room].length - 1);
-
-    socket.emit('notifications', {message: usersInRoomSummary});
+    socket.emit('notifications', parse(socket, true , "number of users", { message : 'Users connected : ' + (io.sockets.adapter.rooms[room].length - 1) } ) );
   }
 
   /*
   Broadcasting message by room
   */
   function handleMessageBroadcasting(socket, nicknames) {
-    socket.on('message', function (data) {
-      messageToSave.push(data);
-      io.sockets.in(data.room).emit('message', JSON.parse(data.message) ); 
+    socket.on('message', function (response, fn) {
+      messageToSave.push(response); console.log(messageToSave)
+
+      fn( parse(socket, true, "message received"));
+
+      io.sockets.in(response.room).emit('message', parse(socket, true , "new message", response.data) ); 
     });
   }
   /*
   allows a user to join an existing room.
   */
   function handleRoomJoining(socket) {
-    socket.on('join', function(data) {
+    socket.on('join', function(response, fn) { 
+      let data = response.data;
+
       if(rooms.filter(function(r) { return r.value === data.name}).length !== -1){
         socket.leave(rooms[socket.id]);
         joinRoom(socket, data.name, data.user);
+
+        fn( parse(socket, true , "room name", { room : data.name }) );//send info
+      } else {
+
+        fn( parse(socket, false , "The room doesn't exist") );//send info
       }
     });
   }
@@ -74,4 +78,19 @@ exports.listen = function(_server) {
     socket.on('disconnect', function() {
       delete nicknames[socket.id];
     }); 
+  }
+
+  /*
+  parse always the same response
+  */
+  function parse(socket, boolean, string_info, object = {}){
+
+    return { 
+      success : boolean, 
+      info : { 
+        id : socket.id, 
+        message : string_info 
+      },
+      data : object 
+    };
   }

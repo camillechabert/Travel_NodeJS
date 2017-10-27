@@ -13,15 +13,12 @@ class Chatroom extends Component {
         const date = new Date();
 
         // Dummy items
-        let json = {
-            "name" : "France",
-            "user" : {
-                "id" : 132224,
-                "username" : "Greencame",
-                "name" : "Julien",
-                "lastname" : "Mustière",
-                "image" : "https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"
-            }
+        let user = {           
+            "id" : 132224,
+            "username" : "Greencame",
+            "name" : "Julien",
+            "lastname" : "Mustière",
+            "image" : "https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"
         }
         // json["chat"] = [
         //     {
@@ -42,7 +39,10 @@ class Chatroom extends Component {
         // ]
 
         this.state = {
-            user : json.user,
+            room : "all",
+            rooms : [],
+            history : [],
+            user : user,
             textarea : ""
         }
 
@@ -52,45 +52,65 @@ class Chatroom extends Component {
     }
 
     componentWillMount(){
-        this.chat = new Chat(this, io.connect('http://localhost:3080'));
-        
-        this.chat.onMessage(() => {
-            this.setState({
-                textarea: ''
-            })
-        })
+        this.chat = new Chat(io.connect('http://localhost:3080'));
 
-        this.chat.join('default', this.state.user);      
-        this.chat.on('notifications', () => {}, true);
-        this.chat.on('newUser', () => {}, true);
+        //get all rooms
+        this.chat.getRooms().then((data) => {
+            this.setState({ rooms : data.rooms })
+        });
+        //room by default
+        this.chat.join('default', this.state.user).then((data) => {
+            this.setState({ room : data.room })
+        });
+        //when we receive a message
+        this.chat.onMessage((data) => {
+            let history = this.state.history.slice(0);
+            history.push({ type : "message", data : data });
+            
+            this.setState({
+                textarea: '',
+                history : history
+            })
+        });//can catch error
+        //when we receive a notification
+        this.chat.on('notifications', (data) => {
+            let history = this.state.history.slice(0);
+            history.push({ type : "notifications", data : data });
+
+            this.setState({ history : history })
+        });//can catch error
+        //when we receive a newUser
+        this.chat.on('newUser', (data) => {
+            let history = this.state.history.slice(0);
+            history.push({ type : "newUser", data : data });
+
+            this.setState({ history : history })
+        });//can catch error
     }
 
     submitMessage(e) {
         e.preventDefault();
 
-        let emiter;
-
         if ( this.state.textarea !== '' ) {
             const date = new Date();
-            const data =  {
+            const data = {
                 "user": this.state.user,
                 "date" : date.toDateString(),
                 "message": this.state.textarea
             }
 
-            try {
-                emiter = this.chat.sendMessage( JSON.stringify(data) );        
-            } catch (e) {
-                console.error(e);
-                // Change behavior there, must apply render() / then try to emit 'message'
-            } finally {
-                // Depending of the situation, free-up UI.
-            }
+            this.chat.sendMessage(data).then((data) => {
+                //console.log(data);
+            }).catch((error) => {
+                //console.log(error);
+            })
         }
     }
 
     handleChangeChat(e, o) {
-        this.chat.join(o.value, this.state.user);
+        this.chat.join(o.value, this.state.user).then((data) => {
+            this.setState({ room : data.room, history : [] });
+        });
     }
 
     scrollToBot() {
