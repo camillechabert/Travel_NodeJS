@@ -14,10 +14,10 @@ class Chat {
 
     join(name, user = {}) {
         if(name === "default")
-            name = localStorage.getItem('chatname') || 'all';
+            name = self.localStorage.getItem('chatname') || 'all';
 
         return this.emit('join', {  name: name, user : user }).then(function(data) {
-            localStorage.setItem('chatname', data.room);//register in localstorage
+            self.localStorage.setItem('chatname', data.room);//register in localstorage
             this.room = data.room;
 
             return data;
