@@ -4,24 +4,25 @@ const http = require('http');
 const url = require('url');
 const path = require("path");
 const api = require('./routes/api');
-const web = require('./routes/web');
+const auth = require('./routes/authentication');
 const chat = require('./lib/chat');
 const serverConf = require('../config/server');
+const bodyParser = require('body-parser');
+const authStrategy = require('./lib/AuthStrategy');
 
 const server = http.createServer(app);
 
-// Mount routes from router
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(authStrategy.initialize());
+
 app.use('/api', api.v01);
+app.use('/auth', auth.routes);
 
-// Mount routes from boarding
-app.use('/boarding', web.boarding);
-
-//chat with socket.io
 chat.listen(server);
 
 process.env.SOCKET_URL = 'http://localhost:' + serverConf.port;
 
-//start server
 server.listen(serverConf.port, () => {
 	console.log('App is Running on', serverConf.port);
 });

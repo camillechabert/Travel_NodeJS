@@ -69,3 +69,4 @@ yarn.lock
 
 # database
 storage
+config/database.json

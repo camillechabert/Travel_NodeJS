@@ -19,7 +19,7 @@ describe('Boarding routes', () => {
       });
 
       it('should return John seed user from seed', async () => {
-        const User = await require('../../models/index').User;
+        const User = await require('../../database/models/index').User;
 
         const jhon = await User.findOne({
             where: {
