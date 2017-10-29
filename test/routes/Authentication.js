@@ -21,7 +21,7 @@ describe('Authentication routes', () => {
       request(server)
         .post('/auth/token')
         .set('Accept', 'application/json')
-        .send({ id: 1, password: '123456789' })
+        .send({ login: 'Juh33', password: '123456789' })
         .expect('content-type', 'application/json; charset=utf-8')
         .expect(200, done);
     });

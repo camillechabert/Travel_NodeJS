@@ -16,8 +16,13 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(authStrategy.initialize());
 
+app.all('*', function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	next();
+});
 app.use('/api', api.v01);
 app.use('/auth', auth.routes);
+
 
 chat.listen(server);
 

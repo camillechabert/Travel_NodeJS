@@ -13,8 +13,8 @@ const routes = express.Router();
 
 routes.post('/token', (req, res) => {
     const jhon = User.findOne({
-        attributes: ['id', 'firstName', 'lasName', 'email'],
-        where: { id: req.body.id, password: req.body.password }
+        attributes: ['id', 'firstName', 'lastName', 'email'],
+        where: { login: req.body.login, password: req.body.password }
     }).then((response) => {
         if (!response)
             res.statusCode = 404;

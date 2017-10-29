@@ -5,8 +5,9 @@ module.exports = {
       // Return a promise to correctly handle asynchronicity.
 
       return queryInterface.bulkInsert('Users', [{
+        login: 'Juh33',
         firstName: 'John',
-        lasName: 'Doe',
+        lastName: 'Doe',
         email: 'jone.doe@localhost.com',
         password: '123456789',
         apiToken: 'demo',

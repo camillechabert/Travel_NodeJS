@@ -3,9 +3,10 @@
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     firstName: DataTypes.STRING,
-    lasName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     password: DataTypes.STRING,
     apiToken: DataTypes.STRING,
+    login: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
       validate: {
