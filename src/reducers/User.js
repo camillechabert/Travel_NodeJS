@@ -2,10 +2,12 @@ export default function user(state = dummyUser, action) {
     switch(action.type) {
         case 'FETCH_USER':
             const newObj = Object.assign(new Object(), state);
-
+            
+            newObj.id = action.id;
             newObj.firstName = action.name;
             newObj.lastName = action.last;
-            newObj.apiToken = action.apiToken;
+            newObj.token = action.token;
+            newObj.email = action.email;
 
             return newObj;
         default:
@@ -14,9 +16,9 @@ export default function user(state = dummyUser, action) {
 }
 
 const dummyUser = {
+    id: null,
     firstName: null,
-    lasName: null,
-    password: null,
-    apiToken: null,
+    lastName: null,
+    token: null,
     email: null
 }
