@@ -1,12 +1,15 @@
 import React, { Component } from "react";
+import { Button, Grid, Image } from 'semantic-ui-react';
 
 class NotFound extends Component {
 
   render() {
     return (
-      <div className="page-not-found">
-        <h4>404 Page not found</h4>
-      </div>
+      <Grid container columns={1}>
+        <Grid.Column>
+          <Image src="https://img00.deviantart.net/0b3b/i/2014/085/5/c/404_desktop_not_found_by_d3n1el-d48jd4g.png" />
+        </Grid.Column>
+      </Grid>
     );
   }
 }
