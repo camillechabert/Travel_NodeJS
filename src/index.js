@@ -9,7 +9,7 @@ import 'semantic-ui-css/semantic.min.css';
 // render the main component
 ReactDOM.render(
   <Provider store={store}>
-    {router}
+    {router()}
   </Provider>,
   document.getElementById('app')
 );

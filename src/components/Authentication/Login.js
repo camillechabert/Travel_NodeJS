@@ -15,12 +15,16 @@ class Login extends Component {
         store.dispatch({
             type: 'FETCH_USER',
             id: user.id,
-            name: user.firstName,
-            last: user.lastName,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             token: token
         });
-        console.log(store.getState());
+        self.sessionStorage.setItem('token', token);
+        for (let key in user)
+            self.sessionStorage.setItem(key, user[key]);
+
+        this.props.userUpdate(true);
     }
 
     handleChange(e, { name, value }) {
@@ -28,6 +32,7 @@ class Login extends Component {
     }
 
     loginError(token) {
+        store.dispatch({ type: 'DROP_USER' });
         console.error('[', token.code, token.error, ']', 'there was a loggin error', 'Actually not handled', '#TODO');
     }
 

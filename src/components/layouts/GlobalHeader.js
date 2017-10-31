@@ -7,7 +7,7 @@ class GlobalHeader extends Component {
   render() {
     return (
       <Header className="header">
-        <GlobalMenu />         
+        <GlobalMenu userSession={this.props.userSession} dataPropagation={this.props.dataPropagation}/>         
       </Header>
     );
   }

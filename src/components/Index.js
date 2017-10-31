@@ -10,11 +10,7 @@ class Index extends Component {
 
     render() {
         return (
-            <Grid container columns={1}>
-                <Grid.Column>
-                    <Image src="https://images2.alphacoders.com/485/thumb-1920-485508.jpg" />
-                </Grid.Column>
-            </Grid>
+            <Image src="https://images2.alphacoders.com/485/thumb-1920-485508.jpg" />
         );
     }
 }
