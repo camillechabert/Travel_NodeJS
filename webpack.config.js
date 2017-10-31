@@ -19,11 +19,12 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
+    noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
     loaders: [
       {
         test: /\.(js|jsx)$/,
         loaders: ['react-hot', 'babel'],
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!mapbox-gl\/js)/
       },
       {
         // https://github.com/jtangelder/sass-loader

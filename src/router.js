@@ -7,6 +7,7 @@ import App from "./components/App";
 import Chatroom from "./components/chat/Chatroom";
 import NotFound from "./components/NotFound";
 import Index from './components/Index';
+import MapIndex from './components/Map/MapIndex';
 
 import Login from './components/Authentication/Login';
 import Register from './components/Authentication/Register';
@@ -27,6 +28,7 @@ const AppPage = Dispatcher(['user'], false);
  */
 const UserEditPage = Dispatcher(['user'], true);
 const ChatRoomPage = Dispatcher(['user'], true);
+const MapPage = Dispatcher(['user'], true);
 
 /**
  * Main path using single responsibility pattern
@@ -44,6 +46,8 @@ const router = () => {
         <Route path="edit" component={UserEditPage(Edition)} />
 
         <Route path="chat" component={ChatRoomPage(Chatroom)} />
+
+        <Route path="map" component={MapPage(MapIndex, {raw: true})} />
 
         <Route path="*" component={NotFoundPage(NotFound)} />
       </Route>

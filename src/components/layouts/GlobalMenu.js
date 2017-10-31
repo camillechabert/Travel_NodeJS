@@ -23,7 +23,7 @@ class GlobalMenu extends Component {
                     vertical
                 >
                     <Container>
-                        <Menu inverted pointing secondary size='large'>
+                        <Menu inverted pointing stackable size='small'>
                             <Menu.Item as={Link} to='/' active>Home</Menu.Item>
                             <Menu.Item as={Link} to='/faq'>Faq</Menu.Item>
                             <Menu.Item as='a'>Company</Menu.Item>
@@ -32,7 +32,8 @@ class GlobalMenu extends Component {
                                 {
                                     this.props.userSession ? (
                                         <div>
-                                            <Button as={Link} to='/edit' inverted> Settings </Button>
+                                            <Button as={Link} to='/map' color='orange' inverted><Icon name="map"/> Map </Button>
+                                            <Button as={Link} to='/edit' inverted><Icon name="setting"/> Settings </Button>
                                             <Button as={Link} to='/' onClick={() => { this.logOut(); }} style={{ marginLeft: '0.5em' }} inverted> <Icon name="log out" /> Log Out </Button>
                                         </div>
                                     ) : (

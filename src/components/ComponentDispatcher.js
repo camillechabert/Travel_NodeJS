@@ -36,6 +36,12 @@ const Dispatcher = (roles, userRequired) =>
                     );
                 }
 
+                if (options.raw) {
+                    return (
+                        <DynamicComponent userSession={this.state.isConnected} userUpdate={this.userUpdate.bind(this)} />
+                    )
+                }
+
                 return (
                     <Grid container columns={1}>
                         <Grid.Column>
