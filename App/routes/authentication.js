@@ -30,13 +30,12 @@ routes.post('/token', (req, res) => {
 
 routes.route('/user')
     .post(passport.auth(), (req, res) => {
-        if (req.user.error === undefined)
-            res.json(req.user);
+        if (req.user.error) {
+            res.statusCode = req.user.statusCode;
+            req.user = req.user.error;
+        }
 
-        res.statusCode = req.user.statusCode;
-        res.json({
-            error: req.user.error
-        });
+        res.json(req.user);
     });
 
 routes.route('/*')

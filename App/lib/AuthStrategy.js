@@ -7,7 +7,7 @@ const User = require('../../database/models/index').User;
 const UserCredential = require('./UserCredential');
 const opts = {};
 
-opts.jwtFromRequest = ExtractJwt.fromUrlQueryParameter(config.queryTokenName);
+opts.jwtFromRequest = ExtractJwt.fromBodyField(config.queryTokenName);
 opts.secretOrKey = config.jwtSecret;
 opts.algorithms = ["HS256"];
 
@@ -20,7 +20,7 @@ passport.use(new jwtStrategy(opts, (payload, done) => {
         return done(null, credential);
 
     User.findOne({
-        attributes: ['id', 'firstName', 'lasName', 'email'],
+        attributes: ['id', 'firstName', 'lastName', 'email'],
         where: { id: credential.id }
     }).then(function (response) {
         if (!response)
