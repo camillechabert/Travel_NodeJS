@@ -45,8 +45,6 @@ class Chat {
     }
 
     onMessage(callback, error = function(){}){
-        if(name === "default")
-            name = self.localStorage.getItem('chatname') || 'all';
 
         this.on('message', callback, error);
     }

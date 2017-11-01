@@ -19,16 +19,16 @@ exports.listen = function(_server) {
     io.emit('client_disconnected', /* CLIENT ID WHO MUST BE DISCONNECTED FROM THE ROOM */);    
 
     //Broadcasting message by room
-    handleMessageBroadcasting(socket, nicknames);
+    _handleMessageBroadcasting(socket, nicknames);
     //Change room
-    handleRoomJoining(socket);
+    _handleRoomJoining(socket);
     
     //provide all rooms availables
     socket.on('rooms', function(response, fn) {
       fn( parse(socket, true , "rooms available", { rooms : rooms }) ) ;
     });
     
-    handleClientDisconnection(socket, nicknames);
+    _handleClientDisconnection(socket, nicknames);
   });
 };
 
@@ -44,7 +44,7 @@ exports.listen = function(_server) {
   /*
   Broadcasting message by room
   */
-  function handleMessageBroadcasting(socket, nicknames) {
+  function _handleMessageBroadcasting(socket, nicknames) {
     socket.on('message', function (response, fn) {
       messageToSave.push(response); console.log(messageToSave)
 
@@ -56,7 +56,7 @@ exports.listen = function(_server) {
   /*
   allows a user to join an existing room.
   */
-  function handleRoomJoining(socket) {
+  function _handleRoomJoining(socket) {
     socket.on('join', function(response, fn) { 
       let data = response.data;
 
@@ -74,7 +74,7 @@ exports.listen = function(_server) {
   /*
   remove a user's nickname when the user leaves the chat application.
   */
-  function handleClientDisconnection(socket, nicknames) {
+  function _handleClientDisconnection(socket, nicknames) {
     socket.on('disconnect', function() {
       delete nicknames[socket.id];
     }); 
