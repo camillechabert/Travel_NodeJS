@@ -75,9 +75,9 @@ class Chatroom extends Component {
             })
         });//can catch error
         //when we receive a notification
-        this.chat.on('notifications', (data) => {
+        this.chat.on('notification', (data) => {
             let history = this.state.history.slice(0);
-            history.push({ type : "notifications", data : data });
+            history.push({ type : "notification", data : data });
 
             this.setState({ history : history })
         });//can catch error
@@ -150,7 +150,7 @@ class Chatroom extends Component {
                                             this.state.history.map((h, i) =>
                                                 (h.type === "message") ?
                                                     <Message key={ i } isOwner={ h.data.user.id === this.state.user.id } message={h.data} key={"chat-"+i}/>
-                                                :  (h.type === "notifications") ?
+                                                :  (h.type === "notification") ?
                                                     <Notification key={ i } image={ h.data.image } message={ h.data.message }/>                                                   
                                                 :
                                                     ''
