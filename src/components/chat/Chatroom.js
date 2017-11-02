@@ -2,9 +2,10 @@ import React, {Component} from "react";
 import "../../stylesheets/main.scss";
 import "../../stylesheets/components/chat.scss";
 import Message from "./Message";
+import Notification from "./Notification";
 import io from 'socket.io-client';
 import Chat from "../../helpers/chat";
-import { Dropdown, Label } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
 
 class Chatroom extends Component {
 
@@ -42,6 +43,7 @@ class Chatroom extends Component {
             room : "all",
             rooms : [],
             history : [],
+            connected : false,
             user : user,
             textarea : ""
         }
@@ -79,13 +81,24 @@ class Chatroom extends Component {
 
             this.setState({ history : history })
         });//can catch error
-        //when we receive a newUser
-        this.chat.on('newUser', (data) => {
-            let history = this.state.history.slice(0);
-            history.push({ type : "newUser", data : data });
 
-            this.setState({ history : history })
-        });//can catch error
+        /**
+         * Manage connection WITHOUT surcharging
+         */
+        //on connection 
+        this.chat.socket.on('connect', (data) => {
+            this.setState({ connected : true })
+        });
+        this.chat.socket.on('reconnect', (data) => {
+            this.setState({ connected : true })
+        });
+        //on disconnection
+        this.chat.socket.on('error', (data) => {
+            this.setState({ connected : false })
+        });
+        this.chat.socket.on('reconnect_error', (data) => {
+            this.setState({ connected : false })
+        });
     }
 
     submitMessage(e) {
@@ -123,7 +136,7 @@ class Chatroom extends Component {
 
     render() {
         return (
-                    <div className="ui grid" data-html="<div className='header'>1056 Users connected</div>">
+                    <div className="ui grid">
                       <div className="four column row">
                         <div className="right floated column ui piled segment">
 
@@ -131,27 +144,16 @@ class Chatroom extends Component {
                                     <h3 className="ui header">
                                         <Dropdown selection search onChange={ this.handleChangeChat } options={ this.state.rooms } value={ this.state.room } />
                                     </h3>
-                                    <div className="">
+                                    <div>
                                     {
                                         this.state.history ?
                                             this.state.history.map((h, i) =>
                                                 (h.type === "message") ?
-                                                    <div key={ h.data.user.id + i } className={ h.data.user.id === this.state.user.id ? 'ui feed ui vertical segment' : '' }>
-                                                        <Message message={h.data} key={"chat-"+i}/>
-                                                    </div>
-                                                :  ((h.type === "notifications") ?
-                                                    <div key={ i }>
-                                                        <Label as='a' >
-                                                            {h.data.message}
-                                                        </Label>
-                                                    </div>
+                                                    <Message key={ i } isOwner={ h.data.user.id === this.state.user.id } message={h.data} key={"chat-"+i}/>
+                                                :  (h.type === "notifications") ?
+                                                    <Notification key={ i } image={ h.data.image } message={ h.data.message }/>                                                   
                                                 :
-                                                    <div key={ i }>
-                                                        <Label as='a' image>
-                                                            <img src={h.data.user.image} />
-                                                            {h.data.user.username} joined
-                                                        </Label>
-                                                    </div>)
+                                                    ''
                                             )
                                         : ''
                                     }
@@ -160,9 +162,17 @@ class Chatroom extends Component {
 
                             <div className="sixteen wide column">
                               <form className="ui message" onSubmit={ this.submitMessage }>
-                                        <div className="ui icon input">
-                                          <input type="texte" value={ this.state.textarea } onChange={ this.handleChange } placeholder="Message"/>
-                                            <i className=" circular Comments icon"></i>
+                                    <div className="ui icon input">
+                                        <div className="field">
+                                            <input type="texte" disabled={ !this.state.connected } value={ this.state.textarea } onChange={ this.handleChange } placeholder="Message"/>
+                                            {
+                                                this.state.connected ? '' :
+                                                <div className="ui pointing label">
+                                                    You aren't connected to internet
+                                                </div>
+                                            }
+                                        </div>
+                                        <i className=" circular Comments icon"></i>                                       
                                     </div>
                               </form>
                             </div>

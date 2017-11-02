@@ -35,8 +35,8 @@ exports.listen = function(_server) {
   function joinRoom(socket, room, user) {
     socket.join(room); //Make user join room
     
-    socket.broadcast.to(room).emit('newUser', parse(socket, true , "new user connected", { user: user }) );
-
+    socket.broadcast.to(room).emit('notifications', parse(socket, true , "number of users", { image : user.image, message : user.username + ' joined ' } ) );
+    
     //Show how many users there are in the room
     socket.emit('notifications', parse(socket, true , "number of users", { message : 'Users connected : ' + (io.sockets.adapter.rooms[room].length - 1) } ) );
   }
@@ -46,7 +46,7 @@ exports.listen = function(_server) {
   */
   function _handleMessageBroadcasting(socket, nicknames) {
     socket.on('message', function (response, fn) {
-      messageToSave.push(response); console.log(messageToSave)
+      messageToSave.push(response);
 
       fn( parse(socket, true, "message received"));
 

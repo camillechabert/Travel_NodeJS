@@ -14,7 +14,7 @@ class Message extends React.Component {
         const date = new Date( this.state.date )
 
         return (
-            <div className="event">
+            <div className={ this.props.isOwner ? 'ui feed ui vertical segment' : '' }>
                 <div className="label">
                     <img alt="user-picture" className="ui avatar image" src={ this.state.user.image } />
                 </div>
