@@ -9,11 +9,7 @@ services:
   - mysql
 
 notifications:
-  email:
-    - julien.boyer@ynov.com
-    - francois.poisblaud@gmail.com
-    - chabertcamille@live.com
-    - julien.mustiere@ntymail.com
+  slack: ynov-estei:nTlYzaNbdjJua7nvXoPR3k3q
 
 cache:
   directories:
