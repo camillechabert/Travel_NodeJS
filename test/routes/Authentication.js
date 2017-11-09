@@ -1,11 +1,11 @@
-import request from 'supertest'
+import request from 'supertest';
 
 // unit tests for the App component
 describe('Authentication routes', () => {
-  const serverPath = '../../App/server'
+  const serverPath = '../../App/server';
 
   describe('Requests', () => {
-    var server = null;
+    let server = null;
 
     beforeEach(() => {
       // free up memory from previous cached server

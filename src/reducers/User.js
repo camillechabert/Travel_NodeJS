@@ -1,29 +1,29 @@
 function User(state = DummyUser, action) {
-    switch (action.type) {
-        case 'FETCH_USER':
-            const newObj = Object.assign(new Object(), state);
+  switch (action.type) {
+  case 'FETCH_USER':
+    const newObj = Object.assign(new Object(), state);
 
-            newObj.id = action.id;
-            newObj.firstName = action.firstName;
-            newObj.lastName = action.lastName;
-            newObj.token = action.token;
-            newObj.email = action.email;
+    newObj.id = action.id;
+    newObj.firstName = action.firstName;
+    newObj.lastName = action.lastName;
+    newObj.token = action.token;
+    newObj.email = action.email;
 
-            return newObj;
-        case 'DROP_USER':
-            self.sessionStorage.clear();
-            return {};
-        default:
-            return state;
-    }
+    return newObj;
+  case 'DROP_USER':
+    self.sessionStorage.clear();
+    return {};
+  default:
+    return state;
+  }
 }
 
 const DummyUser = {
-    id: null,
-    firstName: null,
-    lastName: null,
-    token: null,
-    email: null,
-}
+  id: null,
+  firstName: null,
+  lastName: null,
+  token: null,
+  email: null
+};
 
 export { User, DummyUser };

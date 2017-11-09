@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Button, Form, Container, Header, Segment, Label, Image, Card, Grid, Icon } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Button, Form, Container, Header, Segment, Label, Image, Card, Grid, Icon } from 'semantic-ui-react';
 
 const extra = (
-    <a>
-      <Icon name='mail' />
+  <a>
+    <Icon name='mail' />
       John.doe@gmail.com
-    </a>
-  )
+  </a>
+);
 
 class Edition extends Component {
     
@@ -87,5 +87,5 @@ class Edition extends Component {
         );
     }
 }
-    
+
 export default Edition;

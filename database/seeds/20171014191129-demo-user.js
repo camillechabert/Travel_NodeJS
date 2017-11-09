@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-      // Return a promise to correctly handle asynchronicity.
+    // Return a promise to correctly handle asynchronicity.
 
       return queryInterface.bulkInsert('Users', [{
         login: 'JohnLog',
@@ -17,9 +17,9 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-      // reverting commands here.
-      // Return a promise to correctly handle asynchronicity.
+    // reverting commands here.
+    // Return a promise to correctly handle asynchronicity.
 
-      return queryInterface.bulkDelete('Users', null, {});
+    return queryInterface.bulkDelete('Users', null, {});
   }
 };

@@ -1,22 +1,19 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  let User = sequelize.define('User', {
+  let Message = sequelize.define('Message', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     password: DataTypes.STRING,
     apiToken: DataTypes.STRING,
-    login: {
-      type: DataTypes.STRING,
-      max: 20,
-      allowNull: false,
-    },
+    login: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
       validate: {
-        isEmail: true,
+        email: true,
         max: 30,
         notEmpty: true,
+        notNull: true
       }
     }
   }, {
@@ -26,5 +23,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-  return User;
+  return Message;
 };

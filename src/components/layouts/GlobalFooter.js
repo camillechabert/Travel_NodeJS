@@ -1,9 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 class GlobalFooter extends Component {
-
   render() {
     return (
-      <div></div>
+      <div />
     );
   }
 }

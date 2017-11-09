@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactMapboxGl, { Layer, Feature, Marker, Popup, Cluster } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Marker, Popup } from 'react-mapbox-gl';
 import { Icon } from 'semantic-ui-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import 'mapbox-gl/dist/svg/mapboxgl-ctrl-compass.svg';

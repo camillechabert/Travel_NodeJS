@@ -1,11 +1,11 @@
-import React from "react";
-import { Router, Route, IndexRoute } from "react-router";
-import { history } from "./store.js";
+import React from 'react';
+import { Router, Route, IndexRoute } from 'react-router';
+import { history } from './store.js';
 import { DummyUser } from './reducers/User';
 import { store } from './store';
-import App from "./components/App";
-import Chatroom from "./components/chat/Chatroom";
-import NotFound from "./components/NotFound";
+import App from './components/App';
+import Chatroom from './components/chat/Chatroom';
+import NotFound from './components/NotFound';
 import Index from './components/Index';
 import MapIndex from './components/Map/MapIndex';
 
@@ -53,19 +53,20 @@ const router = () => {
       </Route>
     </Router>
   );
-}
+};
 
 const sessionUser = () => {
   let user = { type: 'FETCH_USER' };
   const userStorage = Object.assign({}, self.sessionStorage);
 
   for (let key in DummyUser) {
-    if (!userStorage[key])
+    if (!userStorage[key]) {
       return;
+    }
     user[key] = userStorage[key];
   }
 
   store.dispatch(user);
-}
+};
 
 export { router };

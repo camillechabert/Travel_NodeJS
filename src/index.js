@@ -1,9 +1,9 @@
-import "babel-polyfill";
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { store } from "./store.js";
-import { router } from "./router.js";
+import 'babel-polyfill';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './store.js';
+import { router } from './router.js';
 import 'semantic-ui-css/semantic.min.css';
 
 process.env.MapboxKey = 'pk.eyJ1IjoianVoMzMiLCJhIjoiY2o5ZnZnMnpyMDQ1ajJxcnFoeXZuZWp6eCJ9.ECUpg6xQI-XcMTjfiZcvyw';

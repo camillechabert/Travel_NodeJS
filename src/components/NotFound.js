@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Button, Grid, Image } from 'semantic-ui-react';
 
 class NotFound extends Component {
-
   render() {
     return (
       <Grid container columns={1}>

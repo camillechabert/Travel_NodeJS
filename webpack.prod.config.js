@@ -1,6 +1,6 @@
-var webpack = require("webpack");
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-module.exports = require('./webpack.config.js');    // inherit from the main config file
+let webpack = require('webpack');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+module.exports = require('./webpack.config.js'); // inherit from the main config file
 
 // disable the hot reload
 module.exports.entry = [
@@ -12,7 +12,7 @@ module.exports.entry = [
 module.exports.plugins.push(
   new webpack.DefinePlugin({
     'process.env': {
-      NODE_ENV: JSON.stringify('production'),
+      NODE_ENV: JSON.stringify('production')
     }
   })
 );
@@ -30,7 +30,7 @@ module.exports.plugins.push(
 // export css to a separate file
 module.exports.module.loaders[1] = {
   test: /\.scss$/,
-  loader: ExtractTextPlugin.extract('css!sass'),
+  loader: ExtractTextPlugin.extract('css!sass')
 };
 
 module.exports.plugins.push(
