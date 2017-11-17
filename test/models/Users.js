@@ -18,8 +18,9 @@ describe('Boarding routes', () => {
         server.close(done);
       });
 
-      it('should return John seed user from seed', async () => {
-        const User = await require('../../database/models/index').User;
+      it('should return John seed user from database', async () => {
+        const Db = await require('../../database/models/index');
+        const User = Db.User;
 
         const jhon = await User.findOne({
             where: {
@@ -27,6 +28,7 @@ describe('Boarding routes', () => {
             }
         });
 
+        assert.ok(jhon);
         assert.equal(jhon.firstName, 'John');
       });
     });
