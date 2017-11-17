@@ -6,14 +6,17 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     password: DataTypes.STRING,
     apiToken: DataTypes.STRING,
-    login: DataTypes.STRING,
+    login: {
+      type: DataTypes.STRING,
+      max: 20,
+      allowNull: false,
+    },
     email: {
       type: DataTypes.STRING,
       validate: {
-        email: true,
+        isEmail: true,
         max: 30,
         notEmpty: true,
-        notNull: true
       }
     }
   }, {
