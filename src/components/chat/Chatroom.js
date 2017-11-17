@@ -6,6 +6,7 @@ import Notification from './Notification';
 import io from 'socket.io-client';
 import Chat from '../../helpers/chat';
 import { Dropdown } from 'semantic-ui-react';
+const { object } = React.PropTypes;
 
 class Chatroom extends Component {
   constructor(props) {
@@ -85,17 +86,17 @@ class Chatroom extends Component {
          * Manage connection WITHOUT surcharging
          */
     // on connection
-    this.chat.socket.on('connect', (data) => {
+    this.chat.socket.on('connect', () => {
       this.setState({ connected: true });
     });
-    this.chat.socket.on('reconnect', (data) => {
+    this.chat.socket.on('reconnect', () => {
       this.setState({ connected: true });
     });
     // on disconnection
-    this.chat.socket.on('error', (data) => {
+    this.chat.socket.on('error', () => {
       this.setState({ connected: false });
     });
-    this.chat.socket.on('reconnect_error', (data) => {
+    this.chat.socket.on('reconnect_error', () => {
       this.setState({ connected: false });
     });
   }
@@ -105,13 +106,13 @@ class Chatroom extends Component {
 
     if (this.state.textarea !== '') {
       const date = new Date();
-      const data = {
+      const dataToSend = {
         user: this.state.user,
         date: date.toDateString(),
         message: this.state.textarea
       };
 
-      this.chat.sendMessage(data).then((data) => {
+      this.chat.sendMessage(dataToSend).then(() => {
         // console.log(data);
       }).catch((error) => {
         // console.log(error);
@@ -126,7 +127,7 @@ class Chatroom extends Component {
   }
 
   scrollToBot() {
-    ReactDOM.findDOMNode(this.refs['chat-box']).scrollTop = ReactDOM.findDOMNode(this.refs['chat-box']).scrollHeight;
+    // ReactDOM.findDOMNode(this.refs['chat-box']).scrollTop = ReactDOM.findDOMNode(this.refs['chat-box']).scrollHeight;
   }
 
   handleChange(e) {
@@ -183,5 +184,9 @@ class Chatroom extends Component {
     );
   }
 }
+
+Chatroom.PropTypes = {
+  user: object
+};
 
 export default Chatroom;

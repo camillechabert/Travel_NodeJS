@@ -3,10 +3,6 @@ import { Button, Header, Image, Icon } from 'semantic-ui-react';
 import { browserHistory, Link } from 'react-router';
 
 class UserNotConnected extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Header as='h2' icon textAlign='center'>

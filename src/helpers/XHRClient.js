@@ -5,7 +5,9 @@ class Client {
     let query = '';
 
     for (let key in params) {
-      query = query + (key + '=' + params[key] + '&');
+      if (params[key]) {
+        query = query + (key + '=' + params[key] + '&');
+      }
     }
 
     if (query.length > 0) {
@@ -16,9 +18,9 @@ class Client {
   }
 
   get(url, options = {}) {
-    url = url + this._formatQuery('GET', options.query);
+    let fullUrl = url + this._formatQuery('GET', options.query);
 
-    return fetch(url, {
+    return fetch(fullUrl, {
       method: 'GET',
       headers: {
         Accept: options.accept || 'text/plain, application/json',

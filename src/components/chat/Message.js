@@ -1,5 +1,7 @@
 import React from 'react';
 import '../../stylesheets/main.scss';
+import moment from 'moment';
+const { bool, object } = React.PropTypes;
 
 class Message extends React.Component {
   constructor(props) {
@@ -10,7 +12,7 @@ class Message extends React.Component {
 
 
   render() {
-    const date = new Date(this.state.date);
+    const date = moment(new Date(this.state.date)).fromNow();
 
     return (
       <div className={ this.props.isOwner ? 'ui feed ui vertical segment' : '' }>
@@ -19,7 +21,7 @@ class Message extends React.Component {
         </div>
         <div className="content">
           <div className="date">
-            <a> { date.toLocaleDateString() } </a>
+            <a> { date } </a>
           </div>
           <div className="summary">
             <a> { this.state.user.username } </a>
@@ -32,5 +34,10 @@ class Message extends React.Component {
     );
   }
 }
+
+Message.propTypes = {
+  isOwner: bool,
+  message: object.isRequired
+};
 
 export default Message;

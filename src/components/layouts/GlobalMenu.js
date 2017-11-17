@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { Button, Container, Divider, Grid, Header, Icon, Image, List, Menu, Segment, Visibility } from 'semantic-ui-react';
+import { Button, Container, Icon, Menu, Segment } from 'semantic-ui-react';
 import { store } from '../../store';
+const { bool, func } = React.PropTypes;
 
 class GlobalMenu extends Component {
   constructor(props) {
@@ -53,5 +54,10 @@ class GlobalMenu extends Component {
     );
   }
 }
+
+GlobalMenu.propTypes = {
+  userSession: bool,
+  dataPropagation: func
+};
 
 export default GlobalMenu;

@@ -95,7 +95,7 @@
     "no-sparse-arrays": 2, // disallow sparse arrays
     "no-unreachable": 2, // disallow unreachable statements after a return, throw, continue, or break statement
     "use-isnan": 2, // disallow comparisons with the value NaN
-    "valid-jsdoc": 2, // Ensure JSDoc comments are valid (off by default)
+    "valid-jsdoc": 1, // Ensure JSDoc comments are valid (off by default)
     "valid-typeof": 2, // Ensure that the results of typeof are compared against a valid string
 
     //
@@ -137,7 +137,7 @@
     "no-octal": 2, // disallow use of octal literals
     "no-octal-escape": 2, // disallow use of octal escape sequences in string literals, such as var foo = "Copyright \251";
     "no-param-reassign": 2, // disallow reassignment of function parameters (off by default)
-    "no-process-env": 2, // disallow use of process.env (off by default)
+    "no-process-env": 0, // disallow use of process.env (off by default)
     "no-proto": 2, // disallow usage of __proto__ property
     "no-redeclare": 2, // disallow declaring the same variable more then once
     "no-return-assign": 2, // disallow use of assignment in return statement
@@ -171,7 +171,7 @@
     "no-label-var": 2, // disallow labels that share a name with a variable
     "no-shadow": 2, // disallow declaration of variables already declared in the outer scope
     "no-shadow-restricted-names": 2, // disallow shadowing of names such as arguments
-    "no-undef": 1, // disallow use of undeclared variables unless mentioned in a /*global */ block
+    "no-undef": 1, // disallow use of undeclared variables unless mentioned in a global block
     "no-undef-init": 1, // disallow use of undefined when initializing variables
     "no-undefined": 1, // disallow use of undefined variable (off by default)
     "no-unused-vars": 1, // disallow declaration of variables that are not used in the code
@@ -204,9 +204,9 @@
     "no-nested-ternary": 1, // disallow nested ternary expressions (off by default)
     "no-new-object": 1, // disallow use of the Object constructor
     "no-spaced-func": 1, // disallow space between function identifier and application
-    "no-ternary": 0, // disallow the use of ternary operators (off by default)
+    "no-ternary": 0, // allow to the use of ternary operators (off by default)
     "no-trailing-spaces": 1, // disallow trailing whitespace at the end of lines
-    "no-underscore-dangle": 1, // disallow dangling underscores in identifiers
+    "no-underscore-dangle": 0, // disallow dangling underscores in identifiers
     //"no-extra-parens": 1, // disallow wrapping of non-IIFE statements in parens
     "one-var": [1, "never"], // allow just one var statement per function (off by default)
     "operator-assignment": [1, "never"], // require assignment operator shorthand where possible or prohibit it entirely (off by default)
@@ -243,7 +243,7 @@
     // the functionality is the same.
     //
     "max-depth": [2, 3], // specify the maximum depth that blocks can be nested (off by default)
-    "max-len": [2, 100, 2], // specify the maximum length of a line in your program (off by default)
+    //"max-len": 0,//[2, 500, 2], // specify the maximum length of a line in your program (off by default)
     "max-params": [2, 5], // limits the number of parameters that can be used in the function declaration. (off by default)
     "max-statements": 0, // specify the maximum number of statement allowed in a function (off by default)
     "no-bitwise": 0, // disallow use of bitwise operators (off by default)

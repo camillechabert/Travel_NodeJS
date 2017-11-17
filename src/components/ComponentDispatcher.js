@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { store } from '../store';
 import UserNotConnected from './pathErrors/UserNotConnected';
+const { func } = React.PropTypes;
 
 /**
  * The routes Manager ensure that roles and session are properly rendered
@@ -10,7 +11,7 @@ import UserNotConnected from './pathErrors/UserNotConnected';
  */
 const Dispatcher = (roles, userRequired) =>
   (DynamicComponent, options = {}) => {
-    return class Manager extends Component {
+    class Manager extends Component {
       constructor(props) {
         super(props);
         this.state = { isConnected: this.userIsConnected() };
@@ -50,7 +51,13 @@ const Dispatcher = (roles, userRequired) =>
           </Grid>
         );
       }
+    }
+
+    Manager.propTypes = {
+      dataPropagation: func.isRequired
     };
+
+    return Manager;
   };
 
 export default Dispatcher;

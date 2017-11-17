@@ -12,11 +12,13 @@ class Chat {
   }
 
   join(name, user = {}) {
-    if(name === 'default') {
-      name = self.localStorage.getItem('chatname') || 'all';
+    let nameRoom = name;
+
+    if(nameRoom === 'default') {
+      nameRoom = self.localStorage.getItem('chatname') || 'all';
     }
 
-    return this.emit('join', { name: name, user: user }).then(function (data) {
+    return this.emit('join', { name: nameRoom, user: user }).then(function (data) {
       self.localStorage.setItem('chatname', data.room);// register in localstorage
       this.room = data.room;
 
@@ -35,9 +37,6 @@ class Chat {
     };
   }
 
-  /**
-     * shortcup
-     */
   sendMessage(message) {
     return this.send('message', message);
   }

@@ -3,6 +3,7 @@ import '../stylesheets/main.scss';
 import Header from './layouts/GlobalHeader';
 import Footer from './layouts/GlobalFooter';
 import { store } from '../store';
+const { element } = React.propTypes;
 
 class App extends Component {
   constructor(props) {
@@ -28,5 +29,9 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  children: element.isRequired
+};
 
 export default App;

@@ -24,7 +24,7 @@ class Login extends Component {
         for (let key in user)
             self.sessionStorage.setItem(key, user[key]);
 
-        this.props.userUpdate(true);
+        this.props.onChange(true);
     }
 
     handleChange(e, { name, value }) {
@@ -104,5 +104,9 @@ class Login extends Component {
         );
     }
 }
+
+Login.propTypes = {
+    onChange: func,
+};
 
 export default Login;

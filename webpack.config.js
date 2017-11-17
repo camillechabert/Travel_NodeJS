@@ -19,29 +19,46 @@ module.exports = {
   },
   module: {
     noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
-    /* preLoaders: [
+    preLoaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader'
+        loader: 'eslint-loader',
+        options: {
+          failOnError: false,
+          quiet: true,
+          fix: true
+        }
       }
+    ],
+    rules: [
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {
+          failOnError: false,
+          quiet: true,
+          fix: true
+        }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+      },
     ],
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader', 'eslint-loader']
+        loaders: ['babel-loader'],
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules\/(?!mapbox-gl\/js)/,
         loader: 'react-hot-loader!babel-loader'
-      },*/
-    loaders: [
-      {
-        test: /\.(js|jsx)$/,
-        loaders: ['react-hot-loader', 'babel-loader'],
-        exclude: /node_modules\/(?!mapbox-gl\/js)/
       },
       {
         // https://github.com/jtangelder/sass-loader
