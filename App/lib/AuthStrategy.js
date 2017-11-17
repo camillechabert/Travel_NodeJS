@@ -20,8 +20,8 @@ passport.use(new jwtStrategy(opts, (payload, done) => {
         return done(null, credential);
 
     User.findOne({
-        attributes: ['id', 'firstName', 'lastName', 'email'],
-        where: { id: credential.id }
+        attributes: ['login', 'firstName', 'lastName', 'email'],
+        where: { login: credential.login }
     }).then(function (response) {
         if (!response)
             response = credentialInstance.errorFormat('QueryError -> User has been not found', 404);
