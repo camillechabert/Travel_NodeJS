@@ -26,7 +26,6 @@ class Edition extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <Card
-                                columns={3}
                                 image='/media/logo.svg'
                                 header='John Doe'
                                 meta='inscrit le 10/03/2017'
@@ -38,7 +37,7 @@ class Edition extends Component {
                                     <Form  size='large'>
 
                                         <Form.Group unstackable widths={2}>
-                                            <Form.Input 
+                                            <Form.Input
                                             value="John"
                                             icon='user' 
                                             iconPosition='left' 
