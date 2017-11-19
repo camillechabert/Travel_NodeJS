@@ -9,35 +9,24 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import Clusters from './Clusters';
 import { Map } from 'mapbox-gl/dist/mapbox-gl';
 import { store } from '../../store';
+var mbUtils = require("mapbox-gl");
 
 class MapIndex extends Component {
     constructor(props) {
         super(props);
+
         this.Map = ReactMapboxGl({
-            accessToken: '',
+            accessToken: process.env.MapboxKey,
             doubleClickZoom: false
         });
 
-        const bdxBounds = {
-            _ne: {
-                lat: 44.865412182320085,
-                lng: -0.5460090245184119
-            },
-            _sw: {
-                lat: 44.819456570377326,
-                lng: -0.6278705830770548
-            }
-        }
-
+        const bdxBounds = mbUtils.LngLatBounds.convert([-0.6278705830770548, 44.819456570377326, -0.5460090245184119, 44.865412182320085]);
         const bdxCenter = [-0.580816, 44.836151];
-
         this.state = { coord: bdxCenter, mapBounds: bdxBounds }
-
         this._getInfos.bind(this);
     }
 
     _getInfos(map, infos) {
-        // { sw: [latlng], ne: [latlng] }
         this.setState({
             mapBounds: map.getBounds()
         });

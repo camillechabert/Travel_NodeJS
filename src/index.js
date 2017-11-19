@@ -6,6 +6,8 @@ import { store } from "./store.js";
 import { router } from "./router.js";
 import 'semantic-ui-css/semantic.min.css';
 
+process.env.MapboxKey = 'DummyKey';
+
 // render the main component
 ReactDOM.render(
   <Provider store={store}>
