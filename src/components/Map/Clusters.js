@@ -11,10 +11,10 @@ class Clusters extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { prevBounds: null, popup: false, coord: null, markers: [] };
+        this.state = { popup: false, coord: null, markers: [] };
 
         try {
-            this.nominatimeWrapper = new NominatimeWrapper(['bars', 'pubs', 'Restaurants', 'Hotel'], {
+            this.nominatimeWrapper = new NominatimeWrapper(['bars', 'Restaurants', 'Hotel'], {
                 "accept-language": "FR",
                 limit: 1000
             });
@@ -25,26 +25,26 @@ class Clusters extends Component {
         this._closePopup.bind(this);
     }
 
-    fetchTest() {
-        // #TODO: Remove prevBounds and use a function that ensure the previous bounds aren't the same (or loop infinit)
-        if (!this.state.prevBounds) {
-            const bounds = this.props.bounds || null;
-            let response = null
+    componentDidMount() {
+        this.getPOIData();
+    }
 
-            try {
-                response = this.nominatimeWrapper.RunWithBounds(bounds);
-            } catch (e) {
-                console.error(e);
-            }
+    getPOIData() {
+        const bounds = this.props.bounds || null;
+        let response = null
 
-            response.then((response) => {
-                response = [].concat.apply([], response);
-                this.setState({
-                    markers: response,
-                    prevBounds: true
-                });
-            });
+        try {
+            response = this.nominatimeWrapper.RunWithBounds(bounds);
+        } catch (e) {
+            console.error(e);
         }
+
+        response.then((response) => {
+            response = [].concat.apply([], response);
+            this.setState({
+                markers: response
+            });
+        });
     }
 
     clusterMarker(coordinates, pointCount) {
@@ -71,7 +71,6 @@ class Clusters extends Component {
     }
 
     render() {
-        this.fetchTest();
         return (
             <div>
                 {this.state.popup &&
@@ -82,12 +81,14 @@ class Clusters extends Component {
                         <PopupContent POI={this.state.popup} close={this._closePopup.bind(this)} />
                     </Popup>)
                 }
-                <Cluster zoomOnClick={true} ClusterMarkerFactory={this.clusterMarker}>
+                <Cluster zoomOnClickPadding={20} zoomOnClick={true} ClusterMarkerFactory={this.clusterMarker}>
                     {
                         this.state.markers.map((POI, key) => {
+                            const coords = [parseFloat(POI.lon), parseFloat(POI.lat)];
+
                             return (<Marker
                                 key={key}
-                                coordinates={[POI.lon, POI.lat]}
+                                coordinates={coords}
                                 onClick={(e) => this.showPopup(POI, key)}>
                                 <Icon name='marker' color='blue' size='huge' />
                             </Marker>);
