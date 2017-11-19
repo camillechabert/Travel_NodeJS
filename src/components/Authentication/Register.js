@@ -40,7 +40,7 @@ class Register extends Component {
      */
     async _submit(form) {
         if (!this.state.agreed) {
-            console.error('valid args ! ');
+            console.error('valid args !');
             return;
         }
 
@@ -53,7 +53,7 @@ class Register extends Component {
         }
 
         this._triggerLoading();
-        const token = await XHR.post('http://localhost:3080/auth/create-user', { body: newUser });
+        const token = await XHR.post(process.env.createUserUrl, { body: newUser });
         this._triggerLoading();
 
         if (token.error) {
@@ -65,8 +65,6 @@ class Register extends Component {
         const user = JSON.parse(atob(hashedToken[1]));
 
         this.loginSuccess(user, token);
-
-
     }
 
     _triggerLoading() {

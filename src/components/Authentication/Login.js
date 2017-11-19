@@ -37,7 +37,7 @@ class Login extends Component {
     }
 
     async submitHandler() {
-        let token = await XHR.post("http://localhost:3080/auth/token", {
+        let token = await XHR.post(process.env.authTokenUrl, {
             body: {
                 login: this.state.login,
                 password: this.state.password

@@ -16,7 +16,7 @@ class NominatimeWrapper {
      * @param {* Set of options to run the API call} options 
      */
     constructor(amenities = [], options) {
-        this.baseUrl = 'http://nominatim.openstreetmap.org/search.php?';
+        this.baseUrl = process.env.NominationUrl;
         this._buildOptions(options);
 
         if (amenities instanceof Array) {

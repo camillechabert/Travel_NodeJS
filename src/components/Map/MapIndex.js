@@ -38,7 +38,7 @@ class MapIndex extends Component {
                 onMoveEnd={(v, m) => this._getInfos(v, m)}
                 className={'map'}
                 center={this.state.coord}
-                style="mapbox://styles/mapbox/streets-v10" containerStyle={{
+                style={process.env.MapboxTilesStyle} containerStyle={{
                     height: "91%",
                     width: "100%"
                 }}>

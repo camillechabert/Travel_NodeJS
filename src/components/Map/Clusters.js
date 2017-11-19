@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapboxGl, { Marker, Cluster, Popup } from "react-mapbox-gl";
 import { Icon } from 'semantic-ui-react';
-import { dummyMarkers } from '../../DummyCoordinates';
 import { randomBytes } from 'crypto';
 import XHR from '../../helpers/XHRClient';
 import PopupContent from './PopupContent';

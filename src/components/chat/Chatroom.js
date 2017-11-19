@@ -54,7 +54,7 @@ class Chatroom extends Component {
     }
 
     componentWillMount(){
-        this.chat = new Chat(io.connect('http://localhost:3080'));
+        this.chat = new Chat(io.connect(process.env.SocketUrl));
 
         //get all rooms
         this.chat.getRooms().then((data) => {
