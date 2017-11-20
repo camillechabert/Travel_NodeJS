@@ -1,4 +1,4 @@
-import API from 'whatwg-fetch';
+// import API from 'whatwg-fetch';
 
 class Client {
   _formatQuery(type = 'GET', params) {

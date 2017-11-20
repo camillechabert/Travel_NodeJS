@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Header, Image, Icon } from 'semantic-ui-react';
-import { browserHistory, Link } from 'react-router';
+import { Button, Header, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router';
 
 class UserNotConnected extends Component {
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Container, Header, Segment, Label, Image, Card, Grid, Icon } from 'semantic-ui-react';
+import { Button, Form, Card, Grid, Icon } from 'semantic-ui-react';
 
 const extra = (
   <a>

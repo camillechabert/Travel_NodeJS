@@ -11,7 +11,7 @@ const { object } = React.PropTypes;
 class Chatroom extends Component {
   constructor(props) {
     super(props);
-    const date = new Date();
+    // const date = new Date();
 
     // Dummy items
     let user = {
@@ -114,7 +114,7 @@ class Chatroom extends Component {
 
       this.chat.sendMessage(dataToSend).then(() => {
         // console.log(data);
-      }).catch((error) => {
+      }).catch(() => {
         // console.log(error);
       });
     }

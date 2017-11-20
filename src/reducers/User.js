@@ -1,7 +1,15 @@
+const DummyUser = {
+  id: null,
+  firstName: null,
+  lastName: null,
+  token: null,
+  email: null
+};
+
 function User(state = DummyUser, action) {
   switch (action.type) {
   case 'FETCH_USER':
-    const newObj = Object.assign(new Object(), state);
+    const newObj = Object.assign({}, state);
 
     newObj.id = action.id;
     newObj.firstName = action.firstName;
@@ -17,13 +25,5 @@ function User(state = DummyUser, action) {
     return state;
   }
 }
-
-const DummyUser = {
-  id: null,
-  firstName: null,
-  lastName: null,
-  token: null,
-  email: null
-};
 
 export { User, DummyUser };

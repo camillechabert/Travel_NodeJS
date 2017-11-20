@@ -21,7 +21,7 @@ const LoginPage = Dispatcher(['user'], false);
 const SignUpPage = Dispatcher(['user'], false);
 const NotFoundPage = Dispatcher(['user'], false);
 const IndexPage = Dispatcher(['user'], false);
-const AppPage = Dispatcher(['user'], false);
+// const AppPage = Dispatcher(['user'], false);//nerverused
 
 /**
  * User connection is required
@@ -29,6 +29,20 @@ const AppPage = Dispatcher(['user'], false);
 const UserEditPage = Dispatcher(['user'], true);
 const ChatRoomPage = Dispatcher(['user'], true);
 const MapPage = Dispatcher(['user'], true);
+
+const sessionUser = () => {
+  let user = { type: 'FETCH_USER' };
+  const userStorage = Object.assign({}, self.sessionStorage);
+
+  for (let key in DummyUser) {
+    if (!userStorage[key]) {
+      return;
+    }
+    user[key] = userStorage[key];
+  }
+
+  store.dispatch(user);
+};
 
 /**
  * Main path using single responsibility pattern
@@ -53,20 +67,6 @@ const router = () => {
       </Route>
     </Router>
   );
-};
-
-const sessionUser = () => {
-  let user = { type: 'FETCH_USER' };
-  const userStorage = Object.assign({}, self.sessionStorage);
-
-  for (let key in DummyUser) {
-    if (!userStorage[key]) {
-      return;
-    }
-    user[key] = userStorage[key];
-  }
-
-  store.dispatch(user);
 };
 
 export { router };

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import XHRClient from '../helpers/XHRClient';
-import { Button, Grid, Image } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 
 class Index extends Component {
   constructor(props) {
