@@ -6,7 +6,7 @@ import Notification from './Notification';
 import io from 'socket.io-client';
 import Chat from '../../helpers/chat';
 import { Dropdown } from 'semantic-ui-react';
-const { object } = React.PropTypes;
+import PropTypes from 'prop-types';
 
 class Chatroom extends Component {
   constructor(props) {
@@ -186,7 +186,7 @@ class Chatroom extends Component {
 }
 
 Chatroom.PropTypes = {
-  user: object
+  user: PropTypes.object
 };
 
 export default Chatroom;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { store } from '../store';
 import UserNotConnected from './pathErrors/UserNotConnected';
-const { func } = React.PropTypes;
+import PropTypes from 'prop-types';
 
 /**
  * The routes Manager ensure that roles and session are properly rendered
@@ -54,7 +54,7 @@ const Dispatcher = (roles, userRequired) =>
     }
 
     Manager.propTypes = {
-      dataPropagation: func.isRequired
+      dataPropagation: PropTypes.func.isRequired
     };
 
     return Manager;

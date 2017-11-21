@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GlobalMenu from './GlobalMenu';
-const { bool, func } = React.PropTypes;
+import PropTypes from 'prop-types';
 
 class GlobalHeader extends Component {
   render() {
@@ -11,8 +11,8 @@ class GlobalHeader extends Component {
 }
 
 GlobalHeader.propTypes = {
-  userSession: bool,
-  dataPropagation: func
+  userSession: PropTypes.bool,
+  dataPropagation: PropTypes.func
 };
 
 export default GlobalHeader;

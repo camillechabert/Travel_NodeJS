@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Button, Container, Icon, Menu, Segment } from 'semantic-ui-react';
 import { store } from '../../store';
-const { bool, func } = React.PropTypes;
+import PropTypes from 'prop-types';
 
 class GlobalMenu extends Component {
   constructor(props) {
@@ -56,8 +56,8 @@ class GlobalMenu extends Component {
 }
 
 GlobalMenu.propTypes = {
-  userSession: bool,
-  dataPropagation: func
+  userSession: PropTypes.bool,
+  dataPropagation: PropTypes.func
 };
 
 export default GlobalMenu;

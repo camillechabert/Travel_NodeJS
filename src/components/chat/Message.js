@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../stylesheets/main.scss';
 import moment from 'moment';
-const { bool, object } = React.PropTypes;
+import PropTypes from 'prop-types';
 
 class Message extends React.Component {
   constructor(props) {
@@ -36,8 +36,8 @@ class Message extends React.Component {
 }
 
 Message.propTypes = {
-  isOwner: bool,
-  message: object.isRequired
+  isOwner: PropTypes.bool,
+  message: PropTypes.object.isRequired
 };
 
 export default Message;

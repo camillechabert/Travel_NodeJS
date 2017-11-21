@@ -3,7 +3,7 @@ import '../stylesheets/main.scss';
 import Header from './layouts/GlobalHeader';
 import Footer from './layouts/GlobalFooter';
 import { store } from '../store';
-const { element } = React.propTypes;
+import PropTypes from 'prop-types';
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  children: element.isRequired
+  children: PropTypes.element.isRequired
 };
 
 export default App;
