@@ -27,8 +27,6 @@ app.use('/auth', auth.routes);
 
 chat.listen(server);
 
-process.env.SOCKET_URL = `http://localhost:${serverConf.port}`;
-
 server.listen(serverConf.port, () => {
   console.log('App is Running on', serverConf.port);
 });
