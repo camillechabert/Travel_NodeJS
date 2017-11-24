@@ -4,7 +4,6 @@ config.json
 
 # IDEA -------
 .idea
-.vscode
 
 # NodeJS -----
 package-lock.json

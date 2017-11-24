@@ -1,0 +1,5 @@
+{
+    "eslint.autoFixOnSave": true,
+    "eslint._legacyModuleResolve": true,
+    "files.autoSave": "onWindowChange"
+}
