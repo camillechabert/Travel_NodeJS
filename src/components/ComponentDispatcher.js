@@ -54,7 +54,7 @@ const Dispatcher = (roles, userRequired) =>
     }
 
     Manager.propTypes = {
-      dataPropagation: PropTypes.func.isRequired
+      dataPropagation: PropTypes.func
     };
 
     return Manager;

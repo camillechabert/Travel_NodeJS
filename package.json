@@ -17,8 +17,8 @@
   },
   "scripts": {
     "start": "echo ---- Start is deprecated: use [npm run serv] instead ----",
-    "proxy": "nodemon App/server",
-    "serv": "npm run proxy & webpack-dev-server --hot --host localhost --inline --noInfo --port 9000",
+    "back": "nodemon App/server",
+    "front": "webpack-dev-server --hot --history-api-fallback --host localhost --inline --port 9000",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
     "test": "mocha & npm run lint",

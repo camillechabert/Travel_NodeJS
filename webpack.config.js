@@ -6,7 +6,6 @@ let CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: [
-    // http://gaearon.github.io/react-hot-loader/getstarted/
     'webpack-dev-server/client?http://localhost:9000',
     'webpack/hot/only-dev-server',
     'babel-polyfill',
@@ -19,18 +18,6 @@ module.exports = {
   },
   module: {
     noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          failOnError: false,
-          quiet: true,
-          fix: true
-        }
-      }
-    ],
     rules: [
       {
         enforce: "pre",
@@ -46,27 +33,15 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
-      },
-    ],
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
         loaders: ['babel-loader'],
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules\/(?!mapbox-gl\/js)/,
-        loader: 'react-hot-loader!babel-loader'
+        loader: ['react-hot-loader', 'babel-loader']
       },
       {
-        // https://github.com/jtangelder/sass-loader
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.css$/,
+        test: /\.(scss|sass|css)$/,
         loaders: ['style-loader', 'css-loader'],
       },
       {

@@ -27,7 +27,8 @@ class Login extends Component {
       }
     }
 
-    this.props.onChange(true);
+    this.props.userUpdate(true);
+    console.log(this.props);
   }
 
   handleChange(e, { name, value }) {
@@ -115,7 +116,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  onChange: PropTypes.func
+  userUpdate: PropTypes.func
 };
 
 export default Login;
