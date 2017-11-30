@@ -21,7 +21,7 @@
     "front": "webpack-dev-server --hot --history-api-fallback --host localhost --inline --port 9000",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
-    "test": "mocha & npm run lint",
+    "test": "mocha",
     "test-watch": "npm test -- --watch"
   },
   "babel": {
