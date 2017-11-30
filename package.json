@@ -95,8 +95,8 @@
     "supertest": "^3.0.0",
     "transform-loader": "^0.2.4",
     "url-loader": "^0.6.2",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.5",
     "whatwg-fetch": "^2.0.1"
   }
 }
