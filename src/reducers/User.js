@@ -13,11 +13,11 @@ function User(state = DummyUser, action) {
   case ADD_USER:
     const user = Object.assign({}, state);
 
-    user.id = action.id;
-    user.firstName = action.firstName;
-    user.lastName = action.lastName;
-    user.token = action.token;
-    user.email = action.email;
+    user.id = action.payload.id;
+    user.firstName = action.payload.firstName;
+    user.lastName = action.payload.lastName;
+    user.token = action.payload.token;
+    user.email = action.payload.email;
 
     return user;
   case DROP_USER:
@@ -26,5 +26,11 @@ function User(state = DummyUser, action) {
     return state;
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    payload: User(state, state)
+  };
+};
 
 export { User, DummyUser };
