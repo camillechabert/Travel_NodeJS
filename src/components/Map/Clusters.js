@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapboxGl, { Marker, Cluster, Popup } from 'react-mapbox-gl';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Button } from 'semantic-ui-react';
 import { randomBytes } from 'crypto';
 import XHR from '../../helpers/XHRClient';
 import PopupContent from './PopupContent';
@@ -14,7 +14,7 @@ class Clusters extends Component {
     this.state = { popup: false, coord: null, markers: [] };
 
     try {
-      this.nominatimeWrapper = new NominatimeWrapper(['bars', 'Restaurants', 'Hotel'], {
+      this.nominatimeWrapper = new NominatimeWrapper(['bar', 'restaurant', 'hotel', 'pub', 'cafe'], {
         'accept-language': 'FR',
         limit: 1000
       });
@@ -50,9 +50,9 @@ class Clusters extends Component {
   clusterMarker(coordinates, pointCount) {
     return (
       <Marker coordinates={coordinates} key={randomBytes(150)} >
-        <Icon as='i' name='add circle' color='orange' size='huge'>
-          <span style={{ color: 'black' }}>{pointCount}</span>
-        </Icon>
+        <div className="nbr-markers">
+          <span style={{ color: 'white' }}>{pointCount}</span>
+        </div>
       </Marker>
     );
   }
@@ -87,6 +87,7 @@ class Clusters extends Component {
               const coords = [parseFloat(POI.lon), parseFloat(POI.lat)];
 
               return (<Marker
+                style={{cursor: 'pointer'}}
                 key={key}
                 coordinates={coords}
                 onClick={(e) => this.showPopup(POI, key)}>

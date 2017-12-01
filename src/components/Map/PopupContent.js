@@ -1,13 +1,31 @@
 import React, {Component} from 'react';
 import { Icon, Card, Button, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import '../../stylesheets/components/map.scss';
 
 class PopupContent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.typeMarkers = {
+      restaurant: './public/../../media/icons/cutlery.svg',
+      bar: './public/../../media/icons/cocktail.svg',
+      pub: './public/../../media/icons/beer.svg',
+      hotel: './public/../../media/icons/bed.svg',
+      cafe: './public/../../media/icons/coffee-cup.svg'
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log(newProps);
+  }
+
   render() {
     return (
       <Card>
         <Card.Content>
-          <Image floated='right' size='mini' src={this.props.POI.icon} />
+          <Button className="close" icon='close' onClick={this.props.close} floated="right"/>
+          <Image floated='left' size='mini' src={this.typeMarkers[this.props.POI.type]} />
           <Card.Header>
             {this.props.POI.display_name[0]}
           </Card.Header>
@@ -22,9 +40,9 @@ class PopupContent extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <div className='ui two buttons'>
-            <Button basic color='green'>Add</Button>
-            <Button onClick={this.props.close} basic color='red'>Close</Button>
+          <div>
+            <Button basic color='green' icon='plus' content='Ajouter'/>
+            <Button basic color='blue' icon='info' content='Informations'/>
           </div>
         </Card.Content>
       </Card>
