@@ -1,3 +1,5 @@
+import { ADD_USER, DROP_USER } from '../actions/userActions';
+
 const DummyUser = {
   id: null,
   firstName: null,
@@ -8,18 +10,17 @@ const DummyUser = {
 
 function User(state = DummyUser, action) {
   switch (action.type) {
-  case 'FETCH_USER':
-    const newObj = Object.assign({}, state);
+  case ADD_USER:
+    const user = Object.assign({}, state);
 
-    newObj.id = action.id;
-    newObj.firstName = action.firstName;
-    newObj.lastName = action.lastName;
-    newObj.token = action.token;
-    newObj.email = action.email;
+    user.id = action.id;
+    user.firstName = action.firstName;
+    user.lastName = action.lastName;
+    user.token = action.token;
+    user.email = action.email;
 
-    return newObj;
-  case 'DROP_USER':
-    self.sessionStorage.clear();
+    return user;
+  case DROP_USER:
     return {};
   default:
     return state;

@@ -13,6 +13,7 @@ import Login from './components/Authentication/Login';
 import Register from './components/Authentication/Register';
 import Edition from './components/Authentication/Edition';
 import Dispatcher from './components/ComponentDispatcher';
+import { addUser } from './actions/userActions';
 
 /**
  * User connection not required
@@ -31,7 +32,7 @@ const ChatRoomPage = Dispatcher(['user'], true);
 const MapPage = Dispatcher(['user'], true);
 
 const sessionUser = () => {
-  let user = { type: 'FETCH_USER' };
+  let user = {};
   const userStorage = Object.assign({}, self.sessionStorage);
 
   for (let key in DummyUser) {
@@ -41,7 +42,7 @@ const sessionUser = () => {
     user[key] = userStorage[key];
   }
 
-  store.dispatch(user);
+  store.dispatch(addUser(user));
 };
 
 /**

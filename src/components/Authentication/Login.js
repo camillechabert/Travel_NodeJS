@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { store } from '../../store';
 import XHR from '../../helpers/XHRClient.js';
 import PropTypes from 'prop-types';
+import { addUser } from '../../actions/userActions';
 
 class Login extends Component {
   constructor(props) {
@@ -11,18 +12,11 @@ class Login extends Component {
     this.state = { login: '', password: '' };
   }
 
-  loginSuccess(user, token) {
-    store.dispatch({
-      type: 'FETCH_USER',
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      token: token
-    });
-    self.sessionStorage.setItem('token', token);
+  loginSuccess(user) {
+    store.dispatch(addUser(user));
+
     for (let key in user) {
-      if(key && user[key]) {
+      if(user.hasOwnProperty(key)) {
         self.sessionStorage.setItem(key, user[key]);
       }
     }
@@ -55,7 +49,8 @@ class Login extends Component {
     const hashedToken = token.response.split('.');
     const user = JSON.parse(atob(hashedToken[1]));
 
-    this.loginSuccess(user, token.response);
+    user.token = token.response;
+    this.loginSuccess(user);
   }
 
   render() {
