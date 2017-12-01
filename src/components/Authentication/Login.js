@@ -28,7 +28,6 @@ class Login extends Component {
     }
 
     this.props.userUpdate(true);
-    console.log(this.props);
   }
 
   handleChange(e, { name, value }) {
