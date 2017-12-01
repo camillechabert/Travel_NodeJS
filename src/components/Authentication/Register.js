@@ -3,6 +3,7 @@ import { Button, Form, Container, Header, Segment, Image, Grid } from 'semantic-
 import XHR from '../../helpers/XHRClient';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
+import { addUser } from '../../actions/userActions';
 
 
 class Register extends Component {
@@ -18,16 +19,9 @@ class Register extends Component {
      * @param {* the complete user hash} user
      * @param {* the JWT token still based64} token
      */
-  loginSuccess(user, token) {
-    store.dispatch({
-      type: 'FETCH_USER',
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      token: token
-    });
-    self.sessionStorage.setItem('token', token);
+  loginSuccess(user) {
+    store.dispatch(addUser(user));
+    self.sessionStorage.setItem('token', user.token);
     for (let key in user) {
       if (user.hasOwnProperty(key)) {
         self.sessionStorage.setItem(key, user[key]);
@@ -67,7 +61,8 @@ class Register extends Component {
     const hashedToken = token.response.split('.');
     const user = JSON.parse(atob(hashedToken[1]));
 
-    this.loginSuccess(user, token);
+    user.token = token;
+    this.loginSuccess(user);
   }
 
   _triggerLoading() {

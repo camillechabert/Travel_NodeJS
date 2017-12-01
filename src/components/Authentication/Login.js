@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { store } from '../../store';
 import XHR from '../../helpers/XHRClient.js';
 import PropTypes from 'prop-types';
-import { addUser } from '../../actions/userActions';
+import { addUser, dropUser } from '../../actions/userActions';
 
 class Login extends Component {
   constructor(props) {
@@ -29,8 +29,8 @@ class Login extends Component {
   }
 
   loginError(token) {
-    store.dispatch({ type: 'DROP_USER' });
-    // console.error('[', token.code, token.error, ']', 'there was a loggin error', 'Actually not handled', '#TODO');
+    store.dispatch(dropUser());
+    console.error('[', token.code, token.error, ']', 'there was a loggin error', 'Actually not handled', '#TODO');
   }
 
   async submitHandler() {
