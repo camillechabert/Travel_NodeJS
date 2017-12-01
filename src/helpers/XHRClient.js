@@ -42,7 +42,7 @@ class Client {
         Accept: options.accept || 'application/json',
         'Content-Type': options.contentType || 'application/x-www-form-urlencoded; charset=UTF-8'
       },
-      body: this._formatQuery('POST', options.body)
+      body: options.body
     }).then((response) => {
       const { ok, status, statusText } = response;
 

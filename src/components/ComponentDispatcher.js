@@ -14,20 +14,10 @@ const Dispatcher = (roles, userRequired) =>
     class Manager extends Component {
       constructor(props) {
         super(props);
-        this.state = { isConnected: this.userIsConnected() };
-      }
-
-      userIsConnected() {
-        return ('store: ', store.getState().user.token !== null);
-      }
-
-      userUpdate(signal) {
-        this.props.dataPropagation(signal);
-        this.setState({ isConnected: signal });
       }
 
       render() {
-        if (userRequired && !this.userIsConnected()) {
+        if (userRequired && !this.props.userSession) {
           return (
             <Grid container columns={1}>
               <Grid.Column>
@@ -39,14 +29,14 @@ const Dispatcher = (roles, userRequired) =>
 
         if (options.raw) {
           return (
-            <DynamicComponent userSession={this.state.isConnected} userUpdate={this.userUpdate.bind(this)} />
+            <DynamicComponent userSession={this.props.userSession} />
           );
         }
 
         return (
           <Grid container columns={1}>
             <Grid.Column>
-              <DynamicComponent userSession={this.state.isConnected} userUpdate={this.userUpdate.bind(this)} />
+              <DynamicComponent userSession={this.props.userSession} />
             </Grid.Column>
           </Grid>
         );
@@ -54,7 +44,7 @@ const Dispatcher = (roles, userRequired) =>
     }
 
     Manager.propTypes = {
-      dataPropagation: PropTypes.func
+      userSession: PropTypes.bool
     };
 
     return Manager;

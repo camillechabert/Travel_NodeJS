@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { store } from '../../store';
 import XHR from '../../helpers/XHRClient.js';
 import PropTypes from 'prop-types';
-import { addUser, dropUser } from '../../actions/userActions';
+import { fetchUser } from '../../actions/userActions';
 
 class Login extends Component {
   constructor(props) {
@@ -12,45 +12,12 @@ class Login extends Component {
     this.state = { login: '', password: '' };
   }
 
-  loginSuccess(user) {
-    store.dispatch(addUser(user));
-
-    for (let key in user) {
-      if(user.hasOwnProperty(key)) {
-        self.sessionStorage.setItem(key, user[key]);
-      }
-    }
-
-    this.props.userUpdate(true);
-  }
-
   handleChange(e, { name, value }) {
     this.setState({ [name]: value });
   }
 
-  loginError(token) {
-    store.dispatch(dropUser());
-    console.error('[', token.code, token.error, ']', 'there was a loggin error', 'Actually not handled', '#TODO');
-  }
-
-  async submitHandler() {
-    let token = await XHR.post('http://localhost:3080/auth/token', {
-      body: {
-        login: this.state.login,
-        password: this.state.password
-      }
-    });
-
-    if (token.error) {
-      this.loginError(token);
-      return;
-    }
-
-    const hashedToken = token.response.split('.');
-    const user = JSON.parse(atob(hashedToken[1]));
-
-    user.token = token.response;
-    this.loginSuccess(user);
+  submitHandler() {
+    store.dispatch(fetchUser({ ...this.state }));
   }
 
   render() {
@@ -64,7 +31,7 @@ class Login extends Component {
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
               <Image src='/media/logo.svg' />
-                            Log-in to your account
+              Log-in to your account
             </Header>
             <Form size='large' onSubmit={() => {
               this.submitHandler();
@@ -100,7 +67,7 @@ class Login extends Component {
               </Segment>
             </Form>
             <Message>
-                            New to us? <Link to={'/sign-up'}> Sign up </Link>
+              New to us? <Link to={'/sign-up'}> Sign up </Link>
             </Message>
           </Grid.Column>
         </Grid>

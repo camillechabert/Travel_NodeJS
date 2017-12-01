@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Button, Container, Icon, Menu, Segment } from 'semantic-ui-react';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
-import { dropUser } from '../../actions/userActions';
+import { dropUserAsync } from '../../actions/userActions';
 
 class GlobalMenu extends Component {
   constructor(props) {
@@ -11,9 +11,7 @@ class GlobalMenu extends Component {
   }
 
   logOut() {
-    this.props.dataPropagation(false);
-    store.dispatch(dropUser());
-    self.sessionStorage.clear();
+    store.dispatch(dropUserAsync());
   }
 
   // Must be improve, keep it for cam&fran
@@ -58,8 +56,7 @@ class GlobalMenu extends Component {
 }
 
 GlobalMenu.propTypes = {
-  userSession: PropTypes.bool,
-  dataPropagation: PropTypes.func
+  userSession: PropTypes.bool
 };
 
 export default GlobalMenu;

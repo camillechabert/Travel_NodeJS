@@ -4,34 +4,36 @@ import Header from './layouts/GlobalHeader';
 import Footer from './layouts/GlobalFooter';
 import { store } from '../store';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { dataPropagation: { userSession: store.getState().user.token !== null } };
-  }
-
-  propagateUserSession(signal) {
-    this.setState({ dataPropagation: { userSession: signal } });
   }
 
   render() {
-    const props = React.cloneElement(this.props.children, { dataPropagation: this.propagateUserSession.bind(this) });
+    const user = (this.props.user.token) ? true : false;
+    const props = React.cloneElement(this.props.children, { userSession: user });
 
     return (
       <div id="page-wrapper" className="main-app">
-        <Header userSession={this.state.dataPropagation.userSession} dataPropagation={this.propagateUserSession.bind(this)} />
+        <Header userSession={user} />
         <div className="content-app">
           {props}
         </div>
-        <Footer userSession={this.state.dataPropagation.userSession} dataPropagation={this.propagateUserSession.bind(this)} />
+        <Footer userSession={user} />
       </div>
     );
   }
 }
 
 App.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  user: PropTypes.object
 };
 
-export default App;
+const reduxConnecter = (nextState, ownProps) => {
+  return { user: nextState.user };
+};
+
+export default connect(reduxConnecter)(App);

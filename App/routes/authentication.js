@@ -40,28 +40,28 @@ routes.route('/user')
   });
 
 routes.route('/create-user')
-    .post((req, res) => {
-        const newUserInstance = User.build({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            password: req.body.password,
-            login: req.body.login,
-            email: req.body.email
-        });
-
-        if (newUserInstance) {
-            newUserInstance.save().then((response) => {
-                res.statusCode = 200
-                res.json({ response: jwt.encode(response, config.jwtSecret) });
-            }).catch((error) => {
-                res.statusCode = 409;
-                res.json({ error: error.errors });
-            });
-        } else {
-            res.statusCode = 500;
-            res.json({ error: 'Fatal error on DB Query' });
-        }
+  .post((req, res) => {
+    const newUserInstance = User.build({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      password: req.body.password,
+      login: req.body.login,
+      email: req.body.email
     });
+
+    if (newUserInstance) {
+      newUserInstance.save().then((response) => {
+        res.statusCode = 200;
+        res.json({ response: jwt.encode(response, config.jwtSecret) });
+      }).catch((error) => {
+        res.statusCode = 409;
+        res.json({ error: error.errors });
+      });
+    } else {
+      res.statusCode = 500;
+      res.json({ error: 'Fatal error on DB Query' });
+    }
+  });
 
 routes.route('/*')
   .get((req, res) => {

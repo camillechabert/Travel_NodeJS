@@ -3,7 +3,7 @@ import { Button, Form, Container, Header, Segment, Image, Grid } from 'semantic-
 import XHR from '../../helpers/XHRClient';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
-import { addUser } from '../../actions/userActions';
+import { addUser, fetchUser } from '../../actions/userActions';
 
 
 class Register extends Component {
@@ -13,59 +13,16 @@ class Register extends Component {
     this.state = { loading: false, firstName: '', lastName: '', email: '', password: '', agreed: false };
   }
 
-  /**
-     * This function is a duplicate of login
-     * Use action from redux #TODO
-     * @param {* the complete user hash} user
-     * @param {* the JWT token still based64} token
-     */
-  loginSuccess(user) {
-    store.dispatch(addUser(user));
-    self.sessionStorage.setItem('token', user.token);
-    for (let key in user) {
-      if (user.hasOwnProperty(key)) {
-        self.sessionStorage.setItem(key, user[key]);
-      }
-    }
-
-    this.props.userUpdate(true);
-  }
-
-  /**
-     * This method contain duplication, refactoring is necessary
-     * @param {* the form submited} form
-     */
-  async _submit(form) {
+  _submit(form) {
     if (!this.state.agreed) {
       console.error('valid args !');
       return;
     }
 
-    const newUser = {
-      login: this.state.email,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      password: this.state.password
-    };
-
-    this._triggerLoading();
-    const token = await XHR.post(process.env.createUserUrl, { body: newUser });
-    this._triggerLoading();
-
-    if (token.error) {
-      console.error(token);
-      return;
-    }
-
-    const hashedToken = token.response.split('.');
-    const user = JSON.parse(atob(hashedToken[1]));
-
-    user.token = token;
-    this.loginSuccess(user);
+    store.dispatch(fetchUser({...this.state})); // ACTUALLY NOT WORKING
   }
 
-  _triggerLoading() {
+  _triggerLoading() { // TODO: Use Sagas && connect to bind this methods #AskJuH
     this.setState({ loading: !this.state.loading });
   }
 
@@ -89,7 +46,7 @@ class Register extends Component {
           <Container>
             <Header as='h2' color='teal' textAlign='center'>
               <Image src='/media/logo.svg' />
-                            Register your account
+      Register your account
             </Header>
             <Segment stacked>
               <Form loading={this.state.loading} size='large'>
@@ -144,7 +101,7 @@ class Register extends Component {
                   fluid size='large'
                   onClick={(form) => this._submit(form)}
                   type='submit'>
-                                    Submit
+      Submit
                 </Button>
               </Form>
             </Segment>

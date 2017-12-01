@@ -7,7 +7,7 @@ import App from '../../src/components/App';
 describe('App component', () => {
   describe('render()', () => {
     it('should render the component', () => {
-      const childProps = { dataPropagation: { userSession: false } };
+      const childProps = { userSession: false };
       const wrapper = shallow(<App children={childProps} />);
       assert.equal(wrapper.length, 1);
     });
