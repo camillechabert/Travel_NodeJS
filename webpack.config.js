@@ -42,7 +42,7 @@ module.exports = {
       },
       {
         test: /\.(scss|sass|css)$/,
-        loaders: ['style-loader', 'css-loader'],
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.svg$/,
