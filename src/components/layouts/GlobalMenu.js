@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, NavLink, browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { Button, Container, Icon, Menu, Segment } from 'semantic-ui-react';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
@@ -21,11 +21,7 @@ class GlobalMenu extends Component {
     };
   }
 
-  handleIsActive(tag, e) {
-    //  console.log(this.props.location.pathname);
-    // e.preventDefault();
-    console.log(tag, e);
-
+  handleIsActive(tag) {
     browserHistory.push({
       pathname: tag
     });
