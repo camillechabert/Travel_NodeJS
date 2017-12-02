@@ -17,7 +17,7 @@ class App extends Component {
 
     return (
       <div id="page-wrapper" className="main-app">
-        <Header userSession={user} />
+        <Header userSession={user} {... this.props} />
         <div className="content-app">
           {props}
         </div>

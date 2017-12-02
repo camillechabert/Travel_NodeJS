@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class GlobalHeader extends Component {
   render() {
     return (
-      <GlobalMenu userSession={this.props.userSession}/>
+      <GlobalMenu {...this.props}/>
     );
   }
 }

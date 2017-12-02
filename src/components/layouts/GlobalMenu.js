@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, NavLink, browserHistory } from 'react-router';
 import { Button, Container, Icon, Menu, Segment } from 'semantic-ui-react';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
@@ -8,6 +8,33 @@ import { dropUserAsync } from '../../actions/userActions';
 class GlobalMenu extends Component {
   constructor(props) {
     super(props);
+
+    this.menu = [
+      { name: 'Home', link: '/'},
+      { name: 'FAQ', link: '/faq'},
+      { name: 'Career', link: '/career'},
+      { name: 'company', link: 'company'}
+    ];
+
+    this.state = {
+      activeItem: this.props.location.pathname
+    };
+  }
+
+  handleIsActive(tag, e) {
+    //  console.log(this.props.location.pathname);
+    // e.preventDefault();
+    console.log(tag, e);
+
+    browserHistory.push({
+      pathname: tag
+    });
+
+    this.setState({activeItem: tag});
+  }
+
+  isActive() {
+
   }
 
   logOut() {
@@ -26,10 +53,14 @@ class GlobalMenu extends Component {
         >
           <Container>
             <Menu inverted pointing stackable size='small'>
-              <Menu.Item as={Link} to='/' active>Home</Menu.Item>
-              <Menu.Item as={Link} to='/faq'>Faq</Menu.Item>
-              <Menu.Item as='a'>Company</Menu.Item>
-              <Menu.Item as='a'>Careers</Menu.Item>
+              {
+                this.menu.map((item) =>
+                  <Menu.Item as='a' name={ item.name } key={ 'sidebar-' + item.name } className={ (this.state.activeItem === item.link) ? 'active' : ''} onClick={(e) => {
+                    this.handleIsActive(item.link);
+                  } }/>
+                )
+              }
+
               <Menu.Item position='right'>
                 {
                   this.props.userSession ? (
@@ -57,7 +88,9 @@ class GlobalMenu extends Component {
 }
 
 GlobalMenu.propTypes = {
-  userSession: PropTypes.bool
+  userSession: PropTypes.bool,
+  dataPropagation: PropTypes.func,
+  location: PropTypes.any
 };
 
 export default GlobalMenu;
