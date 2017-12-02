@@ -3,14 +3,14 @@ import { Button, Form, Container, Header, Segment, Image, Grid } from 'semantic-
 import XHR from '../../helpers/XHRClient';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
-import { addUser, fetchUser } from '../../actions/userActions';
+import { createUser } from '../../actions/userActions';
 
 
 class Register extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { loading: false, firstName: '', lastName: '', email: '', password: '', agreed: false };
+    this.state = { loading: false, login: '', firstName: '', lastName: '', email: '', password: '', agreed: false };
   }
 
   _submit(form) {
@@ -19,7 +19,7 @@ class Register extends Component {
       return;
     }
 
-    store.dispatch(fetchUser({...this.state})); // ACTUALLY NOT WORKING
+    store.dispatch(createUser({...this.state}));
   }
 
   _triggerLoading() { // TODO: Use Sagas && connect to bind this methods #AskJuH
@@ -34,7 +34,7 @@ class Register extends Component {
   }
 
   render() {
-    const { firstName, lastName, email, password } = this.state;
+    const { login, firstName, lastName, email, password } = this.state;
 
     return (
       <Grid
@@ -50,6 +50,15 @@ class Register extends Component {
             </Header>
             <Segment stacked>
               <Form loading={this.state.loading} size='large'>
+                <Form.Group unstackable widths={1}>
+                  <Form.Input
+                    icon='user'
+                    iconPosition='left'
+                    onChange={(e) => this.__handleChange(e, 'login')}
+                    label='Login'
+                    value={login}
+                    placeholder='login' />
+                </Form.Group>
 
                 <Form.Group unstackable widths={2}>
                   <Form.Input

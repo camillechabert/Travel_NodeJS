@@ -1,4 +1,4 @@
-import { FETCH_USER, DROP_USER_ASYNC, addUser, dropUser } from '../actions/userActions';
+import { FETCH_USER, DROP_USER_ASYNC, addUser, dropUser, CREATE_USER } from '../actions/userActions';
 import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import XHR from '../helpers/XHRClient';
 
@@ -23,6 +23,23 @@ function *userXhr(action) {
   }
 }
 
+function *createUserAsync(action) {
+  const data = {
+    body: XHR._formatQuery('POST', action.payload)
+  };
+
+  try {
+    const response = yield call(XHR.post, process.env.createUserUrl, data);
+
+    const user = formatTokenResponse(response);
+    addUserToLocalStorage(user);
+
+    yield put(addUser(user));
+  } catch (e) {
+    console.error({ error: 'from create User Sagas', e });
+  }
+}
+
 function *dropUserAsync(action) {
   try {
     self.sessionStorage.clear();
@@ -38,6 +55,7 @@ function *dropUserAsync(action) {
 
 export function *sagas() {
   yield takeLatest(FETCH_USER, userXhr);
+  yield takeLatest(CREATE_USER, createUserAsync);
   yield takeEvery(DROP_USER_ASYNC, dropUserAsync);
 }
 
