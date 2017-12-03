@@ -3,6 +3,7 @@ import assert from 'assert'
 
 // unit tests for the App component
 describe('Boarding routes', () => {
+  const Db = require('../../database/models/index')
   const serverPath = '../../App/server'
 
     describe('Get requests', () => {
@@ -18,18 +19,18 @@ describe('Boarding routes', () => {
         server.close(done);
       });
 
-      it('should return John seed user from database', async () => {
-        const Db = await require('../../database/models/index');
-        const User = Db.User;
-
-        const jhon = await User.findOne({
+      it('should return John seed user from database', (done) => {
+        Db.User.findOne({
             where: {
                 apiToken: 'demo'
             }
-        });
+        }).done((res, error) => {
+          if (error) return done(new Error(error));
 
-        assert.ok(jhon);
-        assert.equal(jhon.firstName, 'John');
+          assert.ok(res);
+          assert.equal(res.firstName, 'John');
+          done();
+        });
       });
     });
   });
