@@ -4,7 +4,7 @@ import { history } from './store.js';
 import { DummyUser } from './reducers/User';
 import { store } from './store';
 import App from './components/App';
-import Chatroom from './components/chat/Chatroom';
+import Chatroom from './components/chat';
 import NotFound from './components/NotFound';
 import Index from './components/Index';
 import MapIndex from './components/Map/MapIndex';

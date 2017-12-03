@@ -3,48 +3,16 @@ import '../../stylesheets/main.scss';
 import '../../stylesheets/components/chat.scss';
 import Message from './Message';
 import Notification from './Notification';
-import io from 'socket.io-client';
 import Chat from '../../helpers/chat';
-import { Dropdown } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 class Chatroom extends Component {
   constructor(props) {
     super(props);
-    // const date = new Date();
-
-    // Dummy items
-    let user = {
-      id: 132224,
-      username: 'Greencame',
-      name: 'Julien',
-      lastname: 'Mustière',
-      image: 'https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg'
-    };
-    // json["chat"] = [
-    //     {
-    //         "message" : "coucou c'est moi",
-    //         "date" : date.toDateString(),
-    //         "user" : json.user
-    //     },
-    //     {
-    //         "message" : "bienvenue en France",
-    //         "date" : date.toDateString(),
-    //         "user" : json.user
-    //     },
-    //     {
-    //         "message" : "ici c'est pas chère",
-    //         "date" : date.toDateString(),
-    //         "user" : json.user
-    //     }
-    // ]
 
     this.state = {
-      room: 'all',
-      rooms: [],
       history: [],
       connected: false,
-      user: user,
       textarea: ''
     };
 
@@ -53,17 +21,21 @@ class Chatroom extends Component {
     this.handleChangeChat = this.handleChangeChat.bind(this);
   }
 
-  componentWillMount() {
-    this.chat = new Chat(io.connect('http://localhost:3080'));
+  componentWillReceiveProps(props) {
+    // check
+    if(this.props.marker.id !== props.marker.id) {
+      // room by default
 
-    // get all rooms
-    this.chat.getRooms().then((data) => {
-      this.setState({ rooms: data.rooms });
-    });
-    // room by default
-    this.chat.join('default', this.state.user).then((data) => {
-      this.setState({ room: data.room });
-    });
+      this.chat.join(props.marker.id, this.props.user).then((data) => {
+        this.setState({ room: data.room, history: data.history});
+      });
+    }
+  }
+
+  componentWillMount() {
+    this.chat = Chat;
+    this.chat.connect(this.props.marker.id);
+
     // when we receive a message
     this.chat.onMessage((data) => {
       let history = this.state.history.slice(0);
@@ -107,7 +79,7 @@ class Chatroom extends Component {
     if (this.state.textarea !== '') {
       const date = new Date();
       const dataToSend = {
-        user: this.state.user,
+        user: this.props.user,
         date: date.toDateString(),
         message: this.state.textarea
       };
@@ -121,7 +93,7 @@ class Chatroom extends Component {
   }
 
   handleChangeChat(e, o) {
-    this.chat.join(o.value, this.state.user).then((data) => {
+    this.chat.join(o.value, this.props.user).then((data) => {
       this.setState({ room: data.room, history: [] });
     });
   }
@@ -142,14 +114,14 @@ class Chatroom extends Component {
 
             <div className="sixteen wide column">
               <h3 className="ui header">
-                <Dropdown selection search onChange={ this.handleChangeChat } options={ this.state.rooms } value={ this.state.room } />
+                { this.props.marker.name }
               </h3>
               <div>
                 {
                   this.state.history ?
                     this.state.history.map((h, i) =>
                       (h.type === 'message') ?
-                        <Message key={ i } isOwner={ h.data.user.id === this.state.user.id } message={h.data} key={'chat-' + i}/>
+                        <Message key={ i } isOwner={ h.data.user.id === this.props.user.id } message={h.data} key={'chat-' + i}/>
                         : (h.type === 'notification') ?
                           <Notification key={ i } image={ h.data.image } message={ h.data.message }/>
                           :
@@ -185,8 +157,9 @@ class Chatroom extends Component {
   }
 }
 
-Chatroom.PropTypes = {
-  user: PropTypes.object
+Chatroom.propTypes = {
+  user: PropTypes.object.isRequired,
+  marker: PropTypes.object.isRequired
 };
 
 export default Chatroom;

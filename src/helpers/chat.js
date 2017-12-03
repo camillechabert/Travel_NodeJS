@@ -1,34 +1,37 @@
-class Chat {
-  constructor(_socket) {
-    this.socket = _socket;
-    this.room = null;
-  }
+import io from 'socket.io-client';
+const server = require('./../../config/server');
 
+class Chat {
   /*
     *   SOCKET
     */
+  connect(room = null) {
+    this.room = room;
+    this.socket = io('http://localhost:' + server.port, { query: 'room=' + room }).connect();
+  }
+
   send(name, message) {
     return this.emit(name, message);
   }
 
-  join(name, user = {}) {
-    let nameRoom = name;
+  join(id, user = {}) {
+    let idRoom = id;
 
-    if(nameRoom === 'default') {
-      nameRoom = self.localStorage.getItem('chatname') || 'all';
+    if(idRoom === 'default') {
+      idRoom = self.localStorage.getItem('chat_id') || 0;
     }
 
-    return this.emit('join', { name: nameRoom, user: user }).then(function (data) {
-      self.localStorage.setItem('chatname', data.room);// register in localstorage
-      this.room = data.room;
+    return this.emit('join', { name: idRoom, user: user }).then(function (data) {
+      self.localStorage.setItem('chat_id', idRoom);// register in localstorage
+      this.room = idRoom;
 
       return data;
-    }.bind(this));
+    });
   }
 
-  getRooms() {
+  /* getRooms() {
     return this.emit('rooms');
-  }
+  }*/
 
   parse(object) {
     return {
@@ -49,6 +52,10 @@ class Chat {
     * Surcharging method emit of socket.io
     */
   emit(name, object = {}) {
+    if(!this.socket) {
+      this.connect();
+    }
+
     return new Promise(function (resolve, reject) {
       this.socket.emit(name, this.parse(object), function (response) {
         if(typeof response === 'object' && typeof response.data === 'object') {
@@ -86,4 +93,4 @@ class Chat {
   }
 }
 
-module.exports = Chat;
+module.exports = new Chat();
