@@ -1,4 +1,5 @@
 import request from 'supertest';
+import assert from 'assert';
 
 // unit tests for the App component
 describe('Authentication routes', () => {
@@ -31,7 +32,13 @@ describe('Authentication routes', () => {
         .get('/auth/qsdmlqkdmlqsdmlk')
         .set('Accept', 'application/json')
         .expect('content-type', 'application/json; charset=utf-8')
-        .expect(404, done);
+        .expect(404)
+        .end((error, res) => {
+          if (error) return done(error);
+          
+          assert.equal(res.body.response, 'ERROR 404 - NOT FOUND'); // #TODO: use env's variable
+          return done();
+        });
     });
   });
 });
