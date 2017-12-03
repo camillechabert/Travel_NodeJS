@@ -22,7 +22,7 @@ describe('Authentication routes', () => {
       request(server)
         .post('/auth/token')
         .set('Accept', 'application/json')
-        .send({ login: 'Juh33', password: '123456789' })
+        .send({ login: 'JohnLog', password: '123456789' })
         .expect('content-type', 'application/json; charset=utf-8')
         .expect(200, done);
     });
@@ -35,7 +35,7 @@ describe('Authentication routes', () => {
         .expect(404)
         .end((error, res) => {
           if (error) return done(error);
-          
+
           assert.equal(res.body.response, 'ERROR 404 - NOT FOUND'); // #TODO: use env's variable
           return done();
         });
