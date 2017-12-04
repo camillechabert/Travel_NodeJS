@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { Button, Container, Icon, Menu, Segment } from 'semantic-ui-react';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
@@ -21,16 +21,8 @@ class GlobalMenu extends Component {
     };
   }
 
-  handleIsActive(tag) {
-    browserHistory.push({
-      pathname: tag
-    });
-
-    this.setState({activeItem: tag});
-  }
-
-  isActive() {
-
+  componentWillReceiveProps(props) {
+    this.setState({activeItem: props.location.pathname});
   }
 
   logOut() {
@@ -51,9 +43,7 @@ class GlobalMenu extends Component {
             <Menu inverted pointing stackable size='small'>
               {
                 this.menu.map((item) =>
-                  <Menu.Item as='a' name={ item.name } key={ 'sidebar-' + item.name } className={ (this.state.activeItem === item.link) ? 'active' : ''} onClick={(e) => {
-                    this.handleIsActive(item.link);
-                  } }/>
+                  <Menu.Item as={ Link } name={ item.name } to={ item.link } key={ 'sidebar-' + item.name } className={ (this.state.activeItem === item.link) ? 'active' : ''}/>
                 )
               }
 
