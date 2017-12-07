@@ -27,10 +27,4 @@ function User(state = DummyUser, action) {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    payload: User(state, state)
-  };
-};
-
 export { User, DummyUser };

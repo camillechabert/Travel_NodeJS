@@ -9,6 +9,8 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import Clusters from './Clusters';
 import { Map } from 'mapbox-gl/dist/mapbox-gl';
 import { store } from '../../store';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 let mbUtils = require('mapbox-gl');
 
 class MapIndex extends Component {
@@ -48,4 +50,12 @@ class MapIndex extends Component {
   }
 }
 
-export default MapIndex;
+MapIndex.propTypes = {
+  route: PropTypes.any
+};
+
+const reduxConnecter = (nextState, ownProps) => {
+  return { route: nextState.destination };
+};
+
+export default connect(reduxConnecter)(MapIndex);

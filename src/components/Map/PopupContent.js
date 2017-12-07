@@ -1,8 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Icon, Card, Button, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { addDestCoordinates } from '../../actions/destinationActions';
+import {store} from '../../store';
 
 class PopupContent extends Component {
+  addDestination(e) {
+    const coords = this.props.POI.lon + ',' + this.props.POI.lat;
+    store.dispatch(addDestCoordinates(coords));
+  }
+
   render() {
     return (
       <Card>
@@ -23,7 +30,7 @@ class PopupContent extends Component {
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>
-            <Button basic color='green'>Add</Button>
+            <Button basic color='green' onClick={(e) => this.addDestination(e)}>Add</Button>
             <Button onClick={this.props.close} basic color='red'>Close</Button>
           </div>
         </Card.Content>

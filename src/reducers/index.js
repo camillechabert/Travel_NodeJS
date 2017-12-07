@@ -2,9 +2,11 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import { User } from './User';
+import { Destinations } from './Destinations';
 
 export const reducers = combineReducers({
   routing: routerReducer,
   form: formReducer,
-  user: User
+  user: User,
+  destination: Destinations
 });
