@@ -11,7 +11,8 @@ import { Map } from 'mapbox-gl/dist/mapbox-gl';
 import { store } from '../../store';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-let mbUtils = require('mapbox-gl');
+import mbUtils from 'mapbox-gl';
+import SideBar from './SideBar';
 
 class MapIndex extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class MapIndex extends Component {
           height: '91%',
           width: '100%'
         }}>
+        <SideBar destinations={this.props.destinations} />
         <Clusters bounds={this.state.mapBounds} />
       </this.Map>
     );
@@ -51,11 +53,14 @@ class MapIndex extends Component {
 }
 
 MapIndex.propTypes = {
-  route: PropTypes.any
+  route: PropTypes.any,
+  destinations: PropTypes.array
 };
 
 const reduxConnecter = (nextState, ownProps) => {
-  return { route: nextState.destination };
+  return {
+    destinations: nextState.destination
+  };
 };
 
 export default connect(reduxConnecter)(MapIndex);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button, Image } from 'semantic-ui-react';
-import { addDestCoordinates } from '../../actions/destinationActions';
+import { addDestination } from '../../actions/destinationActions';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
 import '../../stylesheets/components/map.scss';
@@ -19,8 +19,14 @@ class PopupContent extends Component {
   }
 
   addDestination() {
-    const coords = this.props.POI.lon + ',' + this.props.POI.lat;
-    store.dispatch(addDestCoordinates(coords));
+    store.dispatch(addDestination({
+      name: this.props.POI.display_name[0],
+      type: this.props.POI.type,
+      place_id: this.props.POI.place_id,
+      lat: this.props.POI.lat,
+      lon: this.props.POI.lon,
+      osm_type: this.props.POI.osm_type
+    }));
   }
 
   render() {

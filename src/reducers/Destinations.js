@@ -1,11 +1,20 @@
-import { ADD_DEST_COORDINATES } from '../actions/destinationActions';
+import { ADD_DEST, DELETE_DESTS } from '../actions/destinationActions';
 
-function Destinations(state = {}, action) {
+function Destinations(state = [], action) {
   switch (action.type) {
-  case ADD_DEST_COORDINATES:
-    let newState = action.payload;
-    if (state.length > 0 && state.split(';').length < 2) { // TODO: don't use dumby logic
-      newState = newState + (';' + state);
+  case DELETE_DESTS:
+    return [];
+  case ADD_DEST:
+    let locked = false;
+    const newState = state.map(dest => {
+      if (+dest.place_id === +action.payload.place_id) {
+        locked = true;
+        return action.payload;
+      }
+      return dest;
+    });
+    if (!locked) {
+      newState.push(action.payload);
     }
     return newState;
   default:

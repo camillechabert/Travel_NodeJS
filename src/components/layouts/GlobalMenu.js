@@ -22,6 +22,7 @@ class GlobalMenu extends Component {
           inverted
           textAlign='center'
           vertical
+          style={{zIndex: 3}}
         >
           <Container>
             <Menu inverted pointing stackable size='small'>
