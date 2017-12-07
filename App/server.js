@@ -6,6 +6,7 @@ const url = require('url');
 const path = require('path');
 const api = require('./routes/api');
 const auth = require('./routes/authentication');
+const routeFromPosition = require('./routes/RouteFromPosition');
 const chat = require('./lib/chat');
 const serverConf = require('../config/server');
 const bodyParser = require('body-parser');
@@ -23,6 +24,7 @@ app.all('*', (req, res, next) => {
 });
 app.use('/api', api.v01);
 app.use('/auth', auth.routes);
+app.use('/routes', routeFromPosition.routes);
 
 
 chat.listen(server);
