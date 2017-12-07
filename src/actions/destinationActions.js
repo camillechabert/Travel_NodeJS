@@ -16,7 +16,7 @@ export const addDestination = (destination) => {
   };
 };
 
-export const deleteDestIds = () => {
+export const deleteDests = () => {
   return {
     type: DELETE_DESTS,
     payload: null

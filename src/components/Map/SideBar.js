@@ -13,6 +13,10 @@ class SideBar extends Component {
     this.setState({ visible: !this.state.visible });
   }
 
+  getRoute() {
+    // TODO: Fetch routes from API
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.destinations.length === this.size) {
       return;
@@ -34,6 +38,7 @@ class SideBar extends Component {
               </Menu.Item>
             ))}
           </div>
+          <Button icon='map' fluid color='blue' size='medium' content='Compute routes' onClick={() => this.getRoute()} />
         </Sidebar>
       </div>
     );
