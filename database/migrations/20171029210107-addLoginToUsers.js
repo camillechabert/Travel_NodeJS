@@ -1,14 +1,16 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface, Sequelize, done) => {
     return [
       queryInterface.addColumn('Users', 'login', {
         type: Sequelize.STRING,
         allowNull: false,
         max: 20
       }),
-      queryInterface.renameColumn('Users', 'lasName', 'lastName')
+      queryInterface.renameColumn('Users', 'lasName', 'lastName').then(() => {
+        done();
+      })
     ];
   },
 
