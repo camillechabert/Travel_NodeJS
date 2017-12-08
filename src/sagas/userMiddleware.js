@@ -1,7 +1,7 @@
 import XHR from '../helpers/XHRClient';
 import { addUser, dropUser } from '../actions/userActions';
 import {formatTokenResponse, addUserToLocalStorage} from './helpers';
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
 function *userXhr(action) {
   const data = {

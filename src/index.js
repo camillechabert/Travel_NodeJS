@@ -13,6 +13,7 @@ process.env.MapboxTilesStyle = 'mapbox://styles/mapbox/streets-v10';
 
 process.env.createUserUrl = 'http://localhost:3080/auth/create-user';
 process.env.authTokenUrl = 'http://localhost:3080/auth/token';
+process.env.computeRouteUrl = 'http://localhost:3080/routes/';
 
 // render the main component
 ReactDOM.render(

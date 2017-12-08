@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
+import { addDestinationRouteAsync, deleteDests } from '../../actions/destinationActions';
+import { store } from '../../store';
 
 class SideBar extends Component {
   constructor(props) {
@@ -13,8 +15,12 @@ class SideBar extends Component {
     this.setState({ visible: !this.state.visible });
   }
 
+  handleRemove(id) {
+    store.dispatch(deleteDests(id));
+  }
+
   getRoute() {
-    // TODO: Fetch routes from API
+    store.dispatch(addDestinationRouteAsync());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,10 +38,13 @@ class SideBar extends Component {
           <Button icon='close' floated='right' color='google plus' onClick={() => this.toggleVisibility()} />
           <div style={{marginTop: 55}}>
             {this.props.destinations.map((dest) => (
-              <Menu.Item key={dest.place_id} name='home'>
-                <Icon name='home' />
-                {dest.name}
-              </Menu.Item>
+              <div key={dest.place_id}>
+                <Button icon='close' color='red' onClick={() => this.handleRemove(dest.place_id)} />
+                <Menu.Item name='home'>
+                  <Icon name='home' />
+                  {dest.name}
+                </Menu.Item>
+              </div>
             ))}
           </div>
           <Button icon='map' fluid color='blue' size='medium' content='Compute routes' onClick={() => this.getRoute()} />

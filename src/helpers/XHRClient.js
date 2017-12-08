@@ -18,15 +18,9 @@ class Client {
   }
 
   get(url, options = {}) {
-    let fullUrl = url + this._formatQuery('GET', options.query);
+    // let fullUrl = url + this._formatQuery('GET', options.query);
 
-    return fetch(fullUrl, {
-      method: 'GET',
-      headers: {
-        Accept: options.accept || 'text/plain, application/json',
-        'Content-Type': options.contentType || 'application/json'
-      }
-    }).then((response) => {
+    return fetch(url, { method: 'GET' }).then((response) => {
       return response.json();
     }).then((json) => {
       return json;

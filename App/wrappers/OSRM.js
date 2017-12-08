@@ -2,9 +2,10 @@ const http = require('node-fetch');
 const conf = require('../../config/server');
 
 const options = {
-  overview: false,
-  alternatives: true,
-  steps: true
+  overview: 'simplified',
+  alternatives: false,
+  steps: false,
+  geometries: 'geojson'
 };
 
 /**
@@ -41,7 +42,6 @@ const compute = (coordinates) => {
       return {error: 'Internal error from OSRM WRAPPER'};
     });
 };
-
 
 module.exports = {
   options: options,

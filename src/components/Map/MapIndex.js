@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
+import ReactMapboxGl, { Marker, GeoJSONLayer } from 'react-mapbox-gl';
 import { Icon } from 'semantic-ui-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import 'mapbox-gl/dist/svg/mapboxgl-ctrl-compass.svg';
@@ -47,6 +47,19 @@ class MapIndex extends Component {
         }}>
         <SideBar destinations={this.props.destinations} />
         <Clusters bounds={this.state.mapBounds} />
+        {this.props.geoRoutes.routes && (
+          <GeoJSONLayer
+            data={this.props.geoRoutes.routes[0].geometry}
+            linePaint={{
+              'line-color': '#F51332',
+              'line-width': 4
+            }}
+            lineLayout={{
+              'line-join': 'round',
+              'line-cap': 'round'
+            }}
+            type='lineLayout'/>
+        )}
       </this.Map>
     );
   }
@@ -54,12 +67,14 @@ class MapIndex extends Component {
 
 MapIndex.propTypes = {
   route: PropTypes.any,
-  destinations: PropTypes.array
+  destinations: PropTypes.array,
+  geoRoutes: PropTypes.object
 };
 
 const reduxConnecter = (nextState, ownProps) => {
   return {
-    destinations: nextState.destination
+    destinations: nextState.destination,
+    geoRoutes: nextState.routes
   };
 };
 
