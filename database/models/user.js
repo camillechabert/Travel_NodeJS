@@ -2,10 +2,10 @@
 
 module.exports = (sequelize, DataTypes) => {
   let User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    first_name: DataTypes.STRING,
+    last_name: DataTypes.STRING,
     password: DataTypes.STRING,
-    apiToken: DataTypes.STRING,
+    api_token: DataTypes.STRING,
     login: {
       type: DataTypes.STRING,
       max: 20,
@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     created_at: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     updated_at: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
     }
   }, {
