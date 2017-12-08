@@ -4,16 +4,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     // Return a promise to correctly handle asynchronicity.
 
-      return queryInterface.bulkInsert('Users', [{
-        login: 'JohnLog',
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'jone.doe@localhost.com',
-        password: '123456789',
-        apiToken: 'demo',
-        createdAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
-        updatedAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
-      }], {});
+    return queryInterface.bulkInsert('Users', [{
+      login: 'JohnLog',
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'jone.doe@localhost.com',
+      password: '123456789',
+      api_token: 'demo'
+    }], {});
   },
 
   down: (queryInterface, Sequelize) => {
