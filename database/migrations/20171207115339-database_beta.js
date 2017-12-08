@@ -1,19 +1,18 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: (queryInterface, Sequelize, done) => {
     return [
       queryInterface.renameColumn('Users', 'apiToken', 'api_token'),
       queryInterface.renameColumn('Users', 'firstName', 'first_name'),
       queryInterface.renameColumn('Users', 'createdAt', 'created_at'),
-      queryInterface.renameColumn('Users', 'updatedAt', 'updated_at'),
+      queryInterface.renameColumn('Users', 'updatedAt', 'updated_at').then(() => done()),
       queryInterface.renameColumn('Users', 'lastName', 'last_name'),
       queryInterface.changeColumn('Users', 'id', {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         unique: true
       }),
-
 
       queryInterface.createTable('marker', {
         id: {

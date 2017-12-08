@@ -30,15 +30,6 @@ module.exports = function (sequelize, Sequelize) {
       },
       onUpdate: 'cascade',
       onDelete: 'restrict'
-    },
-    marker_description_id: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'marker_description',
-        key: 'id'
-      },
-      onUpdate: 'cascade',
-      onDelete: 'restrict'
     }
   }, {
     timestamps: true,
@@ -47,7 +38,7 @@ module.exports = function (sequelize, Sequelize) {
     classMethods: {
       associate: (models) => {
         Route.belongsTo(models.Users, { foreignKey: 'user_id' });
-        Route.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
+        Route.hasMany(models.ToRoute, { foreignKey: 'route_id' });
       }
     }
   });
