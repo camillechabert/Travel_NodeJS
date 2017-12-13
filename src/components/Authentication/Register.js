@@ -10,7 +10,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { loading: false, login: '', firstName: '', lastName: '', email: '', password: '', agreed: false };
+    this.state = { loading: false, login: '', first_name: '', last_name: '', email: '', password: '', agreed: false };
   }
 
   _submit(form) {
@@ -34,7 +34,7 @@ class Register extends Component {
   }
 
   render() {
-    const { login, firstName, lastName, email, password } = this.state;
+    const { login, first_name, last_name, email, password } = this.state;
 
     return (
       <Grid
@@ -64,15 +64,15 @@ class Register extends Component {
                   <Form.Input
                     icon='user'
                     iconPosition='left'
-                    onChange={(e) => this.__handleChange(e, 'firstName')}
+                    onChange={(e) => this.__handleChange(e, 'first_name')}
                     label='First name'
-                    value={firstName}
+                    value={first_name}
                     placeholder='First name' />
                   <Form.Input
                     icon='user'
                     iconPosition='left'
-                    value={lastName}
-                    onChange={(e) => this.__handleChange(e, 'lastName')}
+                    value={last_name}
+                    onChange={(e) => this.__handleChange(e, 'last_name')}
                     label='Last name'
                     placeholder='Last name' />
                 </Form.Group>

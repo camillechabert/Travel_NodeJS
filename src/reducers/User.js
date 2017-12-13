@@ -2,8 +2,8 @@ import { ADD_USER, DROP_USER } from '../actions/userActions';
 
 const DummyUser = {
   id: null,
-  firstName: null,
-  lastName: null,
+  first_name: null,
+  last_name: null,
   token: null,
   email: null
 };
@@ -14,8 +14,8 @@ function User(state = DummyUser, action) {
     const user = Object.assign({}, state);
 
     user.id = action.payload.id;
-    user.firstName = action.payload.firstName;
-    user.lastName = action.payload.lastName;
+    user.first_name = action.payload.first_name;
+    user.last_name = action.payload.last_name;
     user.token = action.payload.token;
     user.email = action.payload.email;
 

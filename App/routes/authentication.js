@@ -13,7 +13,7 @@ const routes = express.Router();
 
 routes.post('/token', (req, res) => {
   const jhon = User.findOne({
-    attributes: ['id', 'firstName', 'lastName', 'email'],
+    attributes: ['id', 'first_name', 'last_name', 'email'],
     where: { login: req.body.login, password: req.body.password }
   }).then((response) => {
     if (!response) {
@@ -42,8 +42,8 @@ routes.route('/user')
 routes.route('/create-user')
   .post((req, res) => {
     const newUserInstance = User.build({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       password: req.body.password,
       login: req.body.login,
       email: req.body.email
