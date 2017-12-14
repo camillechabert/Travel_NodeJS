@@ -1,6 +1,5 @@
 const express = require('express');
-const path = require('path');
-const http = require('http');
+const marker = require('../lib/marker');
 
 /** **********************************
  *      ROUTES API V01
@@ -16,6 +15,11 @@ v01.get('/', (req, res) => {
   // Render some JsonStuff
 });
 
+v01.use('/marker/:uid', (req, res, next) => {
+  res.id = req.params.uid;
+  next();
+});
+v01.use('/marker/:uid', marker);
 
 module.exports = {
   v01
