@@ -3,16 +3,16 @@
 module.exports = {
   up: (queryInterface, Sequelize, done) => {
     return [
-      queryInterface.renameColumn('Users', 'apiToken', 'api_token'),
-      queryInterface.renameColumn('Users', 'firstName', 'first_name'),
-      queryInterface.renameColumn('Users', 'createdAt', 'created_at'),
+      queryInterface.renameColumn('Users', 'apiToken', 'api_token').then(() => done()),
+      queryInterface.renameColumn('Users', 'firstName', 'first_name').then(() => done()),
+      queryInterface.renameColumn('Users', 'createdAt', 'created_at').then(() => done()),
       queryInterface.renameColumn('Users', 'updatedAt', 'updated_at').then(() => done()),
-      queryInterface.renameColumn('Users', 'lastName', 'last_name'),
+      queryInterface.renameColumn('Users', 'lastName', 'last_name').then(() => done()),
       queryInterface.changeColumn('Users', 'id', {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         unique: true
-      }),
+      }).then(() => done()),
 
       queryInterface.createTable('marker', {
         id: {
@@ -38,7 +38,7 @@ module.exports = {
         }
       }, {
         charset: 'utf8'
-      }),
+      }).then(() => done()),
 
 
       queryInterface.createTable('marker_description', {
@@ -64,7 +64,7 @@ module.exports = {
         }
       }, {
         charset: 'utf8'
-      }),
+      }).then(() => done()),
 
       queryInterface.createTable('marker_picture', {
         id: {
@@ -86,7 +86,7 @@ module.exports = {
         }
       }, {
         charset: 'utf8'
-      }),
+      }).then(() => done()),
 
       queryInterface.createTable('message', {
         id: {
@@ -108,7 +108,7 @@ module.exports = {
         }
       }, {
         charset: 'utf8'
-      }),
+      }).then(() => done()),
 
       queryInterface.createTable('note', {
         id: {
@@ -125,7 +125,7 @@ module.exports = {
         }
       }, {
         charset: 'utf8'
-      }),
+      }).then(() => done()),
 
       queryInterface.createTable('room', {
         id: {
@@ -147,7 +147,7 @@ module.exports = {
         }
       }, {
         charset: 'utf8'
-      }),
+      }).then(() => done()),
 
       queryInterface.createTable('route', {
         id: {
@@ -172,7 +172,7 @@ module.exports = {
         }
       }, {
         charset: 'utf8'
-      })
+      }).then(() => done())
     ];
   },
 

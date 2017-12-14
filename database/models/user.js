@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: true,
     underscored: true,
-    tableName: 'users',
+    tableName: 'Users',
     classMethods: {
       associate: (models) => {
         User.hasMany(models.Message, { foreignKey: 'user_id' });
