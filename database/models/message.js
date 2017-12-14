@@ -40,13 +40,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
     underscored: true,
-    tableName: 'message',
-    classMethods: {
-      associate: (models) => {
-        Message.belongsTo(models.Users, { foreignKey: 'user_id' });
-        Message.belongsTo(models.Room, { foreignKey: 'room_id' });
-      }
-    }
+    tableName: 'message'
   });
+
+  Message.associate = function (models) {
+    Message.belongsTo(models.User, { foreignKey: 'user_id' });
+    Message.belongsTo(models.Room, { foreignKey: 'room_id' });
+  };
+
   return Message;
 };

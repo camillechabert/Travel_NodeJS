@@ -26,13 +26,15 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     timestamps: false,
     underscored: true,
-    tableName: 'marker',
-    classMethods: {
-      associate: (models) => {
-        Marker.hasOne(models.MarkerDescription, { foreignKey: 'marker_id' });
-      }
-    }
+    tableName: 'marker'
   });
+
+  Marker.associate = function (models) {
+    Marker.hasOne(models.MarkerDescription, {
+      foreignKey: 'marker_id',
+      as: 'description'
+    });
+  };
 
   return Marker;
 };

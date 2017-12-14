@@ -31,13 +31,12 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     timestamps: true,
     underscored: true,
-    tableName: 'marker_picture',
-    classMethods: {
-      associate: (models) => {
-        MarkerPicture.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
-      }
-    }
+    tableName: 'marker_picture'
   });
+
+  MarkerPicture.associate = function (models) {
+    MarkerPicture.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
+  };
 
   return MarkerPicture;
 };

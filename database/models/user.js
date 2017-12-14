@@ -30,14 +30,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: true,
     underscored: true,
-    tableName: 'Users',
-    classMethods: {
-      associate: (models) => {
-        User.hasMany(models.Message, { foreignKey: 'user_id' });
-        User.hasMany(models.ToNote, { foreignKey: 'user_id' });
-        User.hasMany(models.Route, { foreignKey: 'user_id' });
-      }
-    }
+    tableName: 'Users'
   });
+
+  User.associate = function (models) {
+    User.hasMany(models.Message, { foreignKey: 'user_id' });
+    User.hasMany(models.ToNote, { foreignKey: 'user_id' });
+    User.hasMany(models.Route, { foreignKey: 'user_id' });
+  };
+
   return User;
 };

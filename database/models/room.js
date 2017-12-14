@@ -31,14 +31,13 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     timestamps: true,
     underscored: true,
-    tableName: 'room',
-    classMethods: {
-      associate: (models) => {
-        Room.belongsTo(models.Message, { foreignKey: 'room_id' });
-        Room.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
-      }
-    }
+    tableName: 'room'
   });
+
+  Room.associate = function (models) {
+    Room.hasMany(models.Message, { foreignKey: 'room_id' });
+    Room.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
+  };
 
   return Room;
 };

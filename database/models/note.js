@@ -17,13 +17,13 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     timestamps: false,
     underscored: true,
-    tableName: 'note',
-    classMethods: {
-      associate: (models) => {
-        Note.hasMany(models.Note, { foreignKey: 'note_id' });
-      }
-    }
+    tableName: 'note'
   });
+
+  Note.associate = function (models) {
+    Note.belongsToMany(models.MarkerDescription, { through: models.ToNote });
+    Note.belongsToMany(models.User, { through: models.ToNote });
+  };
 
   return Note;
 };

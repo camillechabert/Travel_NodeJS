@@ -40,15 +40,15 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     timestamps: true,
     underscored: true,
-    tableName: 'to_note',
-    classMethods: {
-      associate: (models) => {
-        ToNote.belongsTo(models.Users, { foreignKey: 'user_id' });
-        ToNote.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
-        ToNote.belongsTo(models.Note, { foreignKey: 'note_id' });
-      }
-    }
+    tableName: 'to_note'
   });
+
+  ToNote.associate = function (models) {
+    ToNote.belongsTo(models.User, { foreignKey: 'user_id' });
+    ToNote.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
+    ToNote.belongsTo(models.Note, { foreignKey: 'note_id' });
+  };
+
 
   return ToNote;
 };

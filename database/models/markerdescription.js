@@ -34,17 +34,16 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     timestamps: true,
     underscored: true,
-    tableName: 'marker_description',
-    classMethods: {
-      associate: (models) => {
-        MarkerDescription.belongsTo(models.Marker, { foreignKey: 'marker_id' });
-        MarkerDescription.hasMany(models.MarkerPicture, { foreignKey: 'marker_description_id' });
-        MarkerDescription.hasMany(models.Route, { foreignKey: 'marker_description_id' });
-        MarkerDescription.hasOne(models.Room, { foreignKey: 'marker_description_id' });
-        MarkerDescription.hasMany(models.ToNote, { foreignKey: 'marker_description_id' });
-      }
-    }
+    tableName: 'marker_description'
   });
+
+  MarkerDescription.associate = function (models) {
+    MarkerDescription.belongsTo(models.Marker, { foreignKey: 'marker_id' });
+    MarkerDescription.hasMany(models.MarkerPicture, { foreignKey: 'marker_description_id', as: 'pictures'});
+    MarkerDescription.belongsToMany(models.Route, { through: models.ToRoute });
+    MarkerDescription.hasOne(models.Room, { foreignKey: 'marker_description_id', as: 'room'});
+    MarkerDescription.belongsToMany(models.Note, { through: models.ToNote });
+  };
 
   return MarkerDescription;
 };

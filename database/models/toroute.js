@@ -23,14 +23,13 @@ module.exports = function (sequelize, Sequelize) {
   }, {
     timestamps: false,
     underscored: true,
-    tableName: 'to_route',
-    classMethods: {
-      associate: (models) => {
-        ToRoute.belongsTo(models.Route, { foreignKey: 'route_id' });
-        ToRoute.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
-      }
-    }
+    tableName: 'to_route'
   });
+
+  ToRoute.associate = function (models) {
+    ToRoute.belongsTo(models.Route, { foreignKey: 'route_id' });
+    ToRoute.belongsTo(models.MarkerDescription, { foreignKey: 'marker_description_id' });
+  };
 
   return ToRoute;
 };
