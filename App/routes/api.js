@@ -17,6 +17,13 @@ v01.get('/', (req, res) => {
 
 v01.use('/marker/:uid', (req, res, next) => {
   res.id = +req.params.uid;
+
+  if(!res.id) {
+    res.json(new BadRequest('Missing ID'));
+  } else if(typeof res.id !== 'number') {
+    res.json(new BadRequest('Wrong ID'));
+  }
+
   next();
 });
 v01.use('/marker/:uid', marker);
