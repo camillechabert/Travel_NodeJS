@@ -34,6 +34,9 @@ module.exports = function (sequelize, Sequelize) {
       foreignKey: 'marker_id',
       as: 'description'
     });
+    Marker.hasOne(models.MarkerDescription, {
+      foreignKey: 'marker_id'
+    });
   };
 
   return Marker;

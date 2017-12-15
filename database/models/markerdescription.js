@@ -40,8 +40,10 @@ module.exports = function (sequelize, Sequelize) {
   MarkerDescription.associate = function (models) {
     MarkerDescription.belongsTo(models.Marker, { foreignKey: 'marker_id' });
     MarkerDescription.hasMany(models.MarkerPicture, { foreignKey: 'marker_description_id', as: 'pictures'});
+    MarkerDescription.hasMany(models.MarkerPicture, { foreignKey: 'marker_description_id'});
     MarkerDescription.belongsToMany(models.Route, { through: models.ToRoute });
     MarkerDescription.hasOne(models.Room, { foreignKey: 'marker_description_id', as: 'room'});
+    MarkerDescription.hasOne(models.Room, { foreignKey: 'marker_description_id'});
     MarkerDescription.belongsToMany(models.Note, { through: models.ToNote });
   };
 
