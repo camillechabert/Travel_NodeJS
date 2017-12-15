@@ -16,7 +16,7 @@ v01.get('/', (req, res) => {
 });
 
 v01.use('/marker/:uid', (req, res, next) => {
-  res.id = req.params.uid;
+  res.id = +req.params.uid;
   next();
 });
 v01.use('/marker/:uid', marker);
