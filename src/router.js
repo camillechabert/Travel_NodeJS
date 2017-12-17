@@ -4,7 +4,6 @@ import { history } from './store.js';
 import { DummyUser } from './reducers/User';
 import { store } from './store';
 import App from './components/App';
-import Chatroom from './components/chat';
 import NotFound from './components/NotFound';
 import Index from './components/Index';
 import MapIndex from './components/Map/MapIndex';
@@ -28,7 +27,6 @@ const IndexPage = Dispatcher(['user'], false);
  * User connection is required
  */
 const UserEditPage = Dispatcher(['user'], true);
-const ChatRoomPage = Dispatcher(['user'], true);
 const MapPage = Dispatcher(['user'], true);
 
 const sessionUser = () => {
@@ -59,8 +57,6 @@ const router = () => {
         <Route path="login" component={LoginPage(Login)} />
         <Route path="sign-up" component={SignUpPage(Register)} />
         <Route path="edit" component={UserEditPage(Edition)} />
-
-        <Route path="chat" component={ChatRoomPage(Chatroom)} />
 
         <Route path="map" component={MapPage(MapIndex, {raw: true})} />
 
