@@ -22,7 +22,7 @@ passport.use(new jwtStrategy(opts, (payload, done) => {
   }
 
   User.findOne({
-    attributes: ['id', 'first_name', 'last_name', 'email'],
+    attributes: ['id', 'first_name', 'last_name', 'email', 'avatar'],
     where: { id: credential.id }
   }).then((response) => {
     if (!response) {
