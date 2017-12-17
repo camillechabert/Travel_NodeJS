@@ -1,6 +1,6 @@
 const socketio = require('socket.io');
 const Message = require('../../database/models/index').Message;
-const Marker = require('../../database/models/index').Marker;
+const Room = require('../../database/models/index').Room;
 
 const messageToSave = [];
 let SaveQueryToDatabase = 1;
@@ -20,7 +20,7 @@ exports.listen = function (_server) {
   io.sockets.on('connection', (socket) => {
     io.emit('client_disconnected' /* CLIENT ID WHO MUST BE DISCONNECTED FROM THE ROOM */);
     // to the canal of the room
-    socket.join(socket.handshake.query.room);
+    joinRoom(socket, socket.handshake.query.room);
 
     // Broadcasting message by room
     _handleMessageBroadcasting(socket);
@@ -45,10 +45,13 @@ function parse(socket, boolean, string_info, object = {}) {
   };
 }
 
-function joinRoom(socket, room, user) {
+function joinRoom(socket, room) {
   socket.join(room); // Make user join room
 
-  socket.broadcast.to(room).emit('notification', parse(socket, true, 'number of users', { image: user.image, message: `${user.username} joined ` }));
+  // save the room in database
+  Room.findOrCreate({ where: { marker_description_id: room } });
+
+  // socket.broadcast.to(room).emit('notification', parse(socket, true, 'number of users', { image: user.image, message: `${user.username} joined ` }));
 
   // Show how many users there are in the room
   socket.emit('notification', parse(socket, true, 'number of users', { message: `Users connected : ${io.sockets.adapter.rooms[room].length - 1}` }));
@@ -60,14 +63,20 @@ function joinRoom(socket, room, user) {
 function _handleMessageBroadcasting(socket) {
   socket.on('message', (response, fn) => {
     // Associate to the ORM
-    /* Message.build({
+    console.log({
       user_id: response.data.user,
+      room_id: response.room,
+      content: response.data.message
+    });
+    let messageBuild = Message.build({
+      user_id: response.data.user,
+      room_id: response.room,
       content: response.data.message
     });
 
     // persisting
     // if(++SaveQueryToDatabase > 5) {
-    Message.save();*/
+    messageBuild.save();
     // }
 
     fn(parse(socket, true, 'message received'));

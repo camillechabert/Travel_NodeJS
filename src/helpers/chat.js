@@ -5,6 +5,12 @@ class Chat {
   /*
     *   SOCKET
     */
+  user(user) {
+    this.user = user;
+
+    return this;
+  }
+
   connect(room = null) {
     this.room = room;
     this.socket = io('http://localhost:' + server.port, { query: 'room=' + room }).connect();
@@ -36,6 +42,7 @@ class Chat {
   parse(object) {
     return {
       room: this.room,
+      user: this.user,
       data: object
     };
   }
