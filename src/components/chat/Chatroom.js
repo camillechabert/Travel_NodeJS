@@ -23,7 +23,6 @@ class Chatroom extends Component {
 
   componentWillReceiveProps(props) {
     if(props.active && !this.chat) {
-      console.log(this.chat);
       this.activate(props.marker.id);
     } else if (props.active) {
       // check

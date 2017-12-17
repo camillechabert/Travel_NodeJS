@@ -2,10 +2,10 @@ export const GET_DESCRIPTION = 'GET_DESCRIPTION';
 export const GET_DESCRIPTION_SUCCESS = 'GET_DESCRIPTION_SUCCESS';
 export const GET_DESCRIPTION_ERROR = 'GET_DESCRIPTION_ERROR';
 
-export const getDescription = (id) => {
+export const getDescription = (marker) => {
   return {
     type: GET_DESCRIPTION,
-    payload: { id }
+    payload: marker
   };
 };
 

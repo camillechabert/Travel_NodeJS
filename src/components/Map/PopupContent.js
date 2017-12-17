@@ -20,7 +20,11 @@ class PopupContent extends Component {
   }
 
   showDescription() {
-    store.dispatch(getDescription(this.props.POI.place_id));
+    store.dispatch(getDescription({
+      id: this.props.POI.place_id,
+      name: this.props.POI.display_name[0],
+      type: this.props.POI.type
+    }));
   }
 
   addDestination() {
