@@ -1,5 +1,5 @@
 
-import { ADD_DEST_ROUTE, DELETE_DEST_ROUTE } from '../actions/destinationActions';
+import { ADD_DEST_ROUTE, DELETE_DEST_ROUTE } from '../../actions/map/destinationActions';
 
 function route(state = {}, action) {
   switch (action.type) {

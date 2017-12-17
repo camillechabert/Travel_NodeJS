@@ -12,7 +12,8 @@ import { store } from '../../store';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import mbUtils from 'mapbox-gl';
-import SideBar from './SideBar';
+import Description from './sidebars/Description';
+import Destination from './sidebars/Destination';
 
 class MapIndex extends Component {
   constructor(props) {
@@ -45,7 +46,8 @@ class MapIndex extends Component {
           height: '91%',
           width: '100%'
         }}>
-        <SideBar destinations={this.props.destinations} />
+        <Destination destinations={this.props.destinations} />
+        <Description user={ this.props.user } marker={this.props.marker } />
         <Clusters bounds={this.state.mapBounds} />
         {this.props.geoRoutes.routes && (
           <GeoJSONLayer
@@ -68,13 +70,17 @@ class MapIndex extends Component {
 MapIndex.propTypes = {
   route: PropTypes.any,
   destinations: PropTypes.array,
-  geoRoutes: PropTypes.object
+  geoRoutes: PropTypes.object,
+  marker: PropTypes.object,
+  user: PropTypes.object
 };
 
 const reduxConnecter = (nextState, ownProps) => {
   return {
     destinations: nextState.destination,
-    geoRoutes: nextState.routes
+    geoRoutes: nextState.routes,
+    marker: nextState.marker,
+    user: nextState.user
   };
 };
 

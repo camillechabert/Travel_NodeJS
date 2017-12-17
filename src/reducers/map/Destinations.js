@@ -1,4 +1,4 @@
-import { ADD_DEST, DELETE_DESTS } from '../actions/destinationActions';
+import { ADD_DEST, DELETE_DESTS } from '../../actions/map/destinationActions';
 
 function Destinations(state = [], action) {
   switch (action.type) {

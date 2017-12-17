@@ -8,6 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 process.env.MapboxKey = 'pk.eyJ1IjoianVoMzMiLCJhIjoiY2o5ZnZnMnpyMDQ1ajJxcnFoeXZuZWp6eCJ9.ECUpg6xQI-XcMTjfiZcvyw';
 process.env.SocketUrl = 'http://localhost:3080';
+process.env.api = process.env.SocketUrl + '/api/';
 process.env.NominationUrl = 'http://nominatim.openstreetmap.org/search.php?';
 process.env.MapboxTilesStyle = 'mapbox://styles/mapbox/streets-v10';
 

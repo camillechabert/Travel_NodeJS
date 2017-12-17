@@ -2,13 +2,15 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import { User } from './User';
-import { Destinations } from './Destinations';
-import { route } from './DestinationRoute';
+import { Destinations } from './map/Destinations';
+import { route } from './map/DestinationRoute';
+import { Marker } from './map/DescriptionMarker';
 
 export const reducers = combineReducers({
   routing: routerReducer,
   form: formReducer,
   user: User,
   destination: Destinations,
-  routes: route
+  routes: route,
+  marker: Marker
 });

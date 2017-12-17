@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button, Image } from 'semantic-ui-react';
-import { addDestination } from '../../actions/destinationActions';
+import { addDestination } from '../../actions/map/destinationActions';
+import { getDescription } from '../../actions/map/descriptionActions';
 import { store } from '../../store';
 import PropTypes from 'prop-types';
 import '../../stylesheets/components/map.scss';
@@ -16,6 +17,10 @@ class PopupContent extends Component {
       hotel: '../../../media/icons/bed.svg',
       cafe: '../../../media/icons/coffee-cup.svg'
     };
+  }
+
+  showDescription() {
+    store.dispatch(getDescription(this.props.POI.place_id));
   }
 
   addDestination() {
@@ -51,7 +56,7 @@ class PopupContent extends Component {
         <Card.Content extra>
           <div>
             <Button basic color='green' icon='plus' content='Ajouter' onClick={() => this.addDestination()} />
-            <Button basic color='blue' icon='info' content='Informations' />
+            <Button basic color='blue' icon='info' content='Informations' onClick={() => this.showDescription()}/>
           </div>
         </Card.Content>
       </Card>

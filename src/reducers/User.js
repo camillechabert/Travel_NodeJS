@@ -5,7 +5,8 @@ const DummyUser = {
   first_name: null,
   last_name: null,
   token: null,
-  email: null
+  email: null,
+  avatar: null
 };
 
 function User(state = DummyUser, action) {
@@ -18,6 +19,7 @@ function User(state = DummyUser, action) {
     user.last_name = action.payload.last_name;
     user.token = action.payload.token;
     user.email = action.payload.email;
+    user.avatar = action.payload.avatar;
 
     return user;
   case DROP_USER:

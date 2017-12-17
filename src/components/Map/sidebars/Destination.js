@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
-import { addDestinationRouteAsync, deleteDests } from '../../actions/destinationActions';
-import { store } from '../../store';
+import { addDestinationRouteAsync, deleteDests } from './../../../actions/map/destinationActions';
+import { store } from './../../../store';
 
-class SideBar extends Component {
+class Destination extends Component {
   constructor(props) {
     super(props);
     this.state = { visible: true };
@@ -34,7 +34,15 @@ class SideBar extends Component {
   render() {
     return (
       <div>
-        <Sidebar as={Menu} style={{paddingTop: 88, zIndex: 1}} animation='overlay' width='wide' visible={this.state.visible} icon='labeled' vertical>
+        <Sidebar
+          as={Menu}
+          style={{paddingTop: 88, zIndex: 5}}
+          animation='overlay'
+          width='wide'
+          visible={this.state.visible}
+          icon='labeled'
+          vertical
+        >
           <Button icon='close' floated='right' color='google plus' onClick={() => this.toggleVisibility()} />
           <div style={{marginTop: 55}}>
             {this.props.destinations.map((dest) => (
@@ -54,9 +62,9 @@ class SideBar extends Component {
   }
 }
 
-SideBar.propTypes = {
+Destination.propTypes = {
   visible: PropTypes.any,
   destinations: PropTypes.array
 };
 
-export default SideBar;
+export default Destination;
