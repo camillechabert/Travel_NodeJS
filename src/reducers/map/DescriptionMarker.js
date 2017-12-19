@@ -2,7 +2,7 @@ import { GET_DESCRIPTION, GET_DESCRIPTION_SUCCESS, GET_DESCRIPTION_ERROR, CHANGE
 
 let dummyMarker = {
   isLoading: true,
-  error: null,
+  error: {},
   data: {
     type: null,
     name: null,
@@ -41,7 +41,10 @@ function Marker(state = dummyMarker, action) {
   case CHANGE_GRADE:
     marker.data = {
       ...marker.data,
-      stars: action.payload.stars
+      stars: {
+        ...marker.data.stars,
+        user: action.payload.stars
+      }
     };
 
     return marker;

@@ -59,7 +59,7 @@ class Description extends Component {
               <Loader inverted>Loading</Loader>
             </Dimmer> : '' }
 
-          { !this.props.marker.isLoading && this.props.marker.data && !this.props.marker.error ?
+          { !this.props.marker.isLoading && this.props.marker.data && Object.keys(this.props.marker.error).length === 0 ?
             <div>
               <Card
                 image={ this.props.marker.data.pictures[0] }
@@ -91,7 +91,7 @@ class Description extends Component {
             </div>
             : <Message negative>
               <Message.Header>We're sorry</Message.Header>
-              <p>{ this.props.marker.error.message }</p>
+              <p>{ this.props.marker.error.message || 'Unknow' }</p>
             </Message>
           }
 

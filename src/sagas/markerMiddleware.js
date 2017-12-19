@@ -3,7 +3,7 @@ import { showDescription, errorDescription, changeGrade } from '../actions/map/d
 import { formatTokenResponse } from './helpers';
 import { call, put } from 'redux-saga/effects';
 
-function parseToStar(note, nb = 5) {
+function toGrade(note, nb = 5) {
   let stars = [];
   let value = note;
 
@@ -20,6 +20,15 @@ function parseToStar(note, nb = 5) {
 
   return stars;
 }
+
+function parseToGrade(note, user = null, nb = 5) {
+  if(!user || typeof user === 'undefined') {
+    return { community: toGrade(note, nb)};
+  }
+
+  return { community: toGrade(note, nb), user: toGrade(user, nb)};
+}
+
 /**
  * Fetch API to get the marker description
  * @param{*The current action} action
@@ -27,7 +36,7 @@ function parseToStar(note, nb = 5) {
 export function *getMarkerDescription(action) {
   try {
     const response = yield call(XHR.get, process.env.api + 'marker/' + action.payload.id + '/description');
-    const stars = parseToStar(response.note || 0);
+    const stars = parseToGrade(response.note || 0, response.user_note);
 
 
     yield put(showDescription({...response, stars}));
@@ -40,7 +49,7 @@ export function *addGrade(action) {
   try {
     const response = yield call(XHR.post, process.env.api + 'marker/' + action.payload.marker_id + '/note', { body: XHR._formatQuery('POST', action.payload) });
 
-    yield put(changeGrade(parseToStar(response.note)));
+    yield put(changeGrade(toGrade(response.note)));
   } catch (e) {
     // yield put(errorDescription(e));
   }
