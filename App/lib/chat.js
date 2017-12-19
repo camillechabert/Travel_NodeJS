@@ -63,16 +63,13 @@ function joinRoom(socket, room) {
 function _handleMessageBroadcasting(socket) {
   socket.on('message', (response, fn) => {
     // Associate to the ORM
-    console.log({
-      user_id: response.data.user,
+    message = {
+      user_id: response.user.id,
       room_id: response.room,
       content: response.data.message
-    });
-    let messageBuild = Message.build({
-      user_id: response.data.user,
-      room_id: response.room,
-      content: response.data.message
-    });
+    };
+    console.log(message);
+    let messageBuild = Message.build(message);
 
     // persisting
     // if(++SaveQueryToDatabase > 5) {
@@ -80,6 +77,8 @@ function _handleMessageBroadcasting(socket) {
     // }
 
     fn(parse(socket, true, 'message received'));
+
+    response.data.user = response.user;
 
     io.sockets.in(response.room).emit('message', parse(socket, true, 'new message', response.data));
   });

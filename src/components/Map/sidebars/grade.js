@@ -27,7 +27,7 @@ class Grade extends Component {
 }
 
 Grade.propTypes = {
-  grade: PropTypes.array.isRequired,
+  grade: PropTypes.object.isRequired,
   onClick: PropTypes.func
 };
 

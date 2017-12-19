@@ -162,7 +162,7 @@ class Chatroom extends Component {
 }
 
 Chatroom.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
   marker: PropTypes.object.isRequired,
   active: PropTypes.bool
 };
