@@ -1,6 +1,7 @@
 export const GET_DESCRIPTION = 'GET_DESCRIPTION';
 export const GET_DESCRIPTION_SUCCESS = 'GET_DESCRIPTION_SUCCESS';
 export const GET_DESCRIPTION_ERROR = 'GET_DESCRIPTION_ERROR';
+export const CHANGE_GRADE = 'CHANGE_GRADE';
 
 export const getDescription = (marker) => {
   return {
@@ -22,3 +23,11 @@ export const errorDescription = (error) => {
     payload: { error }
   };
 };
+
+export const changeGrade = (stars) => {
+  return {
+    type: CHANGE_GRADE,
+    payload: { stars }
+  };
+};
+

@@ -25,6 +25,8 @@ class PopupContent extends Component {
       name: this.props.POI.display_name[0],
       type: this.props.POI.type
     }));
+
+    this.props.close();
   }
 
   addDestination() {
@@ -36,6 +38,8 @@ class PopupContent extends Component {
       lon: this.props.POI.lon,
       osm_type: this.props.POI.osm_type
     }));
+
+    this.props.close();
   }
 
   render() {

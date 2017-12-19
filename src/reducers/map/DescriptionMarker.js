@@ -1,34 +1,53 @@
-import { GET_DESCRIPTION, GET_DESCRIPTION_SUCCESS, GET_DESCRIPTION_ERROR } from '../../actions/map/descriptionActions';
+import { GET_DESCRIPTION, GET_DESCRIPTION_SUCCESS, GET_DESCRIPTION_ERROR, CHANGE_GRADE } from '../../actions/map/descriptionActions';
 
-function Marker(state = {}, action) {
+let dummyMarker = {
+  isLoading: true,
+  error: null,
+  data: {
+    type: null,
+    name: null,
+    description: null
+  }
+};
+
+function Marker(state = dummyMarker, action) {
+  const marker = Object.assign({}, state);
+
   switch (action.type) {
   case GET_DESCRIPTION:
-    return {
-      ...state,
-      isLoading: true
+    marker.isLoading = true;
+    marker.data = {
+      name: action.payload.name,
+      type: action.payload.type
     };
+
+    return marker;
 
   case GET_DESCRIPTION_SUCCESS:
-    return {
-      ...state,
-      isLoading: false,
-      data: action.payload.marker
+    marker.isLoading = false;
+    marker.data = {
+      ...marker.data,
+      ...action.payload.marker
     };
+
+    return marker;
 
   case GET_DESCRIPTION_ERROR:
-    return {
-      ...state,
-      error: action.payload.error,
-      isLoading: false
+    marker.isLoading = false;
+    marker.error = action.payload.error;
+
+    return marker;
+
+  case CHANGE_GRADE:
+    marker.data = {
+      ...marker.data,
+      stars: action.payload.stars
     };
 
+    return marker;
+
   default:
-    return {
-      ...state,
-      isLoading: true,
-      error: null,
-      data: []
-    };
+    return marker;
   }
 }
 

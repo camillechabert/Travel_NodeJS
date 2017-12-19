@@ -10,14 +10,15 @@ class Grade extends Component {
   render() {
     return (
       <a>
-        { this.props.stars.map((s, i) => <Icon key={i} name={s} />) }
+        { this.props.stars.map((s, i) => <Icon key={i} name={s} onClick={() => this.props.onClick(i + 1)} />) }
       </a>
     );
   }
 }
 
 Grade.propTypes = {
-  stars: PropTypes.array.isRequired
+  stars: PropTypes.array.isRequired,
+  onClick: PropTypes.func
 };
 
 export default Grade;

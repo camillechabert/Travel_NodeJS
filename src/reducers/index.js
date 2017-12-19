@@ -5,6 +5,7 @@ import { User } from './User';
 import { Destinations } from './map/Destinations';
 import { route } from './map/DestinationRoute';
 import { Marker } from './map/DescriptionMarker';
+import { Grade } from './map/GradeMarker';
 
 export const reducers = combineReducers({
   routing: routerReducer,
@@ -12,5 +13,6 @@ export const reducers = combineReducers({
   user: User,
   destination: Destinations,
   routes: route,
-  marker: Marker
+  marker: Marker,
+  grade: Grade
 });

@@ -3,6 +3,8 @@ import { Sidebar, Segment, Button, Card, Image, Dimmer, Loader, Icon, Accordion,
 import { PropTypes } from 'prop-types';
 import Chatroom from './../../chat/Chatroom';
 import Grade from './grade';
+import {store} from '../../../store';
+import { addGrade } from '../../../actions/map/gradeActions';
 
 class Description extends Component {
   constructor(props) {
@@ -29,6 +31,12 @@ class Description extends Component {
 
   handleMenu(name) {
     this.setState({ menuItem: name });
+  }
+
+  handleGrade(grade) {
+    if(this.props.marker.data.id && this.props.user.id && grade) {
+      store.dispatch(addGrade(this.props.marker.data.id, this.props.user.id, 'general', grade));
+    }
   }
 
   render() {
@@ -66,7 +74,7 @@ class Description extends Component {
                 description={ this.props.marker.data.description }
                 extra={(
                   <div>
-                    <Grade stars={ this.props.marker.data.stars } />
+                    <Grade stars={ this.props.marker.data.stars } onClick={ (i) => this.handleGrade(i) }/>
 
                     <Accordion>
                       <Accordion.Title active={ this.state.chatroom } onClick={() => this.toggleChatroom()}>
