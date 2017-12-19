@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Sidebar, Segment, Button, Card, Image, Dimmer, Loader, Icon, Accordion, Menu } from 'semantic-ui-react';
+import { Sidebar, Segment, Button, Card, Image, Dimmer, Loader, Icon, Accordion, Menu, Message } from 'semantic-ui-react';
 import { PropTypes } from 'prop-types';
 import Chatroom from './../../chat/Chatroom';
 import Grade from './grade';
@@ -59,7 +59,7 @@ class Description extends Component {
               <Loader inverted>Loading</Loader>
             </Dimmer> : '' }
 
-          { !this.props.marker.isLoading && this.props.marker.data ?
+          { !this.props.marker.isLoading && this.props.marker.data && !this.props.marker.error ?
             <div>
               <Card
                 image={ this.props.marker.data.pictures[0] }
@@ -74,7 +74,7 @@ class Description extends Component {
                 description={ this.props.marker.data.description }
                 extra={(
                   <div>
-                    <Grade stars={ this.props.marker.data.stars } onClick={ (i) => this.handleGrade(i) }/>
+                    <Grade grade={ this.props.marker.data.stars } onClick={ (i) => this.handleGrade(i) }/>
 
                     <Accordion>
                       <Accordion.Title active={ this.state.chatroom } onClick={() => this.toggleChatroom()}>
@@ -89,7 +89,10 @@ class Description extends Component {
               />
 
             </div>
-            : 'error'
+            : <Message negative>
+              <Message.Header>We're sorry</Message.Header>
+              <p>{ this.props.marker.error.message }</p>
+            </Message>
           }
 
 
