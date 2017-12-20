@@ -22,18 +22,22 @@ class Slider extends Component {
   }
 
   render() {
+    let { pictures } = this.props;
+    if(!pictures) {
+      pictures = ['https://image.freepik.com/free-vector/bright-background-with-dots_1055-3132.jpg'];
+    }
     return (
       <div style={{height: '140px', position: 'relative'}}>
-        <div style={{ width: '100%', height: '100%', backgroundSize: 'cover', backgroundImage: `url(${this.props.pictures[this.state.index]})`}} />
+        <div style={{ width: '100%', height: '100%', backgroundSize: 'cover', backgroundImage: `url(${pictures[this.state.index]})`}} />
         { this.state.index === 0 ? '' : <Icon onClick={ () => this.changeIndex(-1)} name='left chevron' size="big" color="grey" style={{position: 'absolute', top: '60px', cursor: 'pointer'}} />}
-        { this.state.index === this.props.pictures.length - 1 ? '' : <Icon onClick={ () => this.changeIndex(1)} name='right chevron' size="big" color="grey" style={{position: 'absolute', top: '60px', right: '0', cursor: 'pointer'}}/>}
+        { this.state.index === pictures.length - 1 ? '' : <Icon onClick={ () => this.changeIndex(1)} name='right chevron' size="big" color="grey" style={{position: 'absolute', top: '60px', right: '0', cursor: 'pointer'}}/>}
       </div>
     );
   }
 }
 
 Slider.propTypes = {
-  pictures: PropTypes.array.isRequired
+  pictures: PropTypes.array
 };
 
 export default Slider;
