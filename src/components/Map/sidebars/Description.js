@@ -19,7 +19,7 @@ class Description extends Component {
 
   componentWillReceiveProps(props) {
     if(this.props.marker !== props.marker) {
-      this.setState({ visible: true, menuItem: 'Info' });
+      this.setState({ visible: true, chatroom: false, menuItem: 'Info' });
     }
   }
 

@@ -20,7 +20,8 @@ exports.listen = function (_server) {
   io.sockets.on('connection', (socket) => {
     io.emit('client_disconnected' /* CLIENT ID WHO MUST BE DISCONNECTED FROM THE ROOM */);
     // to the canal of the room
-    joinRoom(socket, socket.handshake.query.room);
+    console.log(socket.handshake.query.marker, socket.handshake.query);
+    joinRoom(socket, socket.handshake.query.marker);
 
     // Broadcasting message by room
     _handleMessageBroadcasting(socket);
@@ -46,15 +47,18 @@ function parse(socket, boolean, string_info, object = {}) {
 }
 
 function joinRoom(socket, room) {
-  socket.join(room); // Make user join room
+  Room.findOrCreate({ where: { marker_description_id: room } }).then(result => {
+    console.log(result);
+    // obj.getMesssage();
+    socket.join(result.id); // Make user join room
 
-  // save the room in database
-  Room.findOrCreate({ where: { marker_description_id: room } });
+    socket.emit('join', parse(socket, true, 'join_room', { id: result.id }));
+    // save the room in database
+    // socket.broadcast.to(room).emit('notification', parse(socket, true, 'number of users', { image: user.image, message: `${user.username} joined ` }));
 
-  // socket.broadcast.to(room).emit('notification', parse(socket, true, 'number of users', { image: user.image, message: `${user.username} joined ` }));
-
-  // Show how many users there are in the room
-  socket.emit('notification', parse(socket, true, 'number of users', { message: `Users connected : ${io.sockets.adapter.rooms[room].length - 1}` }));
+    // Show how many users there are in the room
+    // socket.emit('notification', parse(socket, true, 'number of users', { message: `Users connected : ${io.sockets.adapter.rooms[room].length - 1}` }));
+  });
 }
 
 /*
@@ -68,7 +72,7 @@ function _handleMessageBroadcasting(socket) {
       room_id: response.room,
       content: response.data.message
     };
-    console.log(message);
+
     let messageBuild = Message.build(message);
 
     // persisting
@@ -90,14 +94,14 @@ function _handleRoomJoining(socket) {
   socket.on('join', (response, fn) => {
     const data = response.data;
 
-    if (Marker.findOne({id: data.name})) {
-      socket.leave(rooms[socket.id]);
-      joinRoom(socket, data.name, data.user);
+    // if (MarkerDescription.findOne({id: data.name})) {
+    socket.leave(response.room);
+    joinRoom(socket, data.name, data.user);
 
-      fn(parse(socket, true, 'room name', { room: data.name }));// send info
-    } else {
+    // fn(parse(socket, true, 'room name', { room: data.name }));// send info
+    /* } else {
       fn(parse(socket, false, 'The room doesn\'t exist'));// send info
-    }
+    }*/
   });
 }
 /*

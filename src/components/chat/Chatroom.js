@@ -23,13 +23,13 @@ class Chatroom extends Component {
 
   componentWillReceiveProps(props) {
     if(props.active && !this.chat) {
-      this.activate(props.marker.id);
+      this.activate(props.marker.data.id);
     } else if (props.active) {
       // check
-      if(this.props.marker.id !== props.marker.id) {
+      if(this.props.marker.data.id !== props.marker.id) {
         // room by default
 
-        this.chat.join(props.marker.id, this.props.user).then((data) => {
+        this.chat.join(props.marker.data.id, this.props.user).then((data) => {
           this.setState({ room: data.room, history: data.history});
         });
       }
@@ -40,7 +40,7 @@ class Chatroom extends Component {
 
   componentWillMount() {
     if(this.props.active) {
-      this.activate(this.props.marker.id);
+      this.activate(this.props.marker.data.id);
     }
   }
 
@@ -48,7 +48,8 @@ class Chatroom extends Component {
     if(this.chat) {
       this.chat.emit('connect');
     } else {
-      this.chat = Chat;
+      console.log(room);
+      this.chat = new Chat();
       this.chat.user(this.props.user).connect(room);
 
       // when we receive a message
