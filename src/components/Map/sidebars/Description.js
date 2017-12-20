@@ -14,7 +14,7 @@ class Description extends Component {
 
     this.state = {
       visible: false,
-      chatroom: false,
+      chatroom: true,
       menuItem: 'Info'
     };
 
@@ -44,7 +44,7 @@ class Description extends Component {
 
   componentWillReceiveProps(props) {
     if(this.props.marker !== props.marker) {
-      this.setState({ visible: true, chatroom: false, menuItem: 'Info' });
+      this.setState({ visible: true, chatroom: true, menuItem: 'Info' });
     }
   }
 
@@ -110,7 +110,7 @@ class Description extends Component {
                 </Button>
               </div>
               <div className="chatroom bloc">
-                <div active={ this.state.chatroom }>
+                <div>
                   <Chatroom user={ this.props.user } marker={ this.props.marker } active={ this.state.chatroom }/>
                 </div>
               </div>

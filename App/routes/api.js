@@ -16,7 +16,8 @@ v01.get('/', (req, res) => {
 });
 
 v01.use('/marker/:uid', (req, res, next) => {
-  res.id = +req.params.uid;
+  // res.id = +req.params.uid;
+  res.id = 1;
 
   if(!res.id) {
     res.json(new BadRequest('Missing ID'));

@@ -24,7 +24,7 @@ class Slider extends Component {
   render() {
     let { pictures } = this.props;
     if(!pictures) {
-      pictures = ['https://image.freepik.com/free-vector/bright-background-with-dots_1055-3132.jpg'];
+      pictures = ['https://image.freepik.com/free-vector/bright-background-with-dots_1055-3132.jpg', 'http://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero-00e10b1f.jpg'];
     }
     return (
       <div style={{height: '140px', position: 'relative'}}>

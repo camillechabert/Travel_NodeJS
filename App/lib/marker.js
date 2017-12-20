@@ -3,7 +3,6 @@ const MarkerDescription = require('../../database/models/index').MarkerDescripti
 const MarkerPicture = require('../../database/models/index').MarkerPicture;
 const ToNote = require('../../database/models/index').ToNote;
 const Note = require('../../database/models/index').Note;
-const passport = require('../lib/AuthStrategy');
 const Sequelize = require('../../database/models/index').Sequelize;
 
 const {BadRequest, NotFound} = require('../errors');
@@ -43,7 +42,9 @@ marker.get('/description', (req, res) => {
   }).then(tasks => {
     if(tasks) {
       let json = tasks.toJSON();
-      json.note = parseFloat(json.note);// CAST(AS FLOAT) IN SQL doesn't work
+      if(json.note) {
+        json.note = parseFloat(json.note);
+      }// CAST(AS FLOAT) IN SQL doesn't work
 
       if(json.user_note) {
         json.user_note = json.user_note[0].note;
