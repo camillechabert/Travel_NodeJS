@@ -5,6 +5,7 @@ import { store } from '../../store';
 import XHR from '../../helpers/XHRClient.js';
 import PropTypes from 'prop-types';
 import { fetchUser } from '../../actions/userActions';
+import { browserHistory } from 'react-router';
 
 class Login extends Component {
   constructor(props) {
@@ -18,6 +19,12 @@ class Login extends Component {
 
   submitHandler() {
     store.dispatch(fetchUser({ ...this.state }));
+  }
+
+  componentWillReceiveProps(props) {
+    if(props.userSession) {
+      browserHistory.push('/map');
+    }
   }
 
   render() {
@@ -77,7 +84,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  userUpdate: PropTypes.func
+  userUpdate: PropTypes.func,
+  userSession: PropTypes.bool
 };
 
 export default Login;
