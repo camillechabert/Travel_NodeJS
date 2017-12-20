@@ -18,7 +18,9 @@ class Description extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ visible: true, menuItem: 'Info' });
+    if(this.props.marker !== props.marker) {
+      this.setState({ visible: true, menuItem: 'Info' });
+    }
   }
 
   toggleVisibility() {
