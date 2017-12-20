@@ -29,10 +29,9 @@ marker.get('/', (req, res) => {
 });
 
 marker.get('/description', (req, res) => {
-  // console.log(res, req._passport, req.session, req.user);
   let include = [ { attributes: [ 'picture' ], model: MarkerPicture, as: 'pictures' }];
-  if(req.params.user_id) {
-    include.push({ attributes: [ 'note' ], model: Note, through: { attributes: [] }, as: 'user_note', where: { user_id: +res.params.user_id }}); // limit: 1
+  if(req.query.user_id) {
+    include.push({ attributes: [ 'note' ], model: Note, through: { attributes: [], where: { user_id: +req.query.user_id } }, as: 'user_note', required: false}); // limit: 1
   }
 
   MarkerDescription.findOne({
@@ -45,9 +44,11 @@ marker.get('/description', (req, res) => {
     if(tasks) {
       let json = tasks.toJSON();
       json.note = parseFloat(json.note);// CAST(AS FLOAT) IN SQL doesn't work
+
       if(json.user_note) {
         json.user_note = json.user_note[0].note;
       } // I don't know how to fix that with sequelize
+
       json.pictures = json.pictures.map((p) => p.picture);
       res.json(json);
     } else {

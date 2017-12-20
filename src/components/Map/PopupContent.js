@@ -23,7 +23,8 @@ class PopupContent extends Component {
     store.dispatch(getDescription({
       id: this.props.POI.place_id,
       name: this.props.POI.display_name[0],
-      type: this.props.POI.type
+      type: this.props.POI.type,
+      user_id: this.props.user.id
     }));
 
     this.props.close();
@@ -75,7 +76,8 @@ class PopupContent extends Component {
 PopupContent.propTypes = {
   close: PropTypes.func,
   type: PropTypes.any,
-  POI: PropTypes.object
+  POI: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default PopupContent;

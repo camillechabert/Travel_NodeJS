@@ -48,7 +48,7 @@ class MapIndex extends Component {
         }}>
         <Destination destinations={this.props.destinations} />
         <Description user={ this.props.user } marker={this.props.marker } />
-        <Clusters bounds={this.state.mapBounds} />
+        <Clusters bounds={this.state.mapBounds} user={this.props.user}/>
         {this.props.geoRoutes.routes && (
           <GeoJSONLayer
             data={this.props.geoRoutes.routes[0].geometry}

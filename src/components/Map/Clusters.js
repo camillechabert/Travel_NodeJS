@@ -78,7 +78,7 @@ class Clusters extends Component {
                       key={'popup'}
                       coordinates={this.state.coord}
                       style={{ zIndex: 99999 }} >
-                      <PopupContent POI={this.state.popup} close={this._closePopup.bind(this)} />
+                      <PopupContent POI={this.state.popup} close={this._closePopup.bind(this)} user={this.props.user} />
                     </Popup>)
         }
         <Cluster zoomOnClickPadding={20} zoomOnClick={true} ClusterMarkerFactory={this.clusterMarker}>
@@ -103,7 +103,8 @@ class Clusters extends Component {
 }
 
 Clusters.propTypes = {
-  bounds: PropTypes.object
+  bounds: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default Clusters;
