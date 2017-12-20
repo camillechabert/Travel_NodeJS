@@ -11,9 +11,13 @@ class Chat {
     return this;
   }
 
-  connect(room = null) {
-    this.room = room;
-    this.socket = io('http://localhost:' + server.port, { query: 'room=' + room }).connect();
+  connect(marker = null) {
+    this.socket = io('http://localhost:' + server.port, { query: 'marker=' + marker }).connect();
+
+    this.on('room_id', (result) => {
+      this.room = result;
+      console.log(this.room);
+    });
   }
 
   send(name, message) {
@@ -100,4 +104,4 @@ class Chat {
   }
 }
 
-module.exports = new Chat();
+module.exports = Chat;

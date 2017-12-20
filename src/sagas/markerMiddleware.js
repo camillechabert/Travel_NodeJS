@@ -35,7 +35,7 @@ function parseToGrade(note, user = null, nb = 5) {
  */
 export function *getMarkerDescription(action) {
   try {
-    const response = yield call(XHR.get, process.env.api + 'marker/' + action.payload.id + '/description');
+    const response = yield call(XHR.get, process.env.api + 'marker/' + action.payload.id + '/description' + XHR._formatQuery('GET', { user_id: action.payload.user_id}));
     const stars = parseToGrade(response.note || 0, response.user_note);
 
 
