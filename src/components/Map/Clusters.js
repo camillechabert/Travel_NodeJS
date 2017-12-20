@@ -91,7 +91,9 @@ class Clusters extends Component {
                 key={key}
                 coordinates={coords}
                 onClick={(e) => this.showPopup(POI, key)}>
-                <Icon name='marker' color='blue' size='huge' />
+                <img src='../../../media/icons/location.svg' style={{
+                  maxHeight: '35px'
+                }}/>
               </Marker>);
             }
             )
